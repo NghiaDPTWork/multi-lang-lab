@@ -53,6 +53,8 @@
 
 package runtime;
 
+import data.Student;
+
 public class Program {
     
     public static void main(String[] args) {
@@ -98,5 +100,11 @@ public class Program {
 
         String result = (x > 5) ? "X lon hon 5" : "X nho hon hoac bang 5";
         System.out.println(result);
+
+
+        // --- PHẦN 6: MINH HỌA KIỂU DỮ LIỆU THAM CHIẾU (REFERENCE DATATYPE) ---
+        // Student là một kiểu dữ liệu tham chiếu tự định nghĩa nằm trong package data
+        Student sv = new Student("Nguyen Van A", 20, 3.8);
+        sv.showInfor();
     }
 }
