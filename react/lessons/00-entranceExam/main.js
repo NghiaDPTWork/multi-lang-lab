@@ -16,3 +16,10 @@ function notification(value) {
     return "Too many ...";
   }
 }
+
+// ARCHITECTURAL BUG: Thiếu liên kết logic với DOM (Document Object Model)
+// Hiện tại file JavaScript chỉ mới khai báo các hàm rời rạc, hoàn toàn CHƯA CÓ:
+// 1. Câu lệnh lấy phần tử từ HTML (ví dụ: document.querySelector('#value'))
+// 2. Sự kiện lắng nghe khi người dùng click chuột (ví dụ: .addEventListener('click', ...))
+// 3. Logic cập nhật giao diện khi dữ liệu thay đổi (chèn text vào HTML).
+// Vì vậy, khi chạy trang web, bấm nút "Count" sẽ không bao giờ kích hoạt được code trong file này!
