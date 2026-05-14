@@ -1,11 +1,18 @@
 // rfc => React Function Component
 
+import { useState } from "react";
+
 const Hello = (props: { name: string }) => {
-  // const [name, setName] = useState("Nghia Duong");
+  const [name, setName] = useState("Hello");
+
   return (
     <div>
-      <h1 className="text-3xl font-bold underline ">Hello, {props.name}!</h1>
-      <h3 className="text-3xl font-bold ">Hello world!</h3>
+      <h2 className="text-xl font-bold text-cyan-400">
+        Props từ Cha: {props.name}{" "}
+      </h2>
+      <p className="text-sm text-gray-300 mb-1">
+        State nội bộ: {name || "(Chưa nhập gì)"}
+      </p>
     </div>
   );
 };
