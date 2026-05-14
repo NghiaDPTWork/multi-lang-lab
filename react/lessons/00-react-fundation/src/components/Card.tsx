@@ -1,12 +1,11 @@
 import React from "react";
 
+// 5. Composition
 export default function Card({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <div className="border-2 border-gray-500 rounded-lg p-4 m-4">
-        <h1 className="font-bold underline">This is a Card Frame</h1>
-        {children}
-      </div>
-    </>
+    <div className="p-4 border-2 border-dashed border-gray-600 rounded bg-gray-900 text-white">
+      <h3 className="font-bold mb-2">5. Composition</h3>
+      <div className="p-2 bg-gray-800 rounded">{children}</div>
+    </div>
   );
 }
