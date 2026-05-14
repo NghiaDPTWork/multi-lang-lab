@@ -1,24 +1,30 @@
 import "./App.css";
+import State from "./components/State";
+import Props from "./components/Props";
+import Form from "./components/Form";
+import Crud from "./components/Crud";
 import Card from "./components/Card";
 import Hello from "./components/Hello";
 
-function App() {
+export default function App() {
   return (
-    <>
-      <div className="border-2 border-red-500 rounded-lg p-4 m-4">
-        <h1 className="text-3xl font-bold underline ">Hello world!</h1>
+    <div className="min-h-screen bg-black text-gray-300 p-6 font-sans">
+      <h1 className="text-3xl font-extrabold text-white text-center mb-6">
+        React Core Demo
+      </h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <State />
+        <Props />
+        <Form />
+        <Card>
+          <p className="text-sm text-emerald-400">
+            Directly Injected Children!
+          </p>
+          <Hello name="Nghia Duong" />
+        </Card>
+        <Crud />
       </div>
-
-      <Card>
-        <Hello name="Nghia Duong" />
-      </Card>
-
-      <Card>
-        <h1 className="font-">This is another Card Frame</h1>
-        <div>This is text of Children part!</div>
-      </Card>
-    </>
+    </div>
   );
 }
-
-export default App;
