@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center pt-20 font-sans text-slate-800">
       <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md border border-slate-200">
-        <h1 className="text-2xl font-bold text-indigo-600 text-center mb-6">
+        <h1 className="text-2xl font-bold text-emerald-600 text-center mb-6">
           To-do List
         </h1>
 
@@ -33,11 +33,11 @@ function App() {
             placeholder="Nhập công việc mới..."
             value={todo}
             onChange={(e) => setTodo(e.target.value)}
-            className="flex-1 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="flex-1 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
           <button
             onClick={handleAddTodo}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors shadow-sm"
           >
             Thêm
           </button>
@@ -49,16 +49,12 @@ function App() {
 
         <ul className="space-y-2">
           {todos.map((item, index) => (
-            // Chuyển dòng thành Flexbox (justify-between) để chữ bên trái, nút bên phải
             <li
               key={index}
               className="flex justify-between items-center bg-slate-100 px-3 py-2 rounded-lg text-slate-700 border border-slate-200 hover:bg-slate-200/50 transition-colors"
             >
-              {/* 1. Nội dung công việc */}
               <span className="font-medium">{item}</span>
 
-              {/* BƯỚC 5b: Nút Xóa nhỏ gọn, lịch sự màu đỏ */}
-              {/* LƯU Ý: Khi cần truyền tham số (index), ta BẮT BUỘC phải bọc hàm trong () => ... */}
               <button
                 onClick={() => handleDeleteTodo(index)}
                 className="text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 px-2 py-1 rounded transition-colors"
