@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06B6D4;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <!-- Nền gradient góc bo chuẩn Modern App Icon -->
+  <rect width="96" height="96" x="2" y="2" rx="24" fill="url(#grad1)" filter="url(#shadow)"/>
+  <!-- Chữ N in đậm tinh tế nằm giữa -->
+  <text x="50" y="68" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="52" fill="#FFFFFF" text-anchor="middle">N</text>
+</svg>
