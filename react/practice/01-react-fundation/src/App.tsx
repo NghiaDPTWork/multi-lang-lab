@@ -11,11 +11,13 @@ function App() {
 
   const handleAddTodo = () => {
     if (todo.trim() === "") return;
-
-    // **** BANH XÁC NHA MÁ (Tính Bất biến - Immutability):
     setTodos([...todos, todo]);
-
     setTodo("");
+  };
+
+  const handleDeleteTodo = (indexToDelete: number) => {
+    const updatedTodos = todos.filter((_, index) => index !== indexToDelete);
+    setTodos(updatedTodos);
   };
 
   return (
@@ -47,11 +49,22 @@ function App() {
 
         <ul className="space-y-2">
           {todos.map((item, index) => (
+            // Chuyển dòng thành Flexbox (justify-between) để chữ bên trái, nút bên phải
             <li
               key={index}
-              className="bg-slate-100 px-3 py-2 rounded-lg text-slate-700 border border-slate-200"
+              className="flex justify-between items-center bg-slate-100 px-3 py-2 rounded-lg text-slate-700 border border-slate-200 hover:bg-slate-200/50 transition-colors"
             >
-              {item}
+              {/* 1. Nội dung công việc */}
+              <span className="font-medium">{item}</span>
+
+              {/* BƯỚC 5b: Nút Xóa nhỏ gọn, lịch sự màu đỏ */}
+              {/* LƯU Ý: Khi cần truyền tham số (index), ta BẮT BUỘC phải bọc hàm trong () => ... */}
+              <button
+                onClick={() => handleDeleteTodo(index)}
+                className="text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 px-2 py-1 rounded transition-colors"
+              >
+                Xóa
+              </button>
             </li>
           ))}
         </ul>
