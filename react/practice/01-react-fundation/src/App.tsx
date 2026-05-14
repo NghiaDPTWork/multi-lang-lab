@@ -3,7 +3,11 @@ import { useState } from "react";
 function App() {
   const [todos, setTodos] = useState([
     { id: crypto.randomUUID(), text: "Học React căn bản", completed: false },
-    { id: crypto.randomUUID(), text: "Làm bài tập JavaScript", completed: false },
+    {
+      id: crypto.randomUUID(),
+      text: "Làm bài tập JavaScript",
+      completed: false,
+    },
     { id: crypto.randomUUID(), text: "Đi chợ mua đồ", completed: true },
   ]);
 
@@ -18,6 +22,9 @@ function App() {
     setTodo("");
   };
 
+  // .fliter() for delete
+  // mindset flow for solve problem: that loop through item and which one
+  // has same id - choose or expect => Diffrent size of items
   const handleDeleteTodo = (idToDelete: string) => {
     const updatedTodos = todos.filter((item) => item.id !== idToDelete);
     setTodos(updatedTodos);
@@ -27,9 +34,12 @@ function App() {
     setTodos([]);
   };
 
+  //.map() for update
+  // mindset flow for solve problem: that loop through item and which one
+  // has same id - changing status => Same size of items
   const handleToggleTodo = (idToToggle: string) => {
     const updatedTodos = todos.map((item) =>
-      item.id === idToToggle ? { ...item, completed: !item.completed } : item
+      item.id === idToToggle ? { ...item, completed: !item.completed } : item,
     );
     setTodos(updatedTodos);
   };
