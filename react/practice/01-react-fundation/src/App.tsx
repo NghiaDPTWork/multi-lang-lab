@@ -20,9 +20,16 @@ function App() {
     setTodos(updatedTodos);
   };
 
+  // BƯỚC TIẾP THEO: Hàm dọn sạch toàn bộ danh sách (Clear All)
+  const handleClearAll = () => {
+    // Truyền một mảng rỗng [] để xoá sạch sành sanh mọi thứ
+    setTodos([]);
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center pt-20 font-sans text-slate-800">
       <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md border border-slate-200">
+        
         <h1 className="text-2xl font-bold text-emerald-600 text-center mb-6">
           To-do List
         </h1>
@@ -64,6 +71,26 @@ function App() {
             </li>
           ))}
         </ul>
+
+        {/* BƯỚC MỚI: THÀNH PHẦN THỐNG KÊ VÀ DỌN DẸP NHANH */}
+        {/* Chỉ hiển thị thanh này nếu có ít nhất 1 công việc trong danh sách (Conditional Rendering) */}
+        {todos.length > 0 && (
+          <div className="flex justify-between items-center mt-6 pt-4 border-t border-slate-100">
+            {/* Đếm số lượng động bằng độ dài của mảng (.length) */}
+            <span className="text-xs text-slate-500">
+              Bạn đang có <strong className="text-slate-700">{todos.length}</strong> công việc
+            </span>
+
+            {/* Nút kích hoạt việc xoá sạch danh sách */}
+            <button
+              onClick={handleClearAll}
+              className="text-xs font-medium text-slate-400 hover:text-red-500 hover:underline transition-colors"
+            >
+              Xóa tất cả
+            </button>
+          </div>
+        )}
+
       </div>
     </div>
   );
