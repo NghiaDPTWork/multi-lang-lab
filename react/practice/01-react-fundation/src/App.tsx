@@ -2,21 +2,24 @@ import { useState } from "react";
 
 function App() {
   const [todos, setTodos] = useState([
-    { text: "Học React căn bản", completed: false },
-    { text: "Làm bài tập JavaScript", completed: false },
-    { text: "Đi chợ mua đồ", completed: true },
+    { id: crypto.randomUUID(), text: "Học React căn bản", completed: false },
+    { id: crypto.randomUUID(), text: "Làm bài tập JavaScript", completed: false },
+    { id: crypto.randomUUID(), text: "Đi chợ mua đồ", completed: true },
   ]);
 
   const [todo, setTodo] = useState("");
 
   const handleAddTodo = () => {
     if (todo.trim() === "") return;
-    setTodos([...todos, { text: todo, completed: false }]);
+    setTodos([
+      ...todos,
+      { id: crypto.randomUUID(), text: todo, completed: false },
+    ]);
     setTodo("");
   };
 
-  const handleDeleteTodo = (indexToDelete: number) => {
-    const updatedTodos = todos.filter((_, index) => index !== indexToDelete);
+  const handleDeleteTodo = (idToDelete: string) => {
+    const updatedTodos = todos.filter((item) => item.id !== idToDelete);
     setTodos(updatedTodos);
   };
 
@@ -24,9 +27,9 @@ function App() {
     setTodos([]);
   };
 
-  const handleToggleTodo = (indexToToggle: number) => {
-    const updatedTodos = todos.map((item, index) =>
-      index === indexToToggle ? { ...item, completed: !item.completed } : item
+  const handleToggleTodo = (idToToggle: string) => {
+    const updatedTodos = todos.map((item) =>
+      item.id === idToToggle ? { ...item, completed: !item.completed } : item
     );
     setTodos(updatedTodos);
   };
@@ -59,30 +62,30 @@ function App() {
         </p>
 
         <ul className="space-y-2">
-          {todos.map((item, index) => (
+          {todos.map((item) => (
             <li
-              key={index}
+              key={item.id}
               className="flex justify-between items-center bg-slate-100 px-3 py-2 rounded-lg text-slate-700 border border-slate-200 hover:bg-slate-200/50 transition-colors"
             >
               <div className="flex items-center gap-3 flex-1">
                 <input
                   type="checkbox"
                   checked={item.completed}
-                  onChange={() => handleToggleTodo(index)}
+                  onChange={() => handleToggleTodo(item.id)}
                   className="w-4 h-4 rounded text-emerald-600 border-slate-300 focus:ring-emerald-500 cursor-pointer accent-emerald-600"
                 />
                 <span
                   className={`font-medium transition-all cursor-pointer ${
                     item.completed ? "line-through text-slate-400 italic" : ""
                   }`}
-                  onClick={() => handleToggleTodo(index)}
+                  onClick={() => handleToggleTodo(item.id)}
                 >
                   {item.text}
                 </span>
               </div>
 
               <button
-                onClick={() => handleDeleteTodo(index)}
+                onClick={() => handleDeleteTodo(item.id)}
                 className="text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 px-2 py-1 rounded transition-colors ml-2"
               >
                 Xóa
