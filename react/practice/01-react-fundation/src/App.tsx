@@ -29,11 +29,21 @@ function App() {
   // mindset flow for solve problem: that loop through item and which one
   // has same id - choose or expect => Diffrent size of items
   const handleDeleteTodo = (idToDelete: string) => {
+    const todoToDelete = todos.find((item) => item.id === idToDelete);
+    const isConfirmed = window.confirm(
+      `Bạn có chắc chắn muốn xóa công việc "${todoToDelete?.text}" không?`
+    );
+    if (!isConfirmed) return;
+
     const updatedTodos = todos.filter((item) => item.id !== idToDelete);
     setTodos(updatedTodos);
   };
 
   const handleClearAll = () => {
+    const isConfirmed = window.confirm(
+      "Bạn có chắc chắn muốn xóa TẤT CẢ công việc không?"
+    );
+    if (!isConfirmed) return;
     setTodos([]);
   };
 
