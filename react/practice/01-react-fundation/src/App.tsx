@@ -46,6 +46,12 @@ function App() {
     setTodos(updatedTodos);
   };
 
+  const filteredTodos = todos.filter((item) => {
+    if (filter === "DONE") return item.completed;
+    if (filter === "NOT_YET") return !item.completed;
+    return true;
+  });
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center pt-20 font-sans text-slate-800">
       <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md border border-slate-200">
@@ -58,6 +64,7 @@ function App() {
             type="text"
             placeholder="Nhập công việc mới..."
             value={todo}
+            // From controller
             onChange={(e) => setTodo(e.target.value)}
             className="flex-1 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
@@ -95,10 +102,11 @@ function App() {
         </div>
 
         <ul className="space-y-2">
-          {todos.map((item) => (
+          {filteredTodos.map((item) => (
             <TodoItem
               key={item.id}
               item={item}
+              // This is REMOTE CONTROL
               onToggle={handleToggleTodo}
               onDelete={handleDeleteTodo}
             />
