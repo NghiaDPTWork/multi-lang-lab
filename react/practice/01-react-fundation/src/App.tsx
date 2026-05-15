@@ -14,7 +14,7 @@ function App() {
 
   const [todo, setTodo] = useState("");
   const [filter, setFilter] = useState("ALL");
-  const [searchTerm, setSearchTerm] = useState(""); // State lưu từ khóa tìm kiếm
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleAddTodo = () => {
     if (todo.trim() === "") return;
@@ -48,9 +48,14 @@ function App() {
   };
 
   const filteredTodos = todos.filter((item) => {
-    if (filter === "DONE") return item.completed;
-    if (filter === "NOT_YET") return !item.completed;
-    return true;
+    const matchesFilter =
+      filter === "ALL" ||
+      (filter === "DONE" && item.completed) ||
+      (filter === "NOT_YET" && !item.completed);
+
+    if (!matchesFilter) return false;
+
+    return item.text.toLowerCase().includes(searchTerm.toLowerCase().trim());
   });
 
   return (
@@ -77,47 +82,41 @@ function App() {
           </button>
         </div>
 
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Tìm kiếm công việc..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full border border-slate-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50"
-          />
-        </div>
-
-        <div className="flex justify-center gap-2 mb-4 border-b border-slate-100 pb-3">
-          <button
-            onClick={() => setFilter("ALL")}
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${
-              filter === "ALL"
-                ? "bg-emerald-600 text-white shadow-sm"
-                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-            }`}
-          >
-            Tất cả
-          </button>
-          <button
-            onClick={() => setFilter("DONE")}
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${
-              filter === "DONE"
-                ? "bg-emerald-600 text-white shadow-sm"
-                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-            }`}
-          >
-            Đã xong
-          </button>
-          <button
-            onClick={() => setFilter("NOT_YET")}
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${
-              filter === "NOT_YET"
-                ? "bg-emerald-600 text-white shadow-sm"
-                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-            }`}
-          >
-            Chưa xong
-          </button>
+        <div className="flex gap-2 mb-4">
+          <div className="flex-1">
+            <input
+              type="text"
+              placeholder="Tìm kiếm..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50"
+            />
+          </div>
+          <div className="relative w-32">
+            <select
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              className="w-full appearance-none pl-3 pr-8 py-2 text-sm font-medium text-slate-600 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none cursor-pointer transition-all"
+            >
+              <option value="ALL">Tất cả</option>
+              <option value="DONE">Đã xong</option>
+              <option value="NOT_YET">Chưa xong</option>
+            </select>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4 absolute right-2.5 top-1/2 transform -translate-y-1/2 pointer-events-none text-slate-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </div>
         </div>
 
         <ul className="space-y-2">
