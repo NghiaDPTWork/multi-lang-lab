@@ -83,19 +83,31 @@ function App() {
         <div className="flex justify-center gap-2 mb-4 border-b border-slate-100 pb-3">
           <button
             onClick={() => setFilter("ALL")}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${
+              filter === "ALL"
+                ? "bg-emerald-600 text-white shadow-sm"
+                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+            }`}
           >
             Tất cả
           </button>
           <button
             onClick={() => setFilter("DONE")}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${
+              filter === "DONE"
+                ? "bg-emerald-600 text-white shadow-sm"
+                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+            }`}
           >
             Đã xong
           </button>
           <button
             onClick={() => setFilter("NOT_YET")}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${
+              filter === "NOT_YET"
+                ? "bg-emerald-600 text-white shadow-sm"
+                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+            }`}
           >
             Chưa xong
           </button>
