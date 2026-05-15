@@ -1,4 +1,5 @@
 import { useState } from "react";
+import TodoItem from "./components/TodoItem";
 
 function App() {
   const [todos, setTodos] = useState([
@@ -12,6 +13,7 @@ function App() {
   ]);
 
   const [todo, setTodo] = useState("");
+  const [filter, setFilter] = useState("ALL");
 
   const handleAddTodo = () => {
     if (todo.trim() === "") return;
@@ -71,36 +73,35 @@ function App() {
           Đang nhập: {todo || "..."}
         </p>
 
+        <div className="flex justify-center gap-2 mb-4 border-b border-slate-100 pb-3">
+          <button
+            onClick={() => setFilter("ALL")}
+            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+          >
+            Tất cả
+          </button>
+          <button
+            onClick={() => setFilter("DONE")}
+            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+          >
+            Đã xong
+          </button>
+          <button
+            onClick={() => setFilter("NOT_YET")}
+            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+          >
+            Chưa xong
+          </button>
+        </div>
+
         <ul className="space-y-2">
           {todos.map((item) => (
-            <li
+            <TodoItem
               key={item.id}
-              className="flex justify-between items-center bg-slate-100 px-3 py-2 rounded-lg text-slate-700 border border-slate-200 hover:bg-slate-200/50 transition-colors"
-            >
-              <div className="flex items-center gap-3 flex-1">
-                <input
-                  type="checkbox"
-                  checked={item.completed}
-                  onChange={() => handleToggleTodo(item.id)}
-                  className="w-4 h-4 rounded text-emerald-600 border-slate-300 focus:ring-emerald-500 cursor-pointer accent-emerald-600"
-                />
-                <span
-                  className={`font-medium transition-all cursor-pointer ${
-                    item.completed ? "line-through text-slate-400 italic" : ""
-                  }`}
-                  onClick={() => handleToggleTodo(item.id)}
-                >
-                  {item.text}
-                </span>
-              </div>
-
-              <button
-                onClick={() => handleDeleteTodo(item.id)}
-                className="text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 px-2 py-1 rounded transition-colors ml-2"
-              >
-                Xóa
-              </button>
-            </li>
+              item={item}
+              onToggle={handleToggleTodo}
+              onDelete={handleDeleteTodo}
+            />
           ))}
         </ul>
 
