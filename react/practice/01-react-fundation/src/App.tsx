@@ -14,6 +14,7 @@ function App() {
 
   const [todo, setTodo] = useState("");
   const [filter, setFilter] = useState("ALL");
+  const [searchTerm, setSearchTerm] = useState(""); // State lưu từ khóa tìm kiếm
 
   const handleAddTodo = () => {
     if (todo.trim() === "") return;
@@ -76,9 +77,15 @@ function App() {
           </button>
         </div>
 
-        <p className="text-xs text-slate-400 italic text-center mb-4">
-          Đang nhập: {todo || "..."}
-        </p>
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Tìm kiếm công việc..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full border border-slate-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50"
+          />
+        </div>
 
         <div className="flex justify-center gap-2 mb-4 border-b border-slate-100 pb-3">
           <button
