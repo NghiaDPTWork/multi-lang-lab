@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Todo List</title>
+    <!-- Css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5" style="max-width: 500px">
+      <h1 class="text-center text-primary mb-4">Dự án: Todo List</h1>
+      
+      <form class="mb-4 shadow p-3 rounded">
+        <div class="mb-3">
+          <label class="form-label">Thêm công việc mới</label>
+          <input type="text" id="name" class="form-control" placeholder="Hôm nay bạn cần làm gì?" />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">ADD</button>
+      </form>
+
+      <div class="mb-4">
+        <label class="form-label">Tìm kiếm công việc</label>
+        <input type="text" id="filter" class="form-control" placeholder="Nhập từ khóa..." />
+      </div>
+
+      <div id="list">
+        <!-- Items go here -->
+      </div>
+    </div>
+
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./ProjectTodo.js"></script>
+  </body>
+</html>

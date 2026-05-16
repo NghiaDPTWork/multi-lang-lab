@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Scissors Rock Paper</title>
+
+    <!-- Css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      .user, #computer {
+        width: 130px;
+        font-size: 5rem;
+      }
+      .user.actived{
+        background-color: #ffc107;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center text-info mb-5">Dự án: Kéo Búa Bao</h1>
+
+      <div class="row">
+        <!-- Người -->
+        <div class="col-6 border-end">
+          <h2 class="text-center">Người chơi</h2>
+          <div class="d-flex flex-column align-items-center gap-3 mt-4">
+            <button class="btn btn-outline-warning user" id="scissors">✌️</button>
+            <button class="btn btn-outline-warning user" id="rock">✊</button>
+            <button class="btn btn-outline-warning user" id="paper">🖐</button>
+          </div>
+        </div>
+
+        <!-- Máy -->
+        <div class="col-6">
+          <h2 class="text-center">Máy chơi</h2>
+          <div class="d-flex justify-content-center align-items-center h-100">
+            <span id="computer" data-id="scissors">✌️</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notification -->
+       <div class="notification text-center mt-5"></div>
+       <div id="play-again" class="text-center d-none mt-3">
+            <button class="btn btn-warning btn-play-again px-5">Chơi lại</button>
+       </div>
+    </div>
+
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./ProjectScissorsRockPaper.js"></script>
+  </body>
+</html>
