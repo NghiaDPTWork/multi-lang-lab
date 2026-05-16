@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Province API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body class="bg-light">
+    <div class="container mt-5" style="max-width: 800px">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h2 class="text-center mb-0">Dự án: Chọn địa chỉ (Province API)</h2>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label">Tỉnh / Thành phố</label>
+                <select id="province" class="form-select"></select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Quận / Huyện</label>
+                <select id="district" class="form-select"></select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Phường / Xã</label>
+                <select id="ward" class="form-select"></select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Số nhà, tên đường</label>
+              <input type="text" id="address" class="form-control" placeholder="Ví dụ: 123 Lê Lợi" />
+            </div>
+            <button class="btn btn-success w-100">Xác nhận địa chỉ</button>
+          </form>
+
+          <div id="information" class="alert alert-success mt-4 d-none"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script -->
+    <script src="./ProjectProvince.js"></script>
+  </body>
+</html>
