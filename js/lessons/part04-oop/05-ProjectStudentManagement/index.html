@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Student Management</title>
+    <!-- Css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center text-info mb-4">Dự án: Quản lý sinh viên (OOP)</h1>
+
+      <form class="mb-4 shadow p-4 rounded bg-light">
+        <div class="row">
+          <div class="col-md-5 mb-3">
+            <label class="form-label">Tên sinh viên</label>
+            <input id="name" type="text" class="form-control" />
+          </div>
+          <div class="col-md-5 mb-3">
+            <label class="form-label">Ngày sinh</label>
+            <input id="birthday" type="date" class="form-control" />
+          </div>
+          <div class="col-md-2 mb-3 d-flex align-items-end">
+            <button class="btn btn-primary w-100">Thêm</button>
+          </div>
+        </div>
+      </form>
+
+      <div id="notification" class="mb-3"></div>
+
+      <table class="table table-striped table-hover border">
+        <thead class="table-dark">
+          <tr>
+            <th>STT</th>
+            <th>Tên</th>
+            <th>Ngày sinh</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dynamic Content -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./ProjectStudentManagement.js"></script>
+  </body>
+</html>
