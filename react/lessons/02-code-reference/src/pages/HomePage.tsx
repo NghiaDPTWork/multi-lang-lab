@@ -1,5 +1,3 @@
-import LogicalAndLesson from "../components/LogicalAndLesson";
-
 export default function HomePage() {
   return (
     <div className="text-center py-20">
@@ -7,7 +5,12 @@ export default function HomePage() {
       <p className="text-gray-500 mt-4">This is the Home Page</p>
 
       {/* Lesson Component */}
-      <LogicalAndLesson />
+      {/* <LogicalAndLesson /> */}
+      <img
+        src="../assets/1.jpg"
+        alt="Picture"
+        className="mx-auto mt-10 rounded-lg shadow-lg w-full max-w-md"
+      />
     </div>
   );
 }
