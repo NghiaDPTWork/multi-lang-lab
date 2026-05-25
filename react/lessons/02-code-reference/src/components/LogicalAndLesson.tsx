@@ -1,4 +1,7 @@
 export default function LogicalAndLesson() {
+  const valNull: any = null;
+  const valTwo: any = 2;
+
   return (
     <div className="mt-12 bg-white border border-slate-100 shadow-xl rounded-2xl p-8 text-left max-w-2xl mx-auto">
       <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
@@ -30,7 +33,7 @@ export default function LogicalAndLesson() {
             <span className="text-slate-400 italic text-xs">
               (Trống - null không render)
             </span>
-            {null && <p>Hello</p>}
+            {valNull && <p>Hello</p>}
           </div>
         </div>
 
@@ -84,7 +87,7 @@ export default function LogicalAndLesson() {
           <div className="text-sm text-slate-700 bg-slate-50 p-2.5 rounded flex items-center gap-2">
             <strong>Giao diện hiển thị:</strong>
             <span className="inline-block px-2.5 py-0.5 text-xs font-bold bg-indigo-100 text-indigo-800 rounded">
-              {2 && [1, 2, 3].length}
+              {valTwo && [1, 2, 3].length}
             </span>
           </div>
         </div>

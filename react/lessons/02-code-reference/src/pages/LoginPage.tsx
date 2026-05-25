@@ -7,16 +7,15 @@ export default function LoginPage() {
 
   // 1. Lấy địa chỉ user muốn đến dự định ban đầu
   const from = location.state?.from?.pathname || "/";
+  const setToken = useAuthStore((state) => state.setTokens);
 
   const handleLogin = () => {
     // Mock lưu token
     // localStorage.setItem("accessToken", "fake-token-123456");
     // Sử dụng Zustand store để lưu token
     // Gọi action setTokens từ Zustand store để lưu token
-    useAuthStore
-      .getState()
-      .setTokens("fake-token-123456", "fake-refresh-token-123456");
-
+    // useAuthStore((state) => state.setTokens);
+    setToken("fake-token-123456", "fake-refresh-token-654321");
     // 2. Login xong quay lại đúng trang cũ
     // Nếu không cho nhảy về trang cũ (vì auth role) thì mình dùng
     // replace: true

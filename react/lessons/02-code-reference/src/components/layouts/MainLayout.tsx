@@ -1,15 +1,17 @@
-import { useState } from "react";
 import { Outlet, Link, NavLink, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../stores/auth.store";
 
 export default function MainLayout() {
-  const token = localStorage.getItem("accessToken");
-  const [isLogin, setIsLogin] = useState(false);
+  // const token = localStorage.getItem("accessToken");
+  const isAuthed = useAuthStore((state) => !!state.accessToken);
+  const clearToken = useAuthStore((state) => state.clearTokens);
+  // const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("accessToken");
+    // localStorage.removeItem("accessToken");
     // Sau khi logout thì mình muốn nhảy về trang chủ
-    setIsLogin(!isLogin);
+    clearToken();
     navigate("/");
   };
 
@@ -34,7 +36,7 @@ export default function MainLayout() {
               Home
             </NavLink>
 
-            {!token ? (
+            {!isAuthed ? (
               <NavLink
                 to="/login"
                 className={({ isActive }) =>
