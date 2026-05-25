@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuthStore } from "../stores/auth.store";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -9,7 +10,12 @@ export default function LoginPage() {
 
   const handleLogin = () => {
     // Mock lưu token
-    localStorage.setItem("accessToken", "fake-token-123456");
+    // localStorage.setItem("accessToken", "fake-token-123456");
+    // Sử dụng Zustand store để lưu token
+    // Gọi action setTokens từ Zustand store để lưu token
+    useAuthStore
+      .getState()
+      .setTokens("fake-token-123456", "fake-refresh-token-123456");
 
     // 2. Login xong quay lại đúng trang cũ
     // Nếu không cho nhảy về trang cũ (vì auth role) thì mình dùng
