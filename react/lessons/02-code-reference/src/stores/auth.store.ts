@@ -1,5 +1,6 @@
 // src/stores/auth.store.ts
 import { create } from "zustand";
+import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
 interface AuthState {
   accessToken: string | null;
@@ -10,14 +11,38 @@ interface AuthState {
   clearTokens: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  // Initial state
-  accessToken: null,
-  refreshToken: null,
+// Cú pháp create<AuthState>()(...)
+// (có dấu ngoặc tròn trống ở giữa để TypeScript hỗ trợ infer type tốt hơn)
+export const useAuthStore = create<AuthState>()(
+  // devtools để hỗ trợ debug state qua extension Redux DevTools
+  devtools(
+    persist(
+      (set) => ({
+        accessToken: null,
+        refreshToken: null,
+        setTokens: (access, refresh) =>
+          set({ accessToken: access, refreshToken: refresh }),
+        clearTokens: () => set({ accessToken: null, refreshToken: null }),
+      }),
+      {
+        // Key trong LocalStorage
+        // storage: localStorage, // Cách lưu mặc định (localStorage)
+        // Hydration: Khi load trang sẽ tự động lấy data từ localStorage để gán vào state của store
+        name: "shopping-card-auth",
+        storage: createJSONStorage(() => localStorage),
+      },
+    ),
+  ),
+);
 
-  // Actions
-  setTokens: (access, refresh) =>
-    set({ accessToken: access, refreshToken: refresh }),
+// export const useAuthStore = create<AuthState>((set) => ({
+//   // Initial state
+//   accessToken: null,
+//   refreshToken: null,
 
-  clearTokens: () => set({ accessToken: null, refreshToken: null }),
-}));
+//   // Actions
+//   setTokens: (access, refresh) =>
+//     set({ accessToken: access, refreshToken: refresh }),
+
+//   clearTokens: () => set({ accessToken: null, refreshToken: null }),
+// }));
