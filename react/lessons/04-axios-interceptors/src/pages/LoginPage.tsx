@@ -46,7 +46,9 @@ export default function LoginPage() {
       }
     } catch (error: any) {
       toast.error("Đăng nhập thất bại", {
-        description: error.response?.data?.message || "Email hoặc mật khẩu không chính xác.",
+        description:
+          error.response?.data?.message ||
+          "Email hoặc mật khẩu không chính xác.",
       });
     } finally {
       setLoading(false);
