@@ -6,12 +6,6 @@ interface AuthTokens {
   refreshToken: string;
 }
 
-interface User {
-  _id: string;
-  email: string;
-  name: string;
-}
-
 // Định nghĩa API
 const authApi = {
   // Đăng nhập
