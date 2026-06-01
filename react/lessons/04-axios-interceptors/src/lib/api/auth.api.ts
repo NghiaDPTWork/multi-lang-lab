@@ -20,6 +20,12 @@ const authApi = {
     // Nếu gặp lỗi CORS
     // Thì có thể do BE chưa cấu hình CORS đúng port hoặc domain của FE
     // => FE sẽ nhận được lỗi CORS
+    // Nếu gặp lỗi 400
+    // Thì có thể do dữ liệu gửi lên không hợp lệ (ví dụ thiếu trường email hoặc password)
+    // => FE sẽ nhận được lỗi 400, và có thể hiển thị thông báo lỗi phù hợp cho người dùng
+    // Nếu gặp lỗi 401
+    // Thì có thể do email hoặc password không chính xác
+    // => FE sẽ nhận được lỗi 401, và có thể hiển thị thông báo lỗi phù hợp cho người dùng
     const { data } = await apiClient.post("/auth/login", credentials);
 
     // Giả sử BE trả về: {message, result: { access_token, refres_token }}
