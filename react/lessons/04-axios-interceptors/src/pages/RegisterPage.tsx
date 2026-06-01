@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { Loader2, User, Mail, Lock } from "lucide-react";
 import { toast } from "sonner";
+import authApi from "@/lib/api/auth.api";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -44,30 +45,44 @@ export default function RegisterPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
     setLoading(true);
-    setTimeout(() => {
+    try {
+      await authApi.register({ fullname, email, password });
       toast.success("Đăng ký thành công!", {
         description: "Bạn có thể đăng nhập ngay bây giờ.",
       });
       navigate("/login");
+    } catch (error: any) {
+      toast.error("Đăng ký thất bại", {
+        description:
+          error.response?.data?.message || "Có lỗi xảy ra. Vui lòng thử lại.",
+      });
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   return (
     <div className="flex items-center justify-center min-h-[80vh] p-4">
       <Card className="w-full max-w-md shadow-md border bg-card rounded-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-foreground">Tạo tài khoản</CardTitle>
-          <CardDescription className="text-muted-foreground text-sm">Đăng ký để bắt đầu</CardDescription>
+          <CardTitle className="text-2xl font-bold text-foreground">
+            Tạo tài khoản
+          </CardTitle>
+          <CardDescription className="text-muted-foreground text-sm">
+            Đăng ký để bắt đầu
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleRegister} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="fullname" className="flex items-center gap-2 text-sm font-medium text-foreground">
+              <Label
+                htmlFor="fullname"
+                className="flex items-center gap-2 text-sm font-medium text-foreground"
+              >
                 <User className="w-4 h-4 text-muted-foreground" />
                 Full Name
               </Label>
@@ -77,7 +92,11 @@ export default function RegisterPage() {
                 placeholder="John Doe"
                 value={fullname}
                 onChange={(e) => setFullname(e.target.value)}
-                className={errors.fullname ? "border-destructive focus-visible:ring-destructive rounded" : "bg-transparent border-input rounded"}
+                className={
+                  errors.fullname
+                    ? "border-destructive focus-visible:ring-destructive rounded"
+                    : "bg-transparent border-input rounded"
+                }
               />
               {errors.fullname && (
                 <p className="text-destructive text-xs">{errors.fullname}</p>
@@ -85,7 +104,10 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium text-foreground">
+              <Label
+                htmlFor="email"
+                className="flex items-center gap-2 text-sm font-medium text-foreground"
+              >
                 <Mail className="w-4 h-4 text-muted-foreground" />
                 Email
               </Label>
@@ -95,7 +117,11 @@ export default function RegisterPage() {
                 placeholder="m@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={errors.email ? "border-destructive focus-visible:ring-destructive rounded" : "bg-transparent border-input rounded"}
+                className={
+                  errors.email
+                    ? "border-destructive focus-visible:ring-destructive rounded"
+                    : "bg-transparent border-input rounded"
+                }
               />
               {errors.email && (
                 <p className="text-destructive text-xs">{errors.email}</p>
@@ -103,7 +129,10 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password" className="flex items-center gap-2 text-sm font-medium text-foreground">
+              <Label
+                htmlFor="password"
+                className="flex items-center gap-2 text-sm font-medium text-foreground"
+              >
                 <Lock className="w-4 h-4 text-muted-foreground" />
                 Password
               </Label>
@@ -113,7 +142,11 @@ export default function RegisterPage() {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={errors.password ? "border-destructive focus-visible:ring-destructive rounded" : "bg-transparent border-input rounded"}
+                className={
+                  errors.password
+                    ? "border-destructive focus-visible:ring-destructive rounded"
+                    : "bg-transparent border-input rounded"
+                }
               />
               {errors.password && (
                 <p className="text-destructive text-xs">{errors.password}</p>
@@ -121,7 +154,10 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword" className="flex items-center gap-2 text-sm font-medium text-foreground">
+              <Label
+                htmlFor="confirmPassword"
+                className="flex items-center gap-2 text-sm font-medium text-foreground"
+              >
                 <Lock className="w-4 h-4 text-muted-foreground" />
                 Confirm Password
               </Label>
@@ -131,14 +167,24 @@ export default function RegisterPage() {
                 placeholder="••••••••"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className={errors.confirmPassword ? "border-destructive focus-visible:ring-destructive rounded" : "bg-transparent border-input rounded"}
+                className={
+                  errors.confirmPassword
+                    ? "border-destructive focus-visible:ring-destructive rounded"
+                    : "bg-transparent border-input rounded"
+                }
               />
               {errors.confirmPassword && (
-                <p className="text-destructive text-xs">{errors.confirmPassword}</p>
+                <p className="text-destructive text-xs">
+                  {errors.confirmPassword}
+                </p>
               )}
             </div>
 
-            <Button type="submit" className="w-full cursor-pointer bg-primary text-primary-foreground rounded py-2 mt-2" disabled={loading}>
+            <Button
+              type="submit"
+              className="w-full cursor-pointer bg-primary text-primary-foreground rounded py-2 mt-2"
+              disabled={loading}
+            >
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {loading ? "Đang tạo tài khoản..." : "Đăng ký"}
             </Button>

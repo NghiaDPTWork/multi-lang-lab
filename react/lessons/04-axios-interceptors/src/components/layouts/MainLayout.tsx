@@ -51,8 +51,9 @@ export default function MainLayout() {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <Link to="/">
-                    <NavigationMenuLink
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to="/"
                       className={cn(
                         navigationMenuTriggerStyle(),
                         "cursor-pointer text-muted-foreground transition-all hover:text-foreground",
@@ -61,13 +62,14 @@ export default function MainLayout() {
                       )}
                     >
                       Home
-                    </NavigationMenuLink>
-                  </Link>
+                    </Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
                 {token && (
                   <NavigationMenuItem>
-                    <Link to="/profile">
-                      <NavigationMenuLink
+                    <NavigationMenuLink asChild>
+                      <Link
+                        to="/profile"
                         className={cn(
                           navigationMenuTriggerStyle(),
                           "cursor-pointer text-muted-foreground transition-all hover:text-foreground",
@@ -76,8 +78,8 @@ export default function MainLayout() {
                         )}
                       >
                         Profile
-                      </NavigationMenuLink>
-                    </Link>
+                      </Link>
+                    </NavigationMenuLink>
                   </NavigationMenuItem>
                 )}
               </NavigationMenuList>

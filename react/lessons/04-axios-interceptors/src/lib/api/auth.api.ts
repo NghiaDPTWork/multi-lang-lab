@@ -28,13 +28,43 @@ const authApi = {
     // => FE sẽ nhận được lỗi 401, và có thể hiển thị thông báo lỗi phù hợp cho người dùng
     const { data } = await apiClient.post("/auth/login", credentials);
 
+    console.log("Raw response from API", data);
     // Giả sử BE trả về: {message, result: { access_token, refres_token }}
     // FE chỉ cần accessToken và refreshToken nên sẽ chuẩn hóa data về cho FE dễ xử lý
     // Lúc này FE sẽ chỉ cần { accessToken, refreshToken } mà không cần quan tâm đến message hay các trường khác
     return {
-      accessToken: data.result.access_token,
-      refreshToken: data.result.refresh_token,
+      // Khúc này phải là data.data
+      // Vì axios trả về response có cấu trúc (NestJS)
+      /*
+      {
+        status: 200,
+        statusText: "OK",
+        headers: { ... },
+        config: { ... },
+        request: { ... },
+        // Đây là nơi chứa cục JSON thực sự mà Backend trả về
+        data: { 
+          message: "Success",
+          // Cục JSON thực sự mà BE trả về nằm trong trường data của response
+          data: { 
+              accessToken: "...",
+              refreshToken: "..."
+          }
+        }
+      }
+      */
+      accessToken: data.data.accessToken,
+      refreshToken: data.data.refreshToken,
     };
+  },
+
+  // Đăng ký
+  async register(credentials: {
+    fullname: string;
+    email: string;
+    password: string;
+  }): Promise<void> {
+    await apiClient.post("/auth/register", credentials);
   },
 };
 

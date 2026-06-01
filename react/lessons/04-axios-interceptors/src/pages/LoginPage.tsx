@@ -24,35 +24,29 @@ export default function LoginPage() {
 
   const from = location.state?.from?.pathname || "/";
   const setToken = useAuthStore((state) => state.setTokens);
+  console.log(setToken);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    try {
-      if (email && password) {
-        const { accessToken, refreshToken } = await authApi.login({
-          email,
-          password,
-        });
-        setToken(accessToken, refreshToken);
-        toast.success("Đăng nhập thành công!", {
-          description: "Chào mừng bạn quay lại.",
-        });
-        navigate(from, { replace: true });
-      } else {
-        toast.error("Đăng nhập thất bại", {
-          description: "Vui lòng điền đầy đủ thông tin.",
-        });
-      }
-    } catch (error: any) {
-      toast.error("Đăng nhập thất bại", {
-        description:
-          error.response?.data?.message ||
-          "Email hoặc mật khẩu không chính xác.",
+    if (email && password) {
+      const { accessToken, refreshToken } = await authApi.login({
+        email,
+        password,
       });
-    } finally {
-      setLoading(false);
+
+      console.log();
+      setToken(accessToken, refreshToken);
+      toast.success("Đăng nhập thành công!", {
+        description: "Chào mừng bạn quay lại.",
+      });
+      navigate(from, { replace: true });
+    } else {
+      toast.error("Đăng nhập thất bại", {
+        description: "Vui lòng điền đầy đủ thông tin.",
+      });
     }
+    setLoading(false);
   };
 
   return (
