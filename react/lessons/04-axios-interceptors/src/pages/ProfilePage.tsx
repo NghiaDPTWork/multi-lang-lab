@@ -15,7 +15,8 @@ export default function ProfilePage() {
   const [error, setError] = useState<string | any>(null);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users/8")
+    const apiUrl = import.meta.env.VITE_API_URL || "https://jsonplaceholder.typicode.com";
+    fetch(`${apiUrl}/users/8`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Lỗi khi tải dữ liệu");
