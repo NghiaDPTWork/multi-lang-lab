@@ -1,0 +1,133 @@
+import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
+import { useAuthStore } from "../../stores/auth.store";
+import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
+
+export default function MainLayout() {
+  const token = useAuthStore((state) => state.accessToken);
+  const clearTokens = useAuthStore((state) => state.clearTokens);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleLogout = () => {
+    clearTokens();
+    toast.success("Đăng xuất thành công!", {
+      description: "Hẹn gặp lại bạn.",
+    });
+    navigate("/login");
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
+      <header className="border-b bg-card sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto flex h-16 items-center justify-between px-4">
+          <Link
+            to="/"
+            className="text-xl font-bold tracking-tight text-foreground hover:text-primary transition-colors"
+          >
+            ShopApp
+          </Link>
+
+          <div className="flex items-center gap-4">
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <Link to="/">
+                    <NavigationMenuLink
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "cursor-pointer text-muted-foreground transition-all hover:text-foreground",
+                        location.pathname === "/" &&
+                          "bg-muted text-primary font-semibold rounded"
+                      )}
+                    >
+                      Home
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+                {token && (
+                  <NavigationMenuItem>
+                    <Link to="/profile">
+                      <NavigationMenuLink
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          "cursor-pointer text-muted-foreground transition-all hover:text-foreground",
+                          location.pathname === "/profile" &&
+                            "bg-muted text-primary font-semibold rounded"
+                        )}
+                      >
+                        Profile
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                )}
+              </NavigationMenuList>
+            </NavigationMenu>
+
+            {token ? (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="ghost" size="sm" className="text-destructive hover:bg-destructive/10 hover:text-destructive cursor-pointer">
+                    Logout
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="bg-card border shadow-lg max-w-sm rounded-lg p-6">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="text-lg font-bold text-foreground">
+                      Bạn muốn đăng xuất?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription className="text-sm text-muted-foreground mt-1">
+                      Phiên đăng nhập sẽ kết thúc và bạn cần đăng nhập lại để truy cập hồ sơ.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter className="mt-4 gap-2 flex justify-end">
+                    <AlertDialogCancel className="border border-input bg-transparent text-foreground hover:bg-muted cursor-pointer rounded px-3 py-1 text-sm">
+                      Hủy
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleLogout}
+                      className="bg-destructive text-white hover:bg-destructive/90 cursor-pointer rounded px-3 py-1 text-sm font-semibold border-none"
+                    >
+                      Đăng xuất
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            ) : (
+              <Button variant="ghost" size="sm" asChild className="cursor-pointer">
+                <Link to="/login">Login</Link>
+              </Button>
+            )}
+          </div>
+        </div>
+      </header>
+
+      <main className="flex-1 max-w-4xl mx-auto w-full p-6">
+        <Outlet />
+      </main>
+
+      <footer className="border-t bg-muted/40 py-6 text-center text-xs text-muted-foreground">
+        <p>© 2026 ShopApp - Minimal Learning Lab</p>
+      </footer>
+    </div>
+  );
+}
