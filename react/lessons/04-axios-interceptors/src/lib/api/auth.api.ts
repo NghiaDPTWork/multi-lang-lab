@@ -13,6 +13,13 @@ const authApi = {
     email: string;
     password: string;
   }): Promise<AuthTokens> {
+    // Nếu gặp 404
+    // Thì API endpoint có thể đã bị thay đổi,
+    // Hoặc Base-URL không đúng, hoặc server đang gặp sự cố
+    // => FE sẽ nhận được lỗi 404, và có thể hiển thị thông báo lỗi phù hợp cho người dùng
+    // Nếu gặp lỗi CORS
+    // Thì có thể do BE chưa cấu hình CORS đúng port hoặc domain của FE
+    // => FE sẽ nhận được lỗi CORS
     const { data } = await apiClient.post("/auth/login", credentials);
 
     // Giả sử BE trả về: {message, result: { access_token, refres_token }}
