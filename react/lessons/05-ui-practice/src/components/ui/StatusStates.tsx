@@ -1,11 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, AlertCircle, Inbox } from "lucide-react";
-
+// src/components/ui/StatusStates.tsx
 export const LoadingState = () => (
   <div className="flex flex-col items-center justify-center p-20 gap-4">
-    <Loader2 className="w-10 h-10 animate-spin text-primary" />
-    <p className="text-muted-foreground animate-pulse text-sm font-medium">Đang tải dữ liệu...</p>
+    <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+    <p className="text-gray-500 animate-pulse">Đang tải dữ liệu...</p>
   </div>
 );
 
@@ -14,25 +11,13 @@ export const ErrorState = ({
 }: {
   message?: string;
 }) => (
-  <Card className="border-destructive/30 bg-destructive/5 text-center max-w-md mx-auto shadow-sm">
-    <CardContent className="flex flex-col items-center justify-center p-8 gap-4">
-      <div className="p-3 rounded-full bg-destructive/10">
-        <AlertCircle className="w-6 h-6 text-destructive" />
-      </div>
-      <div className="space-y-1.5">
-        <p className="font-semibold text-destructive text-lg">Đã xảy ra lỗi!</p>
-        <p className="text-sm text-muted-foreground">{message}</p>
-      </div>
-      <Button
-        variant="destructive"
-        size="sm"
-        onClick={() => window.location.reload()}
-        className="mt-2 cursor-pointer"
-      >
-        Thử lại
-      </Button>
-    </CardContent>
-  </Card>
+  <div className="p-10 border border-red-200 bg-red-50 text-red-600 rounded-lg text-center">
+    <p className="font-bold">Oops!</p>
+    <p>{message}</p>
+    <button className="mt-4 underline" onClick={() => window.location.reload()}>
+      Thử lại
+    </button>
+  </div>
 );
 
 export const EmptyState = ({
@@ -40,12 +25,7 @@ export const EmptyState = ({
 }: {
   message?: string;
 }) => (
-  <Card className="border-dashed text-center max-w-md mx-auto shadow-none">
-    <CardContent className="flex flex-col items-center justify-center p-8 gap-4">
-      <div className="p-3 rounded-full bg-muted/60">
-        <Inbox className="w-6 h-6 text-muted-foreground" />
-      </div>
-      <p className="text-sm text-muted-foreground font-medium">{message}</p>
-    </CardContent>
-  </Card>
+  <div className="p-10 border border-gray-200 bg-gray-50 text-gray-500 rounded-lg text-center animate-pulse">
+    <p>{message}</p>
+  </div>
 );

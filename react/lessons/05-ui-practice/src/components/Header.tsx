@@ -1,6 +1,5 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../stores/auth.store";
-import { Button, buttonVariants } from "@/components/ui/button";
 
 export default function Header() {
   const isAuthed = useAuthStore((state) => !!state.accessToken);
@@ -13,19 +12,18 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60 px-4 py-3">
+    <header className="bg-blue-600 text-white p-4 sticky top-0 z-50">
       <nav className="max-w-4xl mx-auto flex justify-between items-center">
-        <Link to="/" className="text-xl font-bold tracking-tight hover:opacity-90 transition-opacity">
+        <Link to="/" className="text-xl font-bold">
           ShopApp
         </Link>
-        <div className="flex items-center gap-2">
+        <div className="flex gap-4">
           <NavLink
             to="/"
             className={({ isActive }) =>
-              buttonVariants({
-                variant: isActive ? "secondary" : "ghost",
-                size: "sm",
-              })
+              isActive
+                ? "text-yellow-300 font-bold underline"
+                : "hover:text-blue-200"
             }
           >
             Home
@@ -35,10 +33,9 @@ export default function Header() {
             <NavLink
               to="/login"
               className={({ isActive }) =>
-                buttonVariants({
-                  variant: isActive ? "secondary" : "ghost",
-                  size: "sm",
-                })
+                isActive
+                  ? "text-yellow-300 font-bold underline"
+                  : "hover:text-blue-200"
               }
             >
               Login
@@ -48,23 +45,20 @@ export default function Header() {
               <NavLink
                 to="/profile"
                 className={({ isActive }) =>
-                  buttonVariants({
-                    variant: isActive ? "secondary" : "ghost",
-                    size: "sm",
-                  })
+                  isActive
+                    ? "text-yellow-300 font-bold underline"
+                    : "hover:text-blue-200"
                 }
               >
                 Profile
               </NavLink>
 
-              <Button
-                variant="ghost"
-                size="sm"
+              <button
                 onClick={handleLogout}
-                className="text-destructive hover:bg-destructive/10 hover:text-destructive cursor-pointer"
+                className="hover:text-blue-200 cursor-pointer"
               >
                 Logout
-              </Button>
+              </button>
             </>
           )}
         </div>

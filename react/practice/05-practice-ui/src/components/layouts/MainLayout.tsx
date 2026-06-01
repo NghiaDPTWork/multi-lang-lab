@@ -63,19 +63,21 @@ export default function MainLayout() {
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <Link to="/profile">
-                    <NavigationMenuLink
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        location.pathname === "/profile" &&
-                          "bg-primary/10 text-primary font-medium"
-                      )}
-                    >
-                      Profile
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
+                {token && (
+                  <NavigationMenuItem>
+                    <Link to="/profile">
+                      <NavigationMenuLink
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          location.pathname === "/profile" &&
+                            "bg-primary/10 text-primary font-medium"
+                        )}
+                      >
+                        Profile
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                )}
               </NavigationMenuList>
             </NavigationMenu>
 

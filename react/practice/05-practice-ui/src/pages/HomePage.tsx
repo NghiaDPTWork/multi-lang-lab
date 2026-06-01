@@ -1,9 +1,23 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Sparkles, ShoppingBag, ArrowRight, ShieldCheck, Zap } from "lucide-react";
+import {
+  Sparkles,
+  ShoppingBag,
+  ArrowRight,
+  ShieldCheck,
+  Zap,
+} from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "@/stores/auth.store";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function HomePage() {
+  const token = useAuthStore((state) => state.accessToken);
+
   return (
     <div className="space-y-12 py-8">
       <div className="text-center space-y-6 max-w-2xl mx-auto py-12">
@@ -15,18 +29,30 @@ export default function HomePage() {
           Welcome to ShopApp
         </h1>
         <p className="text-muted-foreground text-base sm:text-lg leading-relaxed max-w-md mx-auto">
-          Trải nghiệm mua sắm thông minh, an toàn và cực kỳ nhanh chóng. Tối ưu hóa cho tất cả các thiết bị.
+          Trải nghiệm mua sắm thông minh, an toàn và cực kỳ nhanh chóng. Tối ưu
+          hóa cho tất cả các thiết bị.
         </p>
         <div className="flex justify-center gap-4 pt-4">
-          <Button size="lg" className="gap-2 cursor-pointer shadow-md shadow-primary/20">
+          <Button
+            size="lg"
+            className="gap-2 cursor-pointer shadow-md shadow-primary/20"
+          >
             Explore Products
             <ArrowRight className="w-4 h-4" />
           </Button>
-          <Link to="/login">
-            <Button size="lg" variant="outline" className="cursor-pointer">
-              Get Started
-            </Button>
-          </Link>
+          {token ? (
+            <Link to="/profile">
+              <Button size="lg" variant="outline" className="cursor-pointer">
+                Go to Profile
+              </Button>
+            </Link>
+          ) : (
+            <Link to="/login">
+              <Button size="lg" variant="outline" className="cursor-pointer">
+                Get Started
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
 
@@ -36,9 +62,12 @@ export default function HomePage() {
             <div className="p-3 rounded-lg bg-primary/10 text-primary w-fit group-hover:bg-primary/20 transition-colors">
               <ShoppingBag className="w-6 h-6" />
             </div>
-            <CardTitle className="pt-4 text-lg font-bold">Mua Sắm Đa Dạng</CardTitle>
+            <CardTitle className="pt-4 text-lg font-bold">
+              Mua Sắm Đa Dạng
+            </CardTitle>
             <CardDescription className="text-sm">
-              Hàng ngàn sản phẩm chất lượng cao từ các nhà cung cấp uy tín hàng đầu.
+              Hàng ngàn sản phẩm chất lượng cao từ các nhà cung cấp uy tín hàng
+              đầu.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -48,9 +77,12 @@ export default function HomePage() {
             <div className="p-3 rounded-lg bg-primary/10 text-primary w-fit group-hover:bg-primary/20 transition-colors">
               <ShieldCheck className="w-6 h-6" />
             </div>
-            <CardTitle className="pt-4 text-lg font-bold">Thanh Toán An Toàn</CardTitle>
+            <CardTitle className="pt-4 text-lg font-bold">
+              Thanh Toán An Toàn
+            </CardTitle>
             <CardDescription className="text-sm">
-              Bảo mật tuyệt đối thông tin thanh toán của bạn với các tiêu chuẩn quốc tế.
+              Bảo mật tuyệt đối thông tin thanh toán của bạn với các tiêu chuẩn
+              quốc tế.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -60,9 +92,12 @@ export default function HomePage() {
             <div className="p-3 rounded-lg bg-primary/10 text-primary w-fit group-hover:bg-primary/20 transition-colors">
               <Zap className="w-6 h-6" />
             </div>
-            <CardTitle className="pt-4 text-lg font-bold">Giao Hàng Siêu Tốc</CardTitle>
+            <CardTitle className="pt-4 text-lg font-bold">
+              Giao Hàng Siêu Tốc
+            </CardTitle>
             <CardDescription className="text-sm">
-              Nhận hàng trong vòng 2 giờ tại các khu vực nội thành thành phố lớn.
+              Nhận hàng trong vòng 2 giờ tại các khu vực nội thành thành phố
+              lớn.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -70,4 +105,3 @@ export default function HomePage() {
     </div>
   );
 }
-
