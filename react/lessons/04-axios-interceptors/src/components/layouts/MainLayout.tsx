@@ -108,7 +108,7 @@ export default function MainLayout() {
                     <AlertDialogAction
                       onClick={handleLogout}
                       variant="destructive"
-                      className="cursor-pointer"
+                      className="bg-destructive! text-white! hover:bg-destructive/90! cursor-pointer font-medium rounded-md px-4 py-2 text-sm"
                     >
                       Đăng xuất
                     </AlertDialogAction>

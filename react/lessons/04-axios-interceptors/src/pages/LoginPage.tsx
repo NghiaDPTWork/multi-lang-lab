@@ -18,8 +18,8 @@ import authApi from "@/lib/api/auth.api";
 export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("t.nghia2112279@gmail.com");
+  const [password, setPassword] = useState("1234567");
   const [loading, setLoading] = useState(false);
 
   const from = location.state?.from?.pathname || "/";
@@ -73,7 +73,7 @@ export default function LoginPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="t.nghia2112@example.com"
+                placeholder="t.nghia2112279@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
