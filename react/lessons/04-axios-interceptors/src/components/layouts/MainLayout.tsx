@@ -58,7 +58,7 @@ export default function MainLayout() {
                         navigationMenuTriggerStyle(),
                         "cursor-pointer text-muted-foreground transition-all hover:text-foreground",
                         location.pathname === "/" &&
-                          "bg-muted text-primary font-semibold rounded"
+                          "bg-muted text-primary font-semibold rounded",
                       )}
                     >
                       Home
@@ -74,7 +74,7 @@ export default function MainLayout() {
                           navigationMenuTriggerStyle(),
                           "cursor-pointer text-muted-foreground transition-all hover:text-foreground",
                           location.pathname === "/profile" &&
-                            "bg-muted text-primary font-semibold rounded"
+                            "bg-muted text-primary font-semibold rounded",
                         )}
                       >
                         Profile
@@ -88,7 +88,11 @@ export default function MainLayout() {
             {token ? (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="ghost" size="sm" className="text-destructive hover:bg-destructive/10 hover:text-destructive cursor-pointer">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-destructive hover:bg-destructive/10 hover:text-destructive cursor-pointer"
+                  >
                     Logout
                   </Button>
                 </AlertDialogTrigger>
@@ -98,7 +102,8 @@ export default function MainLayout() {
                       Bạn muốn đăng xuất?
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-sm text-muted-foreground mt-1">
-                      Phiên đăng nhập sẽ kết thúc và bạn cần đăng nhập lại để truy cập hồ sơ.
+                      Phiên đăng nhập sẽ kết thúc và bạn cần đăng nhập lại để
+                      truy cập hồ sơ.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter className="mt-4 gap-2 flex justify-end">
@@ -116,7 +121,12 @@ export default function MainLayout() {
                 </AlertDialogContent>
               </AlertDialog>
             ) : (
-              <Button variant="ghost" size="sm" asChild className="cursor-pointer">
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
+                className="cursor-pointer"
+              >
                 <Link to="/login">Login</Link>
               </Button>
             )}
@@ -129,7 +139,7 @@ export default function MainLayout() {
       </main>
 
       <footer className="border-t bg-muted/40 py-6 text-center text-xs text-muted-foreground">
-        <p>© 2026 ShopApp - Minimal Learning Lab</p>
+        <p>© 2026 ShopApp - React Learning Lab</p>
       </footer>
     </div>
   );
