@@ -6,6 +6,11 @@ interface AuthTokens {
   refreshToken: string;
 }
 
+interface User {
+  id: number;
+  fullname: string;
+  email: string;
+}
 // Định nghĩa API
 const authApi = {
   // Đăng nhập
@@ -65,6 +70,12 @@ const authApi = {
     password: string;
   }): Promise<void> {
     await apiClient.post("/auth/register", credentials);
+  },
+
+  // Get profile (ví dụ để test interceptor)
+  async getProfile(): Promise<User> {
+    const { data } = await apiClient.get("/user/me");
+    return data.data;
   },
 };
 

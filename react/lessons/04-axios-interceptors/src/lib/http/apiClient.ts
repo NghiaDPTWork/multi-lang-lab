@@ -1,3 +1,4 @@
+import { useAuthStore } from "@/stores/auth.store";
 import axios from "axios";
 
 // Create instance
@@ -19,5 +20,17 @@ const apiClient = axios.create({
   // => Phải chuẩn hóa data về cho fe dễ xử lý
   timeout: 10000,
 });
+
+// Sau khi tạo instance, có thể config thêm các interceptor ở đây
+apiClient.interceptors.request.use(
+  (config) => {
+    const accessToken = useAuthStore.getState().accessToken;
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 
 export default apiClient;

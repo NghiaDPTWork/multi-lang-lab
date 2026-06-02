@@ -35,7 +35,7 @@ export default function LoginPage() {
         password,
       });
 
-      console.log();
+      console.log("Access Token:", accessToken);
       setToken(accessToken, refreshToken);
       toast.success("Đăng nhập thành công!", {
         description: "Chào mừng bạn quay lại.",
