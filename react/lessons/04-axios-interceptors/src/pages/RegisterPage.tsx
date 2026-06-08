@@ -51,7 +51,8 @@ export default function RegisterPage() {
     },
   });
 
-  const handleRegister = handleSubmit(async (data) => {
+  // Mình sẽ
+  const handleRegister = async (data: RegisterSchemaType) => {
     try {
       await authApi.register({
         fullname: data.fullname,
@@ -67,7 +68,7 @@ export default function RegisterPage() {
         description: error.response?.data?.message || "Có lỗi xảy ra.",
       });
     }
-  });
+  };
 
   return (
     <div className="flex items-center justify-center min-h-[80vh] p-4">
@@ -81,7 +82,11 @@ export default function RegisterPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleRegister} className="space-y-4">
+          {/* 
+            handleSubmit: là mình nhận vào
+
+           */}
+          <form onSubmit={handleSubmit(handleRegister)} className="space-y-4">
             <div className="space-y-2">
               <Label
                 htmlFor="fullname"
