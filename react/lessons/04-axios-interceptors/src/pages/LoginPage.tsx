@@ -26,7 +26,7 @@ export default function LoginPage() {
   console.log("LoginPage render");
 
   const {
-    register,
+    register: login,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginSchemaType>({
@@ -45,7 +45,6 @@ export default function LoginPage() {
         password: data.password,
       });
 
-      console.log("Access Token:", accessToken);
       setToken(accessToken, refreshToken);
       toast.success("Đăng nhập thành công!", {
         description: "Chào mừng bạn quay lại.",
@@ -83,7 +82,7 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 placeholder="t.nghia2112279@gmail.com"
-                {...register("email")}
+                {...login("email")}
                 className={
                   errors.email
                     ? "border-destructive focus-visible:ring-destructive rounded bg-transparent"
@@ -109,7 +108,7 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 placeholder="••••••••"
-                {...register("password")}
+                {...login("password")}
                 className={
                   errors.password
                     ? "border-destructive focus-visible:ring-destructive rounded bg-transparent"
@@ -128,7 +127,9 @@ export default function LoginPage() {
               className="w-full cursor-pointer bg-primary text-primary-foreground rounded py-2 mt-2"
               disabled={isSubmitting}
             >
-              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {isSubmitting && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
               {isSubmitting ? "Đang đăng nhập..." : "Login"}
             </Button>
           </form>

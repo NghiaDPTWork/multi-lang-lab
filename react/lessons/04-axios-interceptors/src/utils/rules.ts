@@ -53,8 +53,7 @@ export const loginSchema = z.object({
     .min(1, { message: "Email không được để trống" })
     .email({ message: "Email không đúng định dạng" }),
 
-  // Validation cho email
-
+  // Validation cho password
   password: z
     .string()
     .min(1, { message: "Password là bắt buộc" })
