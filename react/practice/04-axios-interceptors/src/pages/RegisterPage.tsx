@@ -16,17 +16,38 @@ import authApi from "@/lib/api/auth.api";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  const [fullname, setFullname] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
+  const getPasswordStrength = (pass: string) => {
+    if (!pass) return "";
+    if (pass.length < 6) return "Yếu";
+    const hasLetters = /[a-zA-Z]/.test(pass);
+    const hasNumbers = /[0-9]/.test(pass);
+    const hasSpecial = /[^a-zA-Z0-9]/.test(pass);
+    if (hasLetters && hasNumbers && hasSpecial && pass.length >= 8) {
+      return "Mạnh";
+    }
+    if (hasLetters && hasNumbers) {
+      return "Trung bình";
+    }
+    return "Yếu";
+  };
+
+  const getStrengthColor = (strength: string) => {
+    if (strength === "Mạnh") return "text-green-500";
+    if (strength === "Trung bình") return "text-yellow-500";
+    return "text-destructive";
+  };
+
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
-    if (!fullname.trim()) {
-      newErrors.fullname = "Họ và tên không được để trống";
+    if (!username.trim()) {
+      newErrors.username = "Tên đăng nhập không được để trống";
     }
     if (!email.trim()) {
       newErrors.email = "Email không được để trống";
@@ -50,20 +71,19 @@ export default function RegisterPage() {
     if (!validate()) return;
     setLoading(true);
     try {
-      await authApi.register({ fullname, email, password });
+      await authApi.register({ username, email, password });
       toast.success("Đăng ký thành công!", {
         description: "Bạn có thể đăng nhập ngay bây giờ.",
       });
       navigate("/login");
     } catch (error: any) {
-      toast.error("Đăng ký thất bại", {
-        description:
-          error.response?.data?.message || "Có lỗi xảy ra. Vui lòng thử lại.",
-      });
+      toast.error("Đăng ký thất bại, vui lòng thử lại");
     } finally {
       setLoading(false);
     }
   };
+
+  const strength = getPasswordStrength(password);
 
   return (
     <div className="flex items-center justify-center min-h-[80vh] p-4">
@@ -80,26 +100,26 @@ export default function RegisterPage() {
           <form onSubmit={handleRegister} className="space-y-4">
             <div className="space-y-2">
               <Label
-                htmlFor="fullname"
+                htmlFor="username"
                 className="flex items-center gap-2 text-sm font-medium text-foreground"
               >
                 <User className="w-4 h-4 text-muted-foreground" />
-                Full Name
+                Username
               </Label>
               <Input
-                id="fullname"
+                id="username"
                 type="text"
-                placeholder="John Doe"
-                value={fullname}
-                onChange={(e) => setFullname(e.target.value)}
+                placeholder="johndoe"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className={
-                  errors.fullname
+                  errors.username
                     ? "border-destructive focus-visible:ring-destructive rounded"
                     : "bg-transparent border-input rounded"
                 }
               />
-              {errors.fullname && (
-                <p className="text-destructive text-xs">{errors.fullname}</p>
+              {errors.username && (
+                <p className="text-destructive text-xs">{errors.username}</p>
               )}
             </div>
 
@@ -148,6 +168,14 @@ export default function RegisterPage() {
                     : "bg-transparent border-input rounded"
                 }
               />
+              {password && (
+                <div className="text-xs">
+                  Mức độ bảo mật:{" "}
+                  <span className={`font-semibold ${getStrengthColor(strength)}`}>
+                    {strength}
+                  </span>
+                </div>
+              )}
               {errors.password && (
                 <p className="text-destructive text-xs">{errors.password}</p>
               )}
@@ -186,7 +214,7 @@ export default function RegisterPage() {
               disabled={loading}
             >
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {loading ? "Đang tạo tài khoản..." : "Đăng ký"}
+              {loading ? "Đang xử lý" : "Đăng ký"}
             </Button>
           </form>
           <div className="text-center mt-4">
