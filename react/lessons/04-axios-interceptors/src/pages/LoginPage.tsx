@@ -25,7 +25,7 @@ export default function LoginPage() {
   const from = location.state?.from?.pathname || "/";
   const setToken = useAuthStore((state) => state.setTokens);
 
-  console.log(console.log("LoginPage render"));
+  console.log("LoginPage render");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import authApi from "@/lib/api/auth.api";
 import { useForm } from "react-hook-form";
 import { registerSchema, type RegisterSchemaType } from "@/utils/rules";
-import { useState } from "react";
+
 import {
   Card,
   CardContent,
@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 export default function RegisterPage() {
   const navigate = useNavigate();
 
+  console.log("RegisterPage render");
   const {
     // Function để đăng ký input với RHF, sẽ trả về props cần thiết để kết nối input với RHF
     register,
@@ -94,6 +95,20 @@ export default function RegisterPage() {
                 type="text"
                 placeholder="Nghĩa Dương"
                 {...register("fullname")}
+                /*
+                  ... thì cái obj đc trả về là như này 
+                  {
+                  onChange: () => void,
+                  onBlur: () => void,
+                  name: "fullname",
+                  ref: () => void
+                  }
+                   Chúng ta sẽ gán các props này vào input để kết nối input với RHF
+                   onChange: Hàm để gọi khi input thay đổi, sẽ cập nhật giá trị và validate nếu cần
+                   onBlur: Hàm để gọi khi input bị blur, sẽ đánh dấu field là touched và validate nếu cần
+                   name: Tên của field, dùng để RHF quản lý state
+                   ref: Ref để gán cho input, giúp RHF theo dõi và quản lý input này
+                */
                 className={
                   errors.fullname
                     ? "border-destructive focus-visible:ring-destructive rounded"
