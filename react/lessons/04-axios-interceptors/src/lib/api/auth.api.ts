@@ -68,7 +68,7 @@ const authApi = {
 
   // Đăng ký
   async register(credentials: {
-    fullname: string;
+    fullName: string;
     email: string;
     password: string;
   }): Promise<void> {

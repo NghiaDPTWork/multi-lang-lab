@@ -44,3 +44,17 @@ export const registerSchema = z
 // Export type để dùng cho RHF(React Hook Form)
 // Dùng infer để tự động suy luận type từ schema, tránh phải duplicate type
 export type RegisterSchemaType = z.infer<typeof registerSchema>;
+
+// Login Schema
+export const loginSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Email không được để trống" })
+    .email({ message: "Email không đúng định dạng" }),
+  password: z
+    .string()
+    .min(1, { message: "Password là bắt buộc" })
+    .min(6, { message: "Password phải ít nhất 6 ký tự" }),
+});
+
+export type LoginSchemaType = z.infer<typeof loginSchema>;

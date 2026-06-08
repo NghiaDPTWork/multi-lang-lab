@@ -51,11 +51,11 @@ export default function RegisterPage() {
     },
   });
 
-  // Mình sẽ
+  // Mình sẽ tiến hành đăng ký dô
   const handleRegister = async (data: RegisterSchemaType) => {
     try {
       await authApi.register({
-        fullname: data.fullname,
+        fullName: data.fullname,
         email: data.email,
         password: data.password,
       });
@@ -138,7 +138,7 @@ export default function RegisterPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="m@example.com"
+                placeholder="nghiadpt@example.com"
                 {...register("email")}
                 className={
                   errors.email
@@ -209,7 +209,13 @@ export default function RegisterPage() {
               type="submit"
               className="w-full cursor-pointer bg-primary text-primary-foreground rounded py-2 mt-2"
               disabled={isSubmitting}
+              // Khúc này là isSubmitting chứ không phải loading
+              // Nếu loading thì mình tự quản lý á
             >
+              {/* 
+                Phần này thì mình sẽ tiên hành handle nút Submit 
+                bằng toán tử ba ngôi
+              */}
               {isSubmitting && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               )}

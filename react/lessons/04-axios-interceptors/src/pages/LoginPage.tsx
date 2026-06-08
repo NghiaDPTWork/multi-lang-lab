@@ -10,7 +10,9 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema, type LoginSchemaType } from "@/utils/rules";
 import { Loader2, Mail, Lock } from "lucide-react";
 import { toast } from "sonner";
 import authApi from "@/lib/api/auth.api";
@@ -18,22 +20,29 @@ import authApi from "@/lib/api/auth.api";
 export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [email, setEmail] = useState("t.nghia2112279@gmail.com");
-  const [password, setPassword] = useState("1234567");
-  const [loading, setLoading] = useState(false);
-
   const from = location.state?.from?.pathname || "/";
   const setToken = useAuthStore((state) => state.setTokens);
 
   console.log("LoginPage render");
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    if (email && password) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginSchemaType>({
+    mode: "onTouched",
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "t.nghia2112279@gmail.com",
+      password: "1234567",
+    },
+  });
+
+  const handleLogin = async (data: LoginSchemaType) => {
+    try {
       const { accessToken, refreshToken } = await authApi.login({
-        email,
-        password,
+        email: data.email,
+        password: data.password,
       });
 
       console.log("Access Token:", accessToken);
@@ -42,12 +51,11 @@ export default function LoginPage() {
         description: "Chào mừng bạn quay lại.",
       });
       navigate(from, { replace: true });
-    } else {
+    } catch (error: any) {
       toast.error("Đăng nhập thất bại", {
-        description: "Vui lòng điền đầy đủ thông tin.",
+        description: error.response?.data?.message || "Đã xảy ra lỗi.",
       });
     }
-    setLoading(false);
   };
 
   return (
@@ -62,7 +70,7 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleSubmit(handleLogin)} className="space-y-4">
             <div className="space-y-2">
               <Label
                 htmlFor="email"
@@ -75,11 +83,18 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 placeholder="t.nghia2112279@gmail.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="bg-transparent border-input rounded"
+                {...register("email")}
+                className={
+                  errors.email
+                    ? "border-destructive focus-visible:ring-destructive rounded bg-transparent"
+                    : "bg-transparent border-input rounded"
+                }
               />
+              {errors.email && (
+                <p className="text-destructive text-xs">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -94,20 +109,27 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="bg-transparent border-input rounded"
+                {...register("password")}
+                className={
+                  errors.password
+                    ? "border-destructive focus-visible:ring-destructive rounded bg-transparent"
+                    : "bg-transparent border-input rounded"
+                }
               />
+              {errors.password && (
+                <p className="text-destructive text-xs">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             <Button
               type="submit"
               className="w-full cursor-pointer bg-primary text-primary-foreground rounded py-2 mt-2"
-              disabled={loading}
+              disabled={isSubmitting}
             >
-              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {loading ? "Đang đăng nhập..." : "Login"}
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {isSubmitting ? "Đang đăng nhập..." : "Login"}
             </Button>
           </form>
           <div className="text-center mt-4">
