@@ -17,8 +17,16 @@ export const registerSchema = z
     // Validation cho password
     password: z
       .string()
-      .min(1, { message: "Password là bắt buộc" })
-      .min(6, { message: "Password phải ít nhất 6 ký tự" }),
+      .min(8, "Tối thiểu 8 ký tự")
+      .refine((val) => /[A-Z]/.test(val), {
+        message: "Phải có ít nhất 1 chữ hoa",
+      })
+      .refine((val) => /[0-9]/.test(val), {
+        message: "Phải có ít nhất 1 số",
+      })
+      .refine((val) => /[!@#$%^&*]/.test(val), {
+        message: "Phải có ít nhất 1 ký tự đặc biệt",
+      }),
 
     // Validation cho confirm_password
     confirmPassword: z.string(),
