@@ -21,15 +21,12 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { Sun, Moon, Monitor } from "lucide-react";
-import { useThemeStore } from "../../stores/theme.strore";
 
 export default function MainLayout() {
   const token = useAuthStore((state) => state.accessToken);
   const clearTokens = useAuthStore((state) => state.clearTokens);
   const navigate = useNavigate();
   const location = useLocation();
-  const { theme, setTheme } = useThemeStore();
 
   const handleLogout = () => {
     clearTokens();
@@ -87,22 +84,6 @@ export default function MainLayout() {
                 )}
               </NavigationMenuList>
             </NavigationMenu>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => {
-                if (theme === "light") setTheme("dark");
-                else if (theme === "dark") setTheme("system");
-                else setTheme("light");
-              }}
-              className="cursor-pointer rounded-full w-9 h-9 flex items-center justify-center border border-muted/50 hover:bg-muted text-foreground shrink-0"
-              title={`Theme: ${theme}`}
-            >
-              {theme === "light" && <Sun className="w-[18px] h-[18px] text-amber-500" />}
-              {theme === "dark" && <Moon className="w-[18px] h-[18px] text-sky-400" />}
-              {theme === "system" && <Monitor className="w-[18px] h-[18px] text-muted-foreground" />}
-            </Button>
 
             {token ? (
               <AlertDialog>
