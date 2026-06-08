@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import authApi from "@/lib/api/auth.api";
 import { useForm } from "react-hook-form";
+import type { RegisterSchemaType } from "@/utils/rules";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -24,13 +25,22 @@ export default function RegisterPage() {
   const {
     // Function để đăng ký input với RHF, sẽ trả về props cần thiết để kết nối input với RHF
     register,
-    handleSubmit, // Wrapper cho submit handler
+    handleSubmit, 
     formState: {
-      errors, // Object chứa validation errors
+      // Object chứa validation errors
+      errors, 
       isSubmitting, // Boolean - đang submit hay không
     },
   } = useForm<RegisterSchemaType>({
     // Sử dụng zodResolver để tích hợp zod schema với react-hook-form
+    // Mode: Khi nào validate
+    mode: "onTouched",
+    /*
+      - onChange: Validate ngay khi người dùng thay đổi input (mỗi lần gõ sẽ validate)
+      - onBlur: Validate khi người dùng rời khỏi input (chỉ validate khi blur)
+      - onSubmit: Validate khi submit form (mặc định)
+      - onTouched: Validate khi input bị touch (blur hoặc change đều được, nhưng chỉ validate lần đầu tiên sau khi touch)
+    */
     },
   });
 

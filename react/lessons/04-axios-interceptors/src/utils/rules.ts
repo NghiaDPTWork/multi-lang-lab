@@ -42,4 +42,5 @@ export const registerSchema = z
   });
 
 // Export type để dùng cho RHF(React Hook Form)
+// Dùng infer để tự động suy luận type từ schema, tránh phải duplicate type
 export type RegisterSchemaType = z.infer<typeof registerSchema>;
