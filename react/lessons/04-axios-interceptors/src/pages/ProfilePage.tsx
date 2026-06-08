@@ -31,6 +31,11 @@ export default function ProfilePage() {
   const [error, setError] = useState<string | any>(null);
   const accessToken = useAuthStore((state) => state.accessToken);
 
+  // Liên quan đến kiến thức về Event Loop trong JavaScript
+  // Khi gọi API, JavaScript sẽ gửi request đi và tiếp tục thực thi code phía dưới mà không chờ response trả về
+  // => FE vẫn có thể render UI, hiển thị loading state, hoặc thực hiện các tác vụ khác trong khi chờ API phản hồi
+  // Khi API trả về response, callback trong .then() hoặc phần code sau await sẽ được đưa vào hàng đợi (task queue)
+  // và sẽ được thực thi sau khi tất cả code đồng bộ hiện tại đã chạy xong
   const handleFetchProfile = async () => {
     setLoading(true);
     setError(null);

@@ -11,39 +11,28 @@ import {
 } from "@/components/ui/card";
 import { useState } from "react";
 import { Loader2, User, Mail, Lock } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import authApi from "@/lib/api/auth.api";
+import { useForm } from "react-hook-form";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  const [fullname, setFullname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const validate = () => {
-    const newErrors: { [key: string]: string } = {};
-    if (!fullname.trim()) {
-      newErrors.fullname = "Họ và tên không được để trống";
-    }
-    if (!email.trim()) {
-      newErrors.email = "Email không được để trống";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = "Email không hợp lệ";
-    }
-    if (!password) {
-      newErrors.password = "Mật khẩu không được để trống";
-    } else if (password.length < 6) {
-      newErrors.password = "Mật khẩu phải từ 6 ký tự";
-    }
-    if (password !== confirmPassword) {
-      newErrors.confirmPassword = "Mật khẩu xác nhận không khớp";
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  const {
+    // Function để đăng ký input với RHF, sẽ trả về props cần thiết để kết nối input với RHF
+    register,
+    handleSubmit, // Wrapper cho submit handler
+    formState: {
+      errors, // Object chứa validation errors
+      isSubmitting, // Boolean - đang submit hay không
+    },
+  } = useForm<RegisterSchemaType>({
+    // Sử dụng zodResolver để tích hợp zod schema với react-hook-form
+    },
+  });
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -18,18 +18,21 @@ const authApi = {
     email: string;
     password: string;
   }): Promise<AuthTokens> {
-    // Nếu gặp 404
+    // Nếu gặp 404 - Not Found
+    // Sai enddpoint
     // Thì API endpoint có thể đã bị thay đổi,
     // Hoặc Base-URL không đúng, hoặc server đang gặp sự cố
     // => FE sẽ nhận được lỗi 404, và có thể hiển thị thông báo lỗi phù hợp cho người dùng
     // Nếu gặp lỗi CORS
     // Thì có thể do BE chưa cấu hình CORS đúng port hoặc domain của FE
     // => FE sẽ nhận được lỗi CORS
-    // Nếu gặp lỗi 400
+    // Nếu gặp lỗi 400 - Bad Request
     // Thì có thể do dữ liệu gửi lên không hợp lệ (ví dụ thiếu trường email hoặc password)
     // => FE sẽ nhận được lỗi 400, và có thể hiển thị thông báo lỗi phù hợp cho người dùng
-    // Nếu gặp lỗi 401
+    // Nếu gặp lỗi 401 - Unauthorized
     // Thì có thể do email hoặc password không chính xác
+    // Hoặc do token đã hết hạn (nếu có sử dụng token)
+    // Có token nhưng chưa đính
     // => FE sẽ nhận được lỗi 401, và có thể hiển thị thông báo lỗi phù hợp cho người dùng
     const { data } = await apiClient.post("/auth/login", credentials);
 
@@ -58,8 +61,8 @@ const authApi = {
         }
       }
       */
-      accessToken: data.data.accessToken,
-      refreshToken: data.data.refreshToken,
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
     };
   },
 
@@ -75,7 +78,7 @@ const authApi = {
   // Get profile (ví dụ để test interceptor)
   async getProfile(): Promise<User> {
     const { data } = await apiClient.get("/user/me");
-    return data.data;
+    return data;
   },
 };
 
