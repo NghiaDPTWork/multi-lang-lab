@@ -27,11 +27,11 @@ export const registerSchema = z
   // (như confirmPassword phải khớp với password) => Nhiều field
   // Refine cho phép chúng ta thêm validation tùy chỉnh sau khi đã validate các field riêng lẻ
   // => 1 field
-  // ctx là util để chúng ta có thể thêm lỗi tùy chỉnh vào field nào đó nếu validation không
-  // thành công
   .superRefine(({ password, confirmPassword }, ctx) => {
     // Custom validation để kiểm tra confirmPassword có khớp với password hay không
     if (confirmPassword !== password) {
+      // ctx là context của validation,
+      // chúng ta có thể dùng nó để thêm lỗi tùy chỉnh vào field nào đó
       ctx.addIssue({
         code: "custom",
         message: "Nhập lại mật khẩu không khớp",
