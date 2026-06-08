@@ -22,6 +22,8 @@ import {
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
+import { ModeToggle } from "@/components/ui/mode-toggle";
+
 export default function MainLayout() {
   const token = useAuthStore((state) => state.accessToken);
   const clearTokens = useAuthStore((state) => state.clearTokens);
@@ -84,6 +86,8 @@ export default function MainLayout() {
                 )}
               </NavigationMenuList>
             </NavigationMenu>
+
+            <ModeToggle />
 
             {token ? (
               <AlertDialog>

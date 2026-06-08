@@ -14,8 +14,7 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
     const applyTheme = () => {
       root.classList.remove("light", "dark");
       if (theme === "system") {
-        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-          .matches
+        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
           ? "dark"
           : "light";
         root.classList.add(systemTheme);
@@ -29,7 +28,7 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
     if (theme === "system") {
       const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
       const listener = () => applyTheme();
-
+      
       mediaQuery.addEventListener("change", listener);
       return () => mediaQuery.removeEventListener("change", listener);
     }

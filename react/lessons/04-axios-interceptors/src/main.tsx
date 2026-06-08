@@ -3,7 +3,7 @@ import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router.tsx";
 import { Toaster } from "@/components/ui/sonner";
-import ThemeProvider from "@/lib/theme";
+import ThemeProvider from "@/components/ui/theme";
 
 createRoot(document.getElementById("root")!).render(
   // <StrictMode>
