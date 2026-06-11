@@ -10,6 +10,9 @@ interface User {
   id: number;
   fullname: string;
   email: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
 }
 // Định nghĩa API
 const authApi = {

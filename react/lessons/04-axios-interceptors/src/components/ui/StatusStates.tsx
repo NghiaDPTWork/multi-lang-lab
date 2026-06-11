@@ -5,14 +5,18 @@ import { Loader2, AlertCircle, Inbox } from "lucide-react";
 export const LoadingState = () => (
   <div className="flex flex-col items-center justify-center p-20 gap-4">
     <Loader2 className="w-10 h-10 animate-spin text-primary" />
-    <p className="text-muted-foreground animate-pulse text-sm font-medium">Đang tải dữ liệu...</p>
+    <p className="text-muted-foreground animate-pulse text-sm font-medium">
+      Đang tải dữ liệu...
+    </p>
   </div>
 );
 
 export const ErrorState = ({
   message = "Đã có lỗi xảy ra",
+  onRetry,
 }: {
   message?: string;
+  onRetry?: () => void;
 }) => (
   <Card className="border-destructive/30 bg-destructive/5 text-center max-w-md mx-auto shadow-sm">
     <CardContent className="flex flex-col items-center justify-center p-8 gap-4">
