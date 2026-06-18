@@ -14,15 +14,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginSchemaType } from "@/utils/rules";
 import { Loader2, Mail, Lock } from "lucide-react";
-import { toast } from "sonner";
-import authApi from "@/lib/api/auth.api";
+import { useLoginMutation } from "@/hooks/useLogin";
 
 export default function LoginPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
-  const setToken = useAuthStore((state) => state.setTokens);
-
+  const loginMutation = useLoginMutation();
   console.log("LoginPage render");
 
   const {
@@ -38,23 +33,9 @@ export default function LoginPage() {
     },
   });
 
-  const handleLogin = async (data: LoginSchemaType) => {
-    try {
-      const { accessToken, refreshToken } = await authApi.login({
-        email: data.email,
-        password: data.password,
-      });
-
-      setToken(accessToken, refreshToken);
-      toast.success("Đăng nhập thành công!", {
-        description: "Chào mừng bạn quay lại.",
-      });
-      navigate(from, { replace: true });
-    } catch (error: any) {
-      toast.error("Đăng nhập thất bại", {
-        description: error.response?.data?.message || "Đã xảy ra lỗi.",
-      });
-    }
+  const handleLogin = async (user: LoginSchemaType) => {
+    loginMutation.mutate(user);
+    //
   };
 
   return (
@@ -125,12 +106,12 @@ export default function LoginPage() {
             <Button
               type="submit"
               className="w-full cursor-pointer bg-primary text-primary-foreground rounded py-2 mt-2"
-              disabled={isSubmitting}
+              disabled={loginMutation.isPending}
             >
-              {isSubmitting && (
+              {loginMutation.isPending && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               )}
-              {isSubmitting ? "Đang đăng nhập..." : "Login"}
+              {loginMutation.isPending ? "Đang đăng nhập..." : "Login"}
             </Button>
           </form>
           <div className="text-center mt-4">

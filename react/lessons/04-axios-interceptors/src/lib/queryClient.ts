@@ -8,7 +8,7 @@ export const queryClient = new QueryClient({
       // 🎛️ Config mặc định cho TẤT CẢ queries
 
       // 1. Refetch on Window Focus
-      refetchOnWindowFocus: true,
+      refetchOnWindowFocus: "always",
       // ⚠️ Mặc định: true (tự fetch lại khi user quay lại tab)
       // 💡 Học: Tắt để dễ debug (log đỡ nhảy loạn)
       // 💡 Production: Bật lại để data luôn tươi

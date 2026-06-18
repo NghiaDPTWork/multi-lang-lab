@@ -14,13 +14,22 @@ interface User {
   createdAt: string;
   updatedAt: string;
 }
+
+interface userRegister {
+  fullname: string;
+  email: string;
+  password: string;
+}
+
+interface userLogin {
+  email: string;
+  password: string;
+}
+
 // Định nghĩa API
 const authApi = {
   // Đăng nhập
-  async login(credentials: {
-    email: string;
-    password: string;
-  }): Promise<AuthTokens> {
+  async login(credentials: userLogin): Promise<AuthTokens> {
     // Nếu gặp 404 - Not Found
     // Sai enddpoint
     // Thì API endpoint có thể đã bị thay đổi,
@@ -70,11 +79,7 @@ const authApi = {
   },
 
   // Đăng ký
-  async register(credentials: {
-    fullName: string;
-    email: string;
-    password: string;
-  }): Promise<void> {
+  async register(credentials: userRegister): Promise<void> {
     await apiClient.post("/auth/register", credentials);
   },
 

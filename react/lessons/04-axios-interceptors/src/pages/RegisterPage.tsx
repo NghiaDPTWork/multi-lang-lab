@@ -1,7 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
-import authApi from "@/lib/api/auth.api";
 import { useForm } from "react-hook-form";
 import { registerSchema, type RegisterSchemaType } from "@/utils/rules";
 
@@ -16,13 +14,14 @@ import { Label } from "@/components/ui/label";
 import { Loader2, Lock, Mail, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRegisterMutation } from "@/hooks/useRegister";
 
 export default function RegisterPage() {
-  const navigate = useNavigate();
+  const registerMutation = useRegisterMutation();
 
-  console.log("RegisterPage render");
   const {
-    // Function để đăng ký input với RHF, sẽ trả về props cần thiết để kết nối input với RHF
+    // Function để đăng ký input với RHF,
+    // sẽ trả về props cần thiết để kết nối input với RHF
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -52,22 +51,8 @@ export default function RegisterPage() {
   });
 
   // Mình sẽ tiến hành đăng ký dô
-  const handleRegister = async (data: RegisterSchemaType) => {
-    try {
-      await authApi.register({
-        fullName: data.fullname,
-        email: data.email,
-        password: data.password,
-      });
-      toast.success("Đăng ký thành công!", {
-        description: "Bạn có thể đăng nhập ngay bây giờ.",
-      });
-      navigate("/login");
-    } catch (error: any) {
-      toast.error("Đăng ký thất bại", {
-        description: error.response?.data?.message || "Có lỗi xảy ra.",
-      });
-    }
+  const handleRegister = async (user: RegisterSchemaType) => {
+    registerMutation.mutate(user);
   };
 
   return (
@@ -208,7 +193,7 @@ export default function RegisterPage() {
             <Button
               type="submit"
               className="w-full cursor-pointer bg-primary text-primary-foreground rounded py-2 mt-2"
-              disabled={isSubmitting}
+              disabled={registerMutation.isPending}
               // Khúc này là isSubmitting chứ không phải loading
               // Nếu loading thì mình tự quản lý á
             >
@@ -216,10 +201,10 @@ export default function RegisterPage() {
                 Phần này thì mình sẽ tiên hành handle nút Submit 
                 bằng toán tử ba ngôi
               */}
-              {isSubmitting && (
+              {registerMutation.isPending && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               )}
-              {isSubmitting ? "Đang tạo tài khoản..." : "Đăng ký"}
+              {registerMutation.isPending ? "Đang tạo tài khoản..." : "Đăng ký"}
             </Button>
           </form>
           <div className="text-center mt-4">

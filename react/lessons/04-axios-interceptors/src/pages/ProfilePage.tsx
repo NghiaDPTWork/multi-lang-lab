@@ -12,19 +12,10 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  Mail,
-  ShieldCheck,
-  Hash,
-  Shield,
-  CreditCard,
-  Key,
-  Calendar,
-} from "lucide-react";
+import { Mail, ShieldCheck, Hash, Shield, Calendar } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useUser } from "@/hooks/useUser";
 import { Button } from "@/components/ui/button";
-import { is } from "zod/v4/locales";
 
 //
 export default function ProfilePage() {
