@@ -1,27 +1,29 @@
-import { useAuthStore } from "../../stores/auth.store";
-import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/features/auth";
+import { useLogoutMutation } from "@/features/auth/hooks";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+} from "@radix-ui/react-navigation-menu";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import { navigationMenuTriggerStyle } from "../components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
+import { ModeToggle } from "../components/ui/mode-toggle";
 import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { cn } from "@/lib/utils";
-import { ModeToggle } from "@/components/ui/mode-toggle";
-import { Link, Outlet, useLocation } from "react-router-dom";
-import { useLogoutMutation } from "@/hooks/useLogout";
+} from "@radix-ui/react-alert-dialog";
+import { Button } from "../components/ui/button";
+import {
+  AlertDialogFooter,
+  AlertDialogHeader,
+} from "../components/ui/alert-dialog";
 
 export default function MainLayout() {
   const token = useAuthStore((state) => state.accessToken);

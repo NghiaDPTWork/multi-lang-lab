@@ -1,5 +1,5 @@
-import authApi from "@/lib/api/auth.api";
 import { useQuery } from "@tanstack/react-query";
+import { authApi } from "../service";
 
 export const useUser = () => {
   //useQuery

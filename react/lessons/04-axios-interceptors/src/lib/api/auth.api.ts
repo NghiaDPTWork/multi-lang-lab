@@ -88,6 +88,11 @@ const authApi = {
     const { data } = await apiClient.get("/user/me");
     return data;
   },
+
+  // Đăng xuất
+  async logout(): Promise<void> {
+    await apiClient.post("/auth/logout");
+  },
 };
 
 export default authApi;

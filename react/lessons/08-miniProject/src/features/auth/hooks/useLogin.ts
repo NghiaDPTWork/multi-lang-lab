@@ -1,8 +1,8 @@
-import authApi from "@/lib/api/auth.api";
-import { useAuthStore } from "@/stores/auth.store";
 import { useMutation } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useAuthStore } from "../store";
+import { authApi } from "../service";
 
 export const useLoginMutation = () => {
   const navigate = useNavigate();
