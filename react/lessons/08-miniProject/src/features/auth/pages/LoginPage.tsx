@@ -27,8 +27,8 @@ export default function LoginPage() {
     mode: "onTouched",
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "t.nghia2112279@gmail.com",
-      password: "1234567",
+      email: "",
+      password: "",
     },
   });
 
@@ -61,7 +61,7 @@ export default function LoginPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="t.nghia2112279@gmail.com"
+                placeholder="your.email@example.com"
                 {...login("email")}
                 className={
                   errors.email

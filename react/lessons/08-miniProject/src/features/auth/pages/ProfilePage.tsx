@@ -7,7 +7,7 @@ import {
 } from "@/shared/components/ui/card";
 import { useUser } from "../hooks";
 import { Button } from "@/shared/components/ui/button";
-import { Calendar, Hash, Mail, Shield, ShieldCheck } from "lucide-react";
+import { Calendar, Clock, Hash, Loader2, Mail, Shield, ShieldCheck } from "lucide-react";
 import { Badge } from "@/shared/components/ui/badge";
 import { Separator } from "@/shared/components/ui/separator";
 import { ErrorState, LoadingState } from "@/shared/components/common";
@@ -44,7 +44,7 @@ export default function ProfilePage() {
     );
   }
 
-  const displayName = user.fullname || "Dương Phạm Trọng Nghĩa";
+  const displayName = user.fullname || "";
 
   return (
     <div className="max-w-2xl mx-auto py-6">
@@ -62,14 +62,10 @@ export default function ProfilePage() {
                 onClick={() => refetchUser()}
                 disabled={isFetchingUser}
                 variant="secondary"
-                className="relative"
+                className="flex items-center gap-1.5 cursor-pointer"
               >
-                Refresh
-                {isFetchingUser && (
-                  <span className="absolute inset-0 flex items-center justify-center">
-                    <span className="animate-spin">🔄</span>
-                  </span>
-                )}
+                {isFetchingUser && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                {isFetchingUser ? "Refreshing..." : "Refresh"}
               </Button>
               <Badge
                 variant="secondary"
@@ -134,6 +130,20 @@ export default function ProfilePage() {
                 <p className="text-sm font-semibold truncate text-foreground">
                   {user.createdAt
                     ? new Date(user.createdAt).toLocaleDateString("vi-VN")
+                    : "N/A"}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 p-3 rounded border bg-muted/20">
+              <Clock className="w-5 h-5 text-muted-foreground shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs text-muted-foreground font-medium">
+                  Cập nhật gần nhất
+                </p>
+                <p className="text-sm font-semibold truncate text-foreground">
+                  {user.updatedAt
+                    ? new Date(user.updatedAt).toLocaleDateString("vi-VN")
                     : "N/A"}
                 </p>
               </div>

@@ -62,7 +62,7 @@ export default function RegisterPage() {
               <Input
                 id="fullname"
                 type="text"
-                placeholder="Nghĩa Dương"
+                placeholder="Nguyễn Văn A"
                 {...register("fullname")}
                 className={
                   errors.fullname
@@ -88,7 +88,7 @@ export default function RegisterPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="nghiadpt@example.com"
+                placeholder="your.email@example.com"
                 {...register("email")}
                 className={
                   errors.email
