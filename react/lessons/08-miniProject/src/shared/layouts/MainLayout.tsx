@@ -38,9 +38,9 @@ export default function MainLayout() {
         <div className="max-w-4xl mx-auto flex h-16 items-center justify-between px-4">
           <Link
             to="/"
-            className="text-xl font-bold tracking-tight text-foreground hover:text-primary transition-colors"
+            className="text-xl font-bold tracking-tight hover:opacity-90 transition-all flex items-center gap-2"
           >
-            ShopApp
+            <span className="bg-gradient-to-r from-red-500 via-orange-500 to-amber-500 bg-clip-text text-transparent">FestiveHub 🎏</span>
           </Link>
 
           <div className="flex items-center gap-4">
@@ -57,7 +57,7 @@ export default function MainLayout() {
                           "bg-muted text-primary font-semibold rounded",
                       )}
                     >
-                      Home
+                      Trang Chủ
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
@@ -73,7 +73,7 @@ export default function MainLayout() {
                             "bg-muted text-primary font-semibold rounded",
                         )}
                       >
-                        Profile
+                        Hồ Sơ
                       </Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
@@ -137,7 +137,7 @@ export default function MainLayout() {
       </main>
 
       <footer className="border-t bg-muted/40 py-6 text-center text-xs text-muted-foreground">
-        <p>© 2026 ShopApp - React Learning Lab</p>
+        <p>© 2026 FestiveHub - Trải nghiệm văn hóa & ngày lễ Việt Nam</p>
       </footer>
     </div>
   );
