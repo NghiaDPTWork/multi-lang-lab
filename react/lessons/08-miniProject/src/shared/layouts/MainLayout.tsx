@@ -3,7 +3,6 @@ import { useLogoutMutation } from "@/features/auth/hooks";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "../components/ui/mode-toggle";
-import { Sparkles } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,9 +31,8 @@ export default function MainLayout() {
         <div className="max-w-4xl mx-auto flex h-16 items-center justify-between px-4">
           <Link
             to="/"
-            className="text-xl font-bold tracking-tight hover:opacity-90 transition-all flex items-center gap-1.5"
+            className="text-xl font-bold tracking-tight hover:opacity-90 transition-all flex items-center"
           >
-            <Sparkles className="w-5 h-5 text-primary animate-pulse shrink-0" />
             <span className="bg-gradient-to-r from-primary via-purple-500 to-accent bg-clip-text text-transparent font-extrabold">
               FestiveHub
             </span>
