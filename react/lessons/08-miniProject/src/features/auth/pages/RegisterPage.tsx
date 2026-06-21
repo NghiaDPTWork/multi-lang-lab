@@ -21,7 +21,7 @@ export default function RegisterPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<RegisterSchemaType>({
     mode: "onTouched",
     resolver: zodResolver(registerSchema),

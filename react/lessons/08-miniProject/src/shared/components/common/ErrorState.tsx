@@ -21,7 +21,7 @@ export const ErrorState = ({
       <Button
         variant="destructive"
         size="sm"
-        onClick={() => window.location.reload()}
+        onClick={onRetry || (() => window.location.reload())}
         className="mt-2 cursor-pointer"
       >
         Thử lại

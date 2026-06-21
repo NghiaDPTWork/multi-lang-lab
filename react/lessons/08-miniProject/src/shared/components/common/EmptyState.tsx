@@ -1,3 +1,6 @@
+import { Card, CardContent } from "@/shared/components/ui/card";
+import { Inbox } from "lucide-react";
+
 export const EmptyState = ({
   message = "Không có dữ liệu nào",
 }: {

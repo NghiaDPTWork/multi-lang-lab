@@ -16,14 +16,12 @@ import {
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@radix-ui/react-alert-dialog";
-import { Button } from "../components/ui/button";
-import {
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from "../components/ui/alert-dialog";
+import { Button } from "../components/ui/button";
 
 export default function MainLayout() {
   const token = useAuthStore((state) => state.accessToken);

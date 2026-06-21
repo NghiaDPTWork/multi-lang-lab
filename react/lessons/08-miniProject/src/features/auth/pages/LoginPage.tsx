@@ -22,7 +22,7 @@ export default function LoginPage() {
   const {
     register: login,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LoginSchemaType>({
     mode: "onTouched",
     resolver: zodResolver(loginSchema),

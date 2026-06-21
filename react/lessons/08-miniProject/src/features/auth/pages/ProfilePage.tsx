@@ -7,7 +7,8 @@ import {
 } from "@/shared/components/ui/card";
 import { useUser } from "../hooks";
 import { Button } from "@/shared/components/ui/button";
-import { Badge, Calendar, Hash, Mail, Shield, ShieldCheck } from "lucide-react";
+import { Calendar, Hash, Mail, Shield, ShieldCheck } from "lucide-react";
+import { Badge } from "@/shared/components/ui/badge";
 import { Separator } from "@/shared/components/ui/separator";
 import { ErrorState, LoadingState } from "@/shared/components/common";
 
