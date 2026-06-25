@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { authApi } from "../service";
+import { authService } from "../service";
 
 export const useRegisterMutation = () => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ export const useRegisterMutation = () => {
       email: string;
       password: string;
       confirmPassword: string;
-    }) => authApi.register(userData),
+    }) => authService.register(userData),
 
     onSuccess: () => {
       toast.success("Đăng ký thành công", {

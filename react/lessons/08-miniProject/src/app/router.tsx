@@ -1,30 +1,56 @@
 import LoginPage from "@/features/auth/pages/LoginPage";
-import ProfilePage from "@/features/auth/pages/ProfilePage";
 import RegisterPage from "@/features/auth/pages/RegisterPage";
+import ProfilePage from "@/features/auth/pages/ProfilePage";
 import HomePage from "@/features/landing/pages/HomePage";
-import RequireAuth from "@/shared/components/guards/RequireAuth";
-import RequireUnAuth from "@/shared/components/guards/RequireUnAuth";
-import MainLayout from "@/shared/layouts/MainLayout";
+import AdminLayout from "@/shared/layouts/AdminLayout";
+import UserLayout from "@/shared/layouts/UserLayout";
 import { createBrowserRouter } from "react-router-dom";
+import { ProtectedRoute, GuestRouter } from "@/shared/components/common";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: <UserLayout />,
     children: [
       {
         index: true,
         element: <HomePage />,
       },
       {
-        element: <RequireAuth />,
-        children: [{ path: "profile", element: <ProfilePage /> }],
+        element: <GuestRouter />,
+        children: [
+          {
+            path: "login",
+            element: <LoginPage />,
+          },
+          {
+            path: "register",
+            element: <RegisterPage />,
+          },
+        ],
       },
       {
-        element: <RequireUnAuth />,
+        element: <ProtectedRoute />,
         children: [
-          { path: "login", element: <LoginPage /> },
-          { path: "register", element: <RegisterPage /> },
+          {
+            path: "profile",
+            element: <ProfilePage />,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <ProtectedRoute allowedRoles={["admin"]} />,
+    children: [
+      {
+        element: <AdminLayout />,
+        children: [
+          {
+            index: true,
+            element: <HomePage />,
+          },
         ],
       },
     ],

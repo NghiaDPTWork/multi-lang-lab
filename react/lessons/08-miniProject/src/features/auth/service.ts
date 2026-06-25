@@ -1,22 +1,23 @@
 import apiClient from "@/lib/axios";
-import type { AuthTokens, User, userLogin, userRegister } from "./types";
+import type { AuthResponse, User, userLogin, userRegister } from "./types";
 
-// Định nghĩa API
-export const authApi = {
+// Định nghĩa Auth Api
+export const authService = {
   // Đăng nhập
-  async login(credentials: userLogin): Promise<AuthTokens> {
-    const { data } = await apiClient.post("/auth/login", credentials);
-
-    console.log("Raw response from API", data);
-    return {
-      accessToken: data.accessToken,
-      refreshToken: data.refreshToken,
-    };
+  async login(credentials: userLogin): Promise<AuthResponse> {
+    return apiClient.post<AuthResponse>(
+      "/auth/login",
+      credentials,
+    ) as unknown as Promise<AuthResponse>;
+    // Ép kiểu để Axios nó biết
   },
 
   // Đăng ký
-  async register(credentials: userRegister): Promise<void> {
-    await apiClient.post("/auth/register", credentials);
+  async register(credentials: userRegister): Promise<AuthResponse> {
+    return apiClient.post<AuthResponse>(
+      "/auth/register",
+      credentials,
+    ) as unknown as Promise<AuthResponse>;
   },
 
   // Get profile (ví dụ để test interceptor)

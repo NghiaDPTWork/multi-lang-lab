@@ -27,8 +27,8 @@ export default function LoginPage() {
     mode: "onTouched",
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "t.nghia2112278@gmail.com",
+      password: "12345678",
     },
   });
 

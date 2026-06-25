@@ -26,8 +26,11 @@ export default function HomePage() {
           </h1>
 
           <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
-            Hành trình tìm hiểu các giá trị lịch sử kiêu hùng, bản sắc văn hóa truyền thống tinh hoa và các sự kiện quốc tế ý nghĩa trong năm.
-            {token ? "" : " Hãy đăng nhập để truy cập đầy đủ các chức năng cá nhân."}
+            Hành trình tìm hiểu các giá trị lịch sử kiêu hùng, bản sắc văn hóa
+            truyền thống tinh hoa và các sự kiện quốc tế ý nghĩa trong năm.
+            {token
+              ? ""
+              : " Hãy đăng nhập để truy cập đầy đủ các chức năng cá nhân."}
           </p>
         </div>
       </div>

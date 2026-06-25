@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { authApi } from "../service";
+import { authService } from "../service";
 
 export const useUser = () => {
   //useQuery
   return useQuery({
     queryKey: ["me"],
     queryFn: async () => {
-      const user = await authApi.getProfile();
+      const user = await authService.getProfile();
       return user;
     },
   });

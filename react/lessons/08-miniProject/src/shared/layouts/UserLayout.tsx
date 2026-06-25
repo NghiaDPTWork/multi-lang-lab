@@ -16,8 +16,9 @@ import {
 } from "../components/ui/alert-dialog";
 import { Button } from "../components/ui/button";
 
-export default function MainLayout() {
+export default function UserLayout() {
   const token = useAuthStore((state) => state.accessToken);
+  const role = useAuthStore((state) => state.role);
   const location = useLocation();
   const logoutMutation = useLogoutMutation();
 
@@ -46,7 +47,7 @@ export default function MainLayout() {
                   "px-3 py-1.5 text-xs font-semibold cursor-pointer transition-all rounded-md",
                   location.pathname === "/"
                     ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
                 Trang Chủ
@@ -58,10 +59,23 @@ export default function MainLayout() {
                     "px-3 py-1.5 text-xs font-semibold cursor-pointer transition-all rounded-md",
                     location.pathname === "/profile"
                       ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
                   )}
                 >
                   Hồ Sơ
+                </Link>
+              )}
+              {token && role === "admin" && (
+                <Link
+                  to="/admin"
+                  className={cn(
+                    "px-3 py-1.5 text-xs font-semibold cursor-pointer transition-all rounded-md",
+                    location.pathname.startsWith("/admin")
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                  )}
+                >
+                  Quản trị
                 </Link>
               )}
             </nav>

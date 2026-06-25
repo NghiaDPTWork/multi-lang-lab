@@ -2,22 +2,34 @@ import { useMutation } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useAuthStore } from "../store";
-import { authApi } from "../service";
+import { authService } from "../service";
+import type { AuthResponse, JwtPayload, LoginRequest } from "../types";
+import { jwtDecode } from "jwt-decode";
 
 export const useLoginMutation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const setTokens = useAuthStore((state) => state.setTokens);
+  const setAuth = useAuthStore((state) => state.setAuth);
+  const from =
+    (location.state as { from?: { pathname: string } })?.from?.pathname || "/";
 
-  return useMutation({
-    mutationFn: (userData: { email: string; password: string }) =>
-      authApi.login(userData),
+  return useMutation<AuthResponse, Error, LoginRequest>({
+    mutationFn: (userData) => authService.login(userData),
 
-    onSuccess: (tokens) => {
-      setTokens(tokens.accessToken, tokens.refreshToken);
+    onSuccess: (response) => {
+      const decoded = jwtDecode<JwtPayload>(response.accessToken);
+      setAuth({
+        accessToken: response.accessToken,
+        role: decoded.role,
+      });
+
       toast.success("Đăng nhập thành công");
-      const from = location.state?.from?.pathname || "/profile";
-      navigate(from, { replace: true });
+
+      if (decoded.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate(from, { replace: true });
+      }
     },
 
     onError: (error: any) => {

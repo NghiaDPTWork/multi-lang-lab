@@ -3,17 +3,17 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useAuthStore } from "../store";
-import { authApi } from "../service";
+import { authService } from "../service";
 
 export const useLogoutMutation = () => {
   const navigate = useNavigate();
-  const clearTokens = useAuthStore((state) => state.clearTokens);
+  const clearAuth = useAuthStore((state) => state.clearAuth);
 
   return useMutation({
-    mutationFn: () => authApi.logout(),
+    mutationFn: () => authService.logout(),
 
     onSuccess: () => {
-      clearTokens();
+      clearAuth();
       queryClient.removeQueries();
       navigate("/login");
       toast.success("Đăng xuất thành công!", {
@@ -22,7 +22,7 @@ export const useLogoutMutation = () => {
     },
 
     onError: (error: any) => {
-      clearTokens();
+      clearAuth();
       queryClient.removeQueries();
       navigate("/login");
       toast.success("Đăng xuất thành công!", {
