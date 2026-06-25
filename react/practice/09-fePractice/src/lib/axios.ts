@@ -1,3 +1,4 @@
+import { useAuthStore } from "@/store/auth-store"
 import axios from "axios"
 
 /**
@@ -14,16 +15,23 @@ export const api = axios.create({
   },
 })
 
-// Request interceptor — attach auth token, etc.
+// Tự động đính kèm Token từ Zustand Store
 api.interceptors.request.use((config) => {
+  const token = useAuthStore.getState().token
+
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
   return config
 })
 
-// Response interceptor — unwrap data / handle errors globally.
+// Lắng nghe phản hồi và xử lý lỗi Token hết hạn (401)
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Centralize error handling here (toast, logout on 401, etc.).
+    if (error.response.status === 401) {
+      useAuthStore.getState().logout()
+    }
     return Promise.reject(error)
   },
 )
