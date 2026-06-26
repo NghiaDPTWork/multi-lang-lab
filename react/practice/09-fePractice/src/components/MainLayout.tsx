@@ -1,14 +1,14 @@
+import { useLogoutMutation } from "@/features/auth/hooks/useLogout"
 import { useAuthStore } from "@/store/auth-store"
-import { Link, Outlet, useNavigate } from "react-router-dom"
+import { Link, Outlet } from "react-router-dom"
 
 export default function MainLayout() {
-  const { user, token, logout } = useAuthStore()
-  const navigate = useNavigate()
+  const { user, token } = useAuthStore()
   const isAuthenticated = !!token && !!user
+  const logoutMutation = useLogoutMutation()
 
   const handleLogout = () => {
-    logout()
-    navigate("/login")
+    logoutMutation.mutate()
   }
 
   return (
@@ -25,9 +25,10 @@ export default function MainLayout() {
               {/* Nút màu đỏ đơn giản */}
               <button
                 onClick={handleLogout}
-                className="bg-red-500 text-white px-3 py-1 rounded ml-2"
+                disabled={logoutMutation.isPending}
+                className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded ml-2 cursor-pointer disabled:opacity-50"
               >
-                Đăng xuất
+                {logoutMutation.isPending ? "Đang đăng xuất..." : "Đăng xuất"}
               </button>
             </>
           ) : (

@@ -1,3 +1,4 @@
+import { User } from "@/features/auth/types"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
@@ -8,12 +9,6 @@ import { persist } from "zustand/middleware"
  * localStorage. Replace with whatever global state your feature needs.
  */
 
-interface User {
-  id: string
-  name: string
-  email: string
-  role: "admin" | "employee"
-}
 interface AuthState {
   token: string | null
   user: User | null
