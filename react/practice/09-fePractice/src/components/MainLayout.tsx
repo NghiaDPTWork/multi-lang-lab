@@ -25,10 +25,9 @@ export default function MainLayout() {
               {/* Nút màu đỏ đơn giản */}
               <button
                 onClick={handleLogout}
-                disabled={logoutMutation.isPending}
-                className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded ml-2 cursor-pointer disabled:opacity-50"
+                className="bg-red-500 text-white px-3 py-1 rounded ml-2"
               >
-                {logoutMutation.isPending ? "Đang đăng xuất..." : "Đăng xuất"}
+                Đăng xuất
               </button>
             </>
           ) : (

@@ -1,14 +1,13 @@
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { loginSchema, type LoginFormFields } from "./schemas/login-schema"
+import { LoginFormFields, loginSchema } from "./schemas/login-schema"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useLoginMutation } from "./hooks/useLogin"
 
 export function LoginPage() {
-  const loginMutation = useLoginMutation()
   const {
     register: login,
     handleSubmit: handleLogin,
@@ -21,11 +20,11 @@ export function LoginPage() {
       password: "",
     },
   })
+  const loginMutation = useLoginMutation()
 
   const onLogin = async (data: LoginFormFields) => {
     loginMutation.mutate(data)
   }
-
   return (
     <div className="flex min-h-svh items-center justify-center p-6 bg-slate-50">
       <Card className="w-full max-w-sm">

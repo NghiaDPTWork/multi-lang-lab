@@ -18,8 +18,7 @@ export const api = axios.create({
 // Tự động đính kèm Token từ Zustand Store
 api.interceptors.request.use((config) => {
   const token = useAuthStore.getState().token
-
-  if (token && config.headers) {
+  if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
   return config

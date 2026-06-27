@@ -1,10 +1,10 @@
+import { useAuthStore } from "@/store/auth-store"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useNavigate } from "react-router-dom"
-import { useAuthStore } from "@/store/auth-store"
-import { logout } from "../services/auth-service" // Import hàm logout riêng lẻ
 import { toast } from "sonner"
+import { logout } from "../services/auth-service"
 
-export const useLogoutMutation = () => {
+export function useLogoutMutation() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const logoutStore = useAuthStore((state) => state.logout)
@@ -12,26 +12,21 @@ export const useLogoutMutation = () => {
   return useMutation({
     mutationFn: () => logout(),
 
+    // If success do somthing
     onSuccess: () => {
       logoutStore()
-
       queryClient.clear()
-
-      navigate("/login", { replace: true })
-      toast.success("Đăng xuất thành công!", {
-        description: "Hẹn gặp lại bạn.",
-      })
+      navigate("/login")
+      toast.success("Đăng xuất thành công")
     },
 
+    // If error do something
     onError: (error: any) => {
       logoutStore()
       queryClient.clear()
-      navigate("/login", { replace: true })
-
-      toast.success("Đăng xuất thành công!", {
-        description: "Phiên làm việc đã kết thúc.",
-      })
-      console.log("Lỗi khi gọi API logout: " + error)
+      navigate("/login")
+      toast.success("Đăng xuất thành công")
+      console.log("Logout error: " + error)
     },
   })
 }
