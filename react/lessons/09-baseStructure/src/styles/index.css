@@ -1,0 +1,36 @@
+/**
+ * FILE: src/styles/index.css
+ * VAI TRÒ: Điểm nạp CSS chính của ứng dụng.
+ * 
+ * PHƯƠNG PHÁP THIẾT KẾ:
+ * 1. Import các layer của Tailwind CSS (base, components, utilities).
+ * 2. Thiết lập biến CSS Variables ở :root (cho phép dễ dàng đổi màu chủ đạo, dark mode).
+ * 3. Viết các custom classes mở rộng dùng chung (những gì Tailwind không làm được nhanh).
+ */
+
+@import "tailwindcss";
+
+:root {
+  /* Định nghĩa các tone màu chủ đạo hệ thống (định dạng HSL/RGB để dễ tạo opacity) */
+  --primary-color: #2563eb;       /* Xanh dương chủ đạo */
+  --primary-hover: #1d4ed8;
+  --bg-main: #f8fafc;            /* Nền chính xám nhẹ */
+  --border-default: #e2e8f0;     /* Màu viền mặc định */
+}
+
+/* Base Styles */
+body {
+  background-color: var(--bg-main);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom global utility classes */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Ẩn thanh cuộn nhưng vẫn cuộn được */
+}
