@@ -1,7 +1,6 @@
 import { z } from "zod"
 
 export const loginSchema = z.object({
-  // Định nghĩa luật validate cho email và password tại đây
   email: z
     .string()
     .min(1, "Email không được để trống")
