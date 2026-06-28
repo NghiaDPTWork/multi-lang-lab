@@ -1,11 +1,9 @@
-import { api } from "@/lib/axios"
 import { LoginFormFields } from "../schema/login-schema"
 
-export async function login(credentential: LoginFormFields) {
-  const response = await api.post("/auth/login", credentential)
-  return response.data
+export const login = async (_credentials: LoginFormFields) => {
+  // TODO: Tự gọi API POST /auth/login
 }
 
-export async function logout() {
-  await api.post("/auth/logout")
+export const logout = async () => {
+  // TODO: Tự gọi API POST /auth/logout
 }

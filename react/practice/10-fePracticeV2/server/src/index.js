@@ -6,6 +6,7 @@ import { config } from "./config.js"
 import { openapiSpec } from "./openapi.js"
 import { authRouter } from "./routes/auth.routes.js"
 import { employeesRouter } from "./routes/employees.routes.js"
+import { attendanceRouter } from "./routes/attendance.routes.js"
 
 const app = express()
 
@@ -28,6 +29,7 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(openapiSpec))
 
 app.use("/auth", authRouter)
 app.use("/employees", employeesRouter)
+app.use("/attendance", attendanceRouter)
 
 // 404 fallback.
 app.use((_req, res) => {

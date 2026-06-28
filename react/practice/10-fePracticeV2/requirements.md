@@ -237,3 +237,40 @@ Yêu cầu:
   - Hiển thị lỗi cho người dùng.
 
 ---
+
+### 5.7. Cập nhật nhân viên — mới bổ sung
+Trang `/admin/employees/:id/edit` (hoặc tích hợp trực tiếp nút chỉnh sửa trên trang chi tiết) dùng để chỉnh sửa thông tin nhân viên.
+
+Yêu cầu:
+- Điền sẵn thông tin cũ của nhân viên lên Form (sử dụng query chi tiết).
+- Validate form tương tự như lúc tạo mới.
+- Gọi API `PUT /employees/:id` để lưu thay đổi.
+- Khi thành công:
+  - Invalidate query danh sách và chi tiết của nhân viên đó.
+  * Hiển thị toast thông báo thành công và chuyển hướng về `/admin`.
+
+---
+
+### 5.8. Xóa nhân viên — mới bổ sung
+Nút "Xóa" được hiển thị trên mỗi dòng ở bảng nhân viên (hoặc tại trang chi tiết).
+
+Yêu cầu:
+- Hiển thị một Confirm Dialog/Modal hỏi xác nhận người dùng trước khi xóa.
+- Gọi API `DELETE /employees/:id`.
+- Khi thành công:
+  - Invalidate query danh sách nhân viên.
+  - Hiển thị thông báo thành công và cập nhật lại bảng mà không cần load lại trang.
+
+---
+
+### 5.9. Nhật ký & Thực hiện Chấm công — mới bổ sung
+Trang `/attendance` dành cho Role `employee` để thực hiện chấm công và xem lịch sử.
+
+Yêu cầu:
+- Hiển thị danh sách lịch sử chấm công dưới dạng bảng (gọi API `GET /attendance`).
+- Có 2 nút bấm chính: **"Check-in"** và **"Check-out"**.
+  * Bấm "Check-in" $\rightarrow$ Gọi API `POST /attendance/check-in`.
+  * Bấm "Check-out" $\rightarrow$ Gọi API `POST /attendance/check-out`.
+- Sau khi thực hiện thành công:
+  - Invalidate query danh sách lịch sử chấm công để cập nhật bảng nhật ký mới nhất.
+  - Hiển thị thông báo chấm công thành công.

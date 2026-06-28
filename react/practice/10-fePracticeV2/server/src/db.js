@@ -92,3 +92,52 @@ export function createEmployee(data) {
   employees.push(employee)
   return employee
 }
+
+export function updateEmployee(id, data) {
+  const employee = employees.find((e) => e.id === id)
+  if (!employee) return null
+  Object.assign(employee, {
+    name: data.name ?? employee.name,
+    email: data.email ?? employee.email,
+    position: data.position ?? employee.position,
+    department: data.department ?? employee.department,
+    status: data.status ?? employee.status,
+    updatedAt: new Date().toISOString(),
+  })
+  return employee
+}
+
+export function deleteEmployee(id) {
+  const index = employees.findIndex((e) => e.id === id)
+  if (index === -1) return false
+  employees.splice(index, 1)
+  return true
+}
+
+export const attendanceLogs = []
+
+export function getAttendanceLogs(userId) {
+  return attendanceLogs.filter((log) => log.userId === userId)
+}
+
+export function checkIn(userId) {
+  const record = {
+    id: `att_${Date.now()}`,
+    userId,
+    timestamp: new Date().toISOString(),
+    type: "check_in",
+  }
+  attendanceLogs.push(record)
+  return record
+}
+
+export function checkOut(userId) {
+  const record = {
+    id: `att_${Date.now()}`,
+    userId,
+    timestamp: new Date().toISOString(),
+    type: "check_out",
+  }
+  attendanceLogs.push(record)
+  return record
+}

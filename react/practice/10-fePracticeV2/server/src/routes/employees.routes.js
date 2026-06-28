@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { z } from "zod"
 
-import { createEmployee, employees, findEmployeeById } from "../db.js"
+import { createEmployee, employees, findEmployeeById, updateEmployee, deleteEmployee } from "../db.js"
 import { requireAuth } from "../middleware/auth.js"
 import { validateBody } from "../validate.js"
 
@@ -61,4 +61,30 @@ employeesRouter.post("/", validateBody(createSchema), (req, res) => {
 
   const employee = createEmployee(data)
   res.status(201).json(employee)
+})
+
+const updateSchema = z.object({
+  name: z.string().min(1, "Tên là bắt buộc").optional(),
+  email: z.string().email("Email không hợp lệ").optional(),
+  position: z.string().min(1, "Chức vụ là bắt buộc").optional(),
+  department: z.string().min(1, "Phòng ban là bắt buộc").optional(),
+  status: z.enum(["active", "on_leave", "inactive"]).optional(),
+})
+
+// PUT /employees/:id → Employee
+employeesRouter.put("/:id", validateBody(updateSchema), (req, res) => {
+  const updated = updateEmployee(req.params.id, req.valid)
+  if (!updated) {
+    return res.status(404).json({ message: "Không tìm thấy nhân viên" })
+  }
+  res.json(updated)
+})
+
+// DELETE /employees/:id → 200 message
+employeesRouter.delete("/:id", (req, res) => {
+  const success = deleteEmployee(req.params.id)
+  if (!success) {
+    return res.status(404).json({ message: "Không tìm thấy nhân viên" })
+  }
+  res.json({ message: "Đã xóa nhân viên thành công" })
 })
