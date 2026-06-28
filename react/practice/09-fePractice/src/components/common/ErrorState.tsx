@@ -3,16 +3,15 @@ interface ErrorStateProps {
   onRetry?: () => void
 }
 
-export function ErrorState({ message = "Đã xảy ra lỗi", onRetry }: ErrorStateProps) {
+export default function ErrorState({ message = "Có lỗi xảy ra", onRetry }: ErrorStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center p-8 gap-3 border border-red-200 bg-red-50 rounded-md text-red-700 max-w-md mx-auto">
-      <p className="font-semibold">{message}</p>
-      <button
-        onClick={onRetry || (() => window.location.reload())}
-        className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded text-sm cursor-pointer transition-colors"
-      >
-        Thử lại
-      </button>
+    <div className="p-6 text-center space-y-3 bg-red-50 text-red-700 rounded-lg max-w-sm mx-auto">
+      <p className="text-sm font-medium">{message}</p>
+      {onRetry && (
+        <button onClick={onRetry} className="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded cursor-pointer transition">
+          Thử lại
+        </button>
+      )}
     </div>
   )
 }

@@ -1,26 +1,28 @@
 import { useAuthStore } from "@/store/auth-store"
 import { Navigate, Outlet } from "react-router-dom"
 
-// 1. Just for User doesn`t Login
+// Don`t need Login
 export function GuestRoute() {
-  const { token, user } = useAuthStore()
+  const { user, token } = useAuthStore()
+  const isAuthenticated = token && user
 
-  if (token && user) {
+  if (isAuthenticated) {
     return <Navigate to={user.role === "admin" ? "/admin" : "/attendance"} />
   }
 
   return <Outlet />
 }
 
-// 2. Just for User Login
-interface ProtctedRouteProps {
+export interface ProtectedRoute {
   allowedRoles: Array<"admin" | "employee">
 }
 
-export function ProtectedRoute({ allowedRoles }: ProtctedRouteProps) {
-  const { token, user } = useAuthStore()
+// Require login for this Page to hand-on
+export function ProtectedRoute({ allowedRoles }: ProtectedRoute) {
+  const { user, token } = useAuthStore()
+  const isAuthenticated = token && user
 
-  if (!token || !user) {
+  if (!isAuthenticated) {
     return <Navigate to="/login" />
   }
 
