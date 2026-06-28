@@ -1,56 +1,57 @@
 import { createBrowserRouter } from "react-router-dom"
+import HomePage from "./pages/HomePage"
+import { GuestRoute, ProtectedRoute } from "./components/AuthGuards"
+import LoginPage from "./feature/auth/page/LoginPage"
 import MainLayout from "./components/MainLayout"
-import { HomePage } from "./pages/HomePage"
-import { GuestRoute, ProtectedRoute } from "./components/AuthGuard"
-import { LoginPage } from "./features/auth/LoginPage"
-import { AttendancePage } from "./features/employees/pages/AttendancePage"
-import { AdminPage } from "./features/employees/pages/AdminPage"
-import { CreateEmployee } from "./features/employees/pages/CreateEmployee"
-import { EmployeeDetail } from "./features/employees/pages/EmployeeDetail"
+import AdminPage from "./feature/employees/page/AdminPage"
+import EmployeeCreatePage from "./feature/employees/page/EmployeeCreatePage"
+import EmployeeDetailPage from "./feature/employees/page/EmployeeDetailPage"
+import AttendancePage from "./feature/employees/page/AttendancePage"
 
 export const router = createBrowserRouter([
-  // 1. Login Page
+  // 1. Don`t include MainLayout
   {
     element: <GuestRoute />,
     children: [
       {
-        element: <LoginPage />,
         path: "/login",
+        element: <LoginPage />,
       },
     ],
   },
-
-  // 2. Main Pages
+  // 2. Include MainLayout and some core papges
   {
     element: <MainLayout />,
     children: [
       {
-        element: <HomePage />,
         path: "/",
+        element: <HomePage />,
       },
+
       {
         element: <ProtectedRoute allowedRoles={["admin"]} />,
         children: [
           {
-            element: <AdminPage />,
             path: "/admin",
+            element: <AdminPage />,
           },
           {
-            element: <CreateEmployee />,
             path: "/admin/employees/create",
+            element: <EmployeeCreatePage />,
           },
           {
-            element: <EmployeeDetail />,
             path: "/admin/employees/:id",
+            element: <EmployeeDetailPage />,
           },
         ],
       },
+
       {
         element: <ProtectedRoute allowedRoles={["employee"]} />,
         children: [
           {
-            element: <AttendancePage />,
             path: "/attendance",
+            element: <AttendancePage />,
           },
         ],
       },
