@@ -1,7 +1,9 @@
 export interface Employee {
   id: string;
-  fullName: string;
+  name: string;
   email: string;
-  phoneNumber: string;
   position: string;
+  department: string;
+  status: "active" | "on_leave" | "inactive";
+  createdAt: string;
 }
