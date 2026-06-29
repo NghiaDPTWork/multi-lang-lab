@@ -21,7 +21,7 @@ export function LoginPage() {
     },
   })
 
-  const onSubmit = (values: LoginFormValues) => {
+  const onLogin = (values: LoginFormValues) => {
     loginMutation.mutate(values)
   }
 
@@ -34,7 +34,7 @@ export function LoginPage() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin(onSubmit)} className="space-y-4">
+          <form onSubmit={handleLogin(onLogin)} className="space-y-4">
             <div>
               <Input
                 type="email"
