@@ -1,14 +1,13 @@
-import { User } from "@/types"
+import { AuthState } from "@/features/auth/types"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
-interface AuthState {
-  token: string | null
-  user: User | null
-  setToken: (token: string | null, user: User | null) => void
-  logout: () => void
-}
-
+/**
+ * Example Zustand store (skeleton).
+ *
+ * Demonstrates the pattern: state + actions in one slice, persisted to
+ * localStorage. Replace with whatever global state your feature needs.
+ */
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
