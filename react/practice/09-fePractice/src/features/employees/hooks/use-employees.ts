@@ -7,3 +7,11 @@ export function useEmployees() {
     queryFn: employeeService.getAll
   });
 }
+
+export function useEmployeeById(id: string | undefined) {
+  return useQuery({
+    queryKey: ['employee', id],
+    queryFn: () => employeeService.getById(id!),
+    enabled: !!id
+  });
+}
