@@ -6,4 +6,8 @@ export const employeeService = {
     const response = await api.get("/employees")
     return response.data
   },
+  getById: async (id: string): Promise<Employee> => {
+    const response = await api.get(`/employees/${id}`)
+    return response.data
+  },
 }
