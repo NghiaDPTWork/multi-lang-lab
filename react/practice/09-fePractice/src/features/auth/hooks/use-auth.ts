@@ -1,28 +1,40 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { authService } from "../services/auth-service"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useAuthStore } from "@/store/auth-store"
-import { AuthResponse } from "../types"
-import { toast } from "sonner"
 
 export function useLogin() {
   const navigate = useNavigate()
-  const location = useLocation()
-  const setAuth = useAuthStore.getState().setToken
-
-  const from = location.state?.from?.pathname || "/"
+  const setToken = useAuthStore((state) => state.setToken)
   return useMutation({
     mutationFn: authService.login,
-
-    onSuccess(response: AuthResponse) {
-      setAuth(response.token, response.user)
-      toast.success("Đăng nhập thành công!")
-      navigate(from, { replace: true })
+    onSuccess: (data) => {
+      setToken(data.token, data.user)
+      if (data.user.role === "admin") {
+        navigate("/admin")
+      } else {
+        navigate("/attendance")
+      }
     },
+  })
+}
 
-    onError(error: any) {
-      toast.error(error.message || "Dang xuat loi roi")
-      console.log("")
+export function useLogout() {
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
+  const logout = useAuthStore.getState().logout
+
+  return useMutation({
+    mutationFn: authService.logout,
+    onSuccess: () => {
+      logout()
+      queryClient.clear()
+      navigate("/login")
+    },
+    onError: () => {
+      logout()
+      queryClient.clear()
+      navigate("/login")
     },
   })
 }

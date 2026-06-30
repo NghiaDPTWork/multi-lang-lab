@@ -1,9 +1,12 @@
-import { useAuthStore } from "@/store/auth-store"
-import { Outlet, Link } from "react-router-dom"
+import { Outlet, Link } from 'react-router-dom';
+import { useAuthStore } from '@/store/auth-store';
+import { useLogout } from '@/features/auth/hooks/use-auth';
 
 export function MainLayout() {
-  const { token, user, logout } = useAuthStore()
-  const isAuthenticated = token && user
+  const { token, user } = useAuthStore();
+  const { mutate: handleLogout } = useLogout();
+  const isAuthenticated = token && user;
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b bg-card">
@@ -12,16 +15,13 @@ export function MainLayout() {
           <nav className="flex space-x-6 text-sm font-semibold">
             {isAuthenticated ? (
               <button
-                onClick={logout}
+                onClick={() => handleLogout()}
                 className="text-destructive hover:text-destructive/80 transition cursor-pointer bg-transparent border-0 font-semibold p-0"
               >
                 Logout
               </button>
             ) : (
-              <Link
-                to="/login"
-                className="text-primary hover:text-primary/80 transition"
-              >
+              <Link to="/login" className="text-primary hover:text-primary/80 transition">
                 Login
               </Link>
             )}
@@ -32,5 +32,5 @@ export function MainLayout() {
         <Outlet />
       </main>
     </div>
-  )
+  );
 }

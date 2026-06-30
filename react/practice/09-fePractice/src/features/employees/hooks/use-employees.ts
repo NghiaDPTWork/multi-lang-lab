@@ -1,5 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { employeeService } from '../services/employee-service';
+import { useNavigate } from 'react-router-dom';
 
 export function useEmployees() {
   return useQuery({
@@ -8,10 +9,23 @@ export function useEmployees() {
   });
 }
 
-export function useEmployeeById(id: string | undefined) {
+export function useEmployeeById(id?: string) {
   return useQuery({
     queryKey: ['employee', id],
     queryFn: () => employeeService.getById(id!),
     enabled: !!id
+  });
+}
+
+export function useCreateEmployee() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: employeeService.create,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['employees'] });
+      navigate('/admin');
+    }
   });
 }

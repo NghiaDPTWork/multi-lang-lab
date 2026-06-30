@@ -1,13 +1,15 @@
-import { api } from "@/lib/axios"
-import { Employee } from "../types"
+import { api } from '@/lib/axios';
+import { Employee } from '../types';
+import { EmployeeFormFields } from '../schemas/employee-schema';
 
 export const employeeService = {
   getAll: async (): Promise<Employee[]> => {
-    const response = await api.get("/employees")
-    return response.data
+    return api.get('/employees');
   },
   getById: async (id: string): Promise<Employee> => {
-    const response = await api.get(`/employees/${id}`)
-    return response.data
+    return api.get(`/employees/${id}`);
   },
-}
+  create: async (data: EmployeeFormFields): Promise<Employee> => {
+    return api.post('/employees', data);
+  }
+};

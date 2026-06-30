@@ -15,7 +15,7 @@ export function ErrorState({ message = 'Something went wrong.', onRetry }: Error
       </div>
       <p className="text-sm font-medium">{message}</p>
       {onRetry && (
-        <Button onClick={onRetry} variant="outline" size="sm" className="cursor-pointer">
+        <Button onClick={onRetry} variant="outline" size="sm">
           Try Again
         </Button>
       )}
