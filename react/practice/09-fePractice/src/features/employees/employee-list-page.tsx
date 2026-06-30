@@ -110,5 +110,6 @@ export function EmployeeListPage() {
           )}
         </CardContent>
       </Card>
+    </div>
   )
 }
