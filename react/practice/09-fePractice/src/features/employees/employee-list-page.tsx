@@ -1,113 +1,90 @@
-import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead } from "@/components/ui/table"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { useEmployees } from "./hooks/use-employees"
-import { LoadingState } from "@/components/common/loading-state"
-import { ErrorState } from "@/components/common/error-state"
-import { EmptyState } from "@/components/common/empty-state"
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableHead,
+} from "@/components/ui/table"
+import { Card, CardContent } from "@/components/ui/card"
+import { useEmployeeList } from "./hooks/use-employees"
+import { useState } from "react"
 
 export function EmployeeListPage() {
-  const navigate = useNavigate()
-  const { data: employees, isLoading, isError, refetch } = useEmployees()
-  const [searchTerm, setSearchTerm] = useState("")
+  const goTo = useNavigate()
+  const {
+    data: employeeData,
+  } = useEmployeeList()
 
-  if (isLoading) {
-    return <LoadingState message="Loading employees..." />
-  }
+  const [searchQuery, setSearchQuery] = useState("")
 
-  if (isError) {
-    return <ErrorState message="Failed to load employee list." onRetry={refetch} />
-  }
+  const searchedEmployees =
+    employeeData?.filter((emp) =>
+      [emp.name, emp.email, emp.position, emp.department]
+        .join(" ")
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()),
+    ) || []
 
-  const filteredEmployees = employees?.filter((employee) =>
-    [employee.name, employee.email, employee.position, employee.department]
-      .join(" ")
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-  ) || []
-
-  const getStatusBadgeVariant = (status: string) => {
-    switch (status) {
-      case "active":
-        return "default"
-      case "on_leave":
-        return "secondary"
-      case "inactive":
-        return "destructive"
-      default:
-        return "outline"
-    }
+  const viewEmployeeDetail = (id: string | null) => {
+    goTo(`/admin/employees/${id}`)
   }
 
   return (
-    <div className="space-y-6 max-w-6xl mx-auto">
-      <div className="flex justify-between items-center bg-card p-4 rounded-xl border shadow-sm">
-        <Input
-          placeholder="Search employees..."
-          className="max-w-xs"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+    <div className="space-y-6">
+      <div className="flex justify-between items-center bg-card p-4 rounded-xl border">
+        <div className="w-full max-w-xs">
+          <Input
+            placeholder="Search employees..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
         <Link to="/admin/employees/create">
-          <Button>Add Employee</Button>
+          <Button>Add New</Button>
         </Link>
       </div>
 
-      <Card className="overflow-hidden shadow-xs border">
-        <CardHeader className="bg-muted/10 border-b pb-4">
-          <CardTitle className="text-xl font-bold">Employee Directory</CardTitle>
-        </CardHeader>
-        <CardContent className="p-0">
-          {filteredEmployees.length === 0 ? (
-            <div className="p-6">
-              <EmptyState message={searchTerm ? "No employees match your search query." : "No employees registered yet."} />
-            </div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow className="hover:bg-transparent">
-                  <TableHead className="w-[100px]">ID</TableHead>
-                  <TableHead>Full Name</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Position</TableHead>
-                  <TableHead>Department</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+      <Card>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>ID</TableHead>
+                <TableHead>Full Name</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Position</TableHead>
+                <TableHead>Department</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {searchedEmployees.map((emp) => (
+                <TableRow
+                  key={emp.id}
+                  onClick={() => viewEmployeeDetail(emp.id)}
+                >
+                  <TableCell>{emp.id}</TableCell>
+                  <TableCell>{emp.name}</TableCell>
+                  <TableCell>{emp.email}</TableCell>
+                  <TableCell>{emp.position}</TableCell>
+                  <TableCell>{emp.department}</TableCell>
+                  <TableCell>{emp.status}</TableCell>
+                  <TableCell>
+                    <Link to={`/admin/employees/${emp.id}`}>
+                      <Button variant="outline" size="sm">
+                        Detail
+                      </Button>
+                    </Link>
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredEmployees.map((employee) => (
-                  <TableRow
-                    key={employee.id}
-                    className="cursor-pointer transition hover:bg-muted/50"
-                    onClick={() => navigate(`/admin/employees/${employee.id}`)}
-                  >
-                    <TableCell className="font-semibold text-muted-foreground">{employee.id}</TableCell>
-                    <TableCell className="font-medium">{employee.name}</TableCell>
-                    <TableCell>{employee.email}</TableCell>
-                    <TableCell>{employee.position}</TableCell>
-                    <TableCell>{employee.department}</TableCell>
-                    <TableCell>
-                      <Badge variant={getStatusBadgeVariant(employee.status)}>
-                        {employee.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
-                      <Link to={`/admin/employees/${employee.id}`}>
-                        <Button variant="outline" size="sm" className="mr-2">
-                          Detail
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
+              ))}
+            </TableBody>
+          </Table>
         </CardContent>
       </Card>
     </div>
