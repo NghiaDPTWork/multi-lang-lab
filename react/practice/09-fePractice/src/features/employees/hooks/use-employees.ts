@@ -1,31 +1,31 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { employeeService } from '../services/employee-service';
-import { useNavigate } from 'react-router-dom';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { employeeApi } from "../services/employee-service"
+import { useNavigate } from "react-router-dom"
 
-export function useEmployees() {
+export function useEmployeeList() {
   return useQuery({
-    queryKey: ['employees'],
-    queryFn: employeeService.getAll
-  });
+    queryKey: ["employees"],
+    queryFn: employeeApi.fetchAll,
+  })
 }
 
-export function useEmployeeById(id?: string) {
+export function useEmployeeDetail(id?: string) {
   return useQuery({
-    queryKey: ['employee', id],
-    queryFn: () => employeeService.getById(id!),
-    enabled: !!id
-  });
+    queryKey: ["employee", id],
+    queryFn: () => employeeApi.fetchById(id!),
+    enabled: !!id,
+  })
 }
 
-export function useCreateEmployee() {
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
+export function useAddEmployee() {
+  const queryClient = useQueryClient()
+  const goTo = useNavigate()
 
   return useMutation({
-    mutationFn: employeeService.create,
+    mutationFn: employeeApi.createNew,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['employees'] });
-      navigate('/admin');
-    }
-  });
+      queryClient.invalidateQueries({ queryKey: ["employees"] })
+      goTo("/admin")
+    },
+  })
 }
