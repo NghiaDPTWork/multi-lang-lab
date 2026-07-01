@@ -3,11 +3,11 @@ import { Navigate, Outlet } from "react-router-dom"
 
 export function GuestRoute() {
   const { token, user } = useAuthStore()
-  const isAuthenticated = token && user
+  const hasLoggedIn = token && user
 
-  if (isAuthenticated) {
-    const path = user.role === "admin" ? "/admin" : "/attendance"
-    return <Navigate to={path} replace />
+  if (hasLoggedIn) {
+    const targetPath = user.role === "admin" ? "/admin" : "/attendance"
+    return <Navigate to={targetPath} replace />
   }
 
   return <Outlet />
@@ -19,15 +19,15 @@ export interface ProtectedRouteProps {
 
 export function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
   const { token, user } = useAuthStore()
-  const isAuthenticated = token && user
+  const hasLoggedIn = token && user
 
-  if (!isAuthenticated) {
+  if (!hasLoggedIn) {
     return <Navigate to="/login" />
   }
 
-  if (isAuthenticated && !allowedRoles.includes(user.role)) {
-    const path = user.role === "admin" ? "/admin" : "/attendance"
-    return <Navigate to={path} replace />
+  if (hasLoggedIn && !allowedRoles.includes(user.role)) {
+    const targetPath = user.role === "admin" ? "/admin" : "/attendance"
+    return <Navigate to={targetPath} replace />
   }
 
   return <Outlet />
