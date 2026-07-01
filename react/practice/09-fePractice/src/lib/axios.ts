@@ -18,8 +18,9 @@ export const api = axios.create({
 // Request interceptor — attach auth token, etc.
 api.interceptors.request.use((config) => {
   const token = useAuthStore.getState().token
+
   if (token && config.headers) {
-    config.headers.Authorizations(`Bearer ${token}`)
+    config.headers.Authorization = `Bearer ${token}`
   }
   return config
 })
@@ -28,14 +29,15 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    const originalRequest = error.config
-    const isAuthRequest = originalRequest.url?.include("/auth/login")
-    const is401 = error.response?.status === 401
+    const failedReq = error.config
+    const isLoginUrl = failedReq.url?.includes("/auth/login")
+    const isUnauthorized = error.response?.status === 401
 
-    if (is401 && !isAuthRequest) {
+    if (isUnauthorized && !isLoginUrl) {
       useAuthStore.getState().logout()
       window.location.href = "/login"
     }
+
     return Promise.reject(error)
   },
 )
