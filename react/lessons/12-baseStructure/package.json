@@ -1,0 +1,35 @@
+{
+  "name": "12-base-structure",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Hướng dẫn thiết lập cấu trúc thư mục cho dự án React Enterprise thực tế.",
+  "scripts": {
+    "dev": "vite # Chạy dự án dưới môi trường phát triển (Local Development Server)",
+    "build": "tsc -b && vite build # Biên dịch kiểm tra TypeScript và đóng gói ứng dụng (Production Bundle)",
+    "lint": "eslint . # Kiểm tra chất lượng code và định dạng tiêu chuẩn dự án",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" # Tự động định dạng lại toàn bộ code theo chuẩn Prettier"
+  },
+  "dependencies": {
+    "comment": "Chứa các thư viện runtime chính cho hệ thống",
+    "@hookform/resolvers": "^3.9.1",
+    "@radix-ui/react-slot": "^1.1.1",
+    "@tanstack/react-query": "^5.62.7",
+    "axios": "^1.7.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.1",
+    "react-router-dom": "^7.18.0",
+    "sonner": "^1.7.0",
+    "zod": "^3.24.1",
+    "zustand": "^5.0.2"
+  },
+  "devDependencies": {
+    "comment": "Chứa các thư viện hỗ trợ biên dịch, dev server và type-check",
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "~5.6.3",
+    "vite": "^6.0.5"
+  }
+}
