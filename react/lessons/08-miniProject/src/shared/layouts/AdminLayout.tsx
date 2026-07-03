@@ -48,7 +48,7 @@ export default function AdminLayout() {
                   "px-3 py-1.5 text-xs font-semibold cursor-pointer transition-all rounded-md",
                   location.pathname === "/admin"
                     ? "bg-destructive text-destructive-foreground"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
                 Dashboard
@@ -58,12 +58,6 @@ export default function AdminLayout() {
                 className="px-3 py-1.5 text-xs font-semibold cursor-pointer transition-all rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
               >
                 Về Trang Chủ
-              </Link>
-              <Link
-                to="/profile"
-                className="px-3 py-1.5 text-xs font-semibold cursor-pointer transition-all rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
-              >
-                Hồ Sơ
               </Link>
             </nav>
 
@@ -112,13 +106,17 @@ export default function AdminLayout() {
       <main className="flex-1 max-w-4xl mx-auto w-full p-6">
         <div className="mb-6 p-4 rounded-xl border border-destructive/20 bg-destructive/5 text-destructive flex items-center gap-3 text-sm font-semibold">
           <ShieldAlert className="w-5 h-5 shrink-0" />
-          <span>Bạn đang truy cập trang Quản Trị với đầy đủ quyền hạn hệ thống.</span>
+          <span>
+            Bạn đang truy cập trang Quản Trị với đầy đủ quyền hạn hệ thống.
+          </span>
         </div>
         <Outlet />
       </main>
 
       <footer className="border-t bg-muted/40 py-6 text-center text-xs text-muted-foreground">
-        <p>© 2026 FestiveHub Admin Panel - Quản lý trải nghiệm văn hóa & ngày lễ</p>
+        <p>
+          © 2026 FestiveHub Admin Panel - Quản lý trải nghiệm văn hóa & ngày lễ
+        </p>
       </footer>
     </div>
   );

@@ -1,8 +1,6 @@
-export interface IEmployee {
-  id: string
-  name: string
+export interface User {
+  _id: string
   email: string
-  position: string
-  department: string
-  status: "active" | "on_leave" | "inactive"
+  password: string
+  role: "admin" | "employee" | string
 }

@@ -1,75 +1,26 @@
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { useUserLogin } from "./hooks/use-auth"
-import { LoginFormInputs, loginValidationSchema } from "./schemas/auth-schema"
 
-export function LoginPage() {
-  const authMutation = useUserLogin()
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormInputs>({
-    mode: "onTouched",
-    resolver: zodResolver(loginValidationSchema),
-    defaultValues: {
-      email: "admin@example.com",
-      password: "admin123",
-    },
-  })
-
-  const handleLoginSubmit = (formData: LoginFormInputs) => {
-    authMutation.mutate(formData)
-  }
-
+export default function LoginPage() {
   return (
-    <div className="flex h-screen items-center justify-center p-4 bg-muted/20">
+    <div className="flex items-center justify-center h-screen b-4">
       <div className="w-full max-w-sm">
         <Card>
           <CardHeader>
-            <CardTitle>
-              Login
-            </CardTitle>
+            <CardTitle className="text-center"> Login Form</CardTitle>
           </CardHeader>
+
           <CardContent>
-            <form onSubmit={handleSubmit(handleLoginSubmit)} className="space-y-4">
+            <form action="submit" className="space-y-4">
               <div className="space-y-1">
-                <Input type="email" placeholder="Email" {...register("email")} />
-                {errors.email && (
-                  <p className="text-xs text-destructive">
-                    {errors.email.message}
-                  </p>
-                )}
+                <Input type="email" placeholder="Please text email here ..." />
               </div>
               <div className="space-y-1">
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  {...register("password")}
-                />
-                {errors.password && (
-                  <p className="text-xs text-destructive">
-                    {errors.password.message}
-                  </p>
-                )}
+                <Input type="password" placeholder="*****" />
               </div>
-              {authMutation.isError && (
-                <p className="text-xs text-destructive text-center">
-                  {(authMutation.error as any)?.response?.data?.message ||
-                    "Invalid email or password"}
-                </p>
-              )}
-              <div className="w-full">
-                <Button
-                  type="submit"
-                  disabled={authMutation.isPending}
-                >
-                  {authMutation.isPending ? "Signing In..." : "Sign In"}
-                </Button>
+              <div className="space-y-1">
+                <Button className="w-full">Login</Button>
               </div>
             </form>
           </CardContent>

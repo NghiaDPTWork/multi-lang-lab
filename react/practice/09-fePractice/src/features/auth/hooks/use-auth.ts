@@ -1,52 +1,53 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { authService } from "../services/auth-service"
-import { useNavigate } from "react-router-dom"
 import { useAuthStore } from "@/store/auth-store"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useNavigate, useParams } from "react-router-dom"
+import { authService } from "../services/auth-service"
 
-export function useUserLogin() {
-  const goTo = useNavigate()
-  const setToken = useAuthStore((state) => state.setToken)
+export const useLogin = () => {
+  const navigate = useNavigate()
+  const setToken = useAuthStore.getState().setToken
+
   return useMutation({
     mutationFn: authService.login,
 
-    onSuccess: (responsePayload) => {
-      setToken(responsePayload.token, responsePayload.user)
-      if (responsePayload.user.role === "admin") {
-        goTo("/admin")
+    onSuccess(payload) {
+      setToken(payload.accessToken, payload.user)
+
+      if (payload.user.role === "admin") {
+        navigate("/admin")
       } else {
-        goTo("/attendance")
+        navigate("/attendance")
       }
-      console.log("Đăng nhập thành công chúc mừng bạn đã đăng nhập")
+
+      console.log("Login successfull !!!")
     },
 
-    onError: (authError: any) => {
-      console.log("Đăng nhập thất bại rồi xem lỗi ở đây nè " + authError)
+    onError(error: any) {
+      console.log("Osp!!! Something go wrong for Login " + error.message)
     },
   })
 }
 
-export function useUserLogout() {
-  const goTo = useNavigate()
+export const useLogout = () => {
   const queryClient = useQueryClient()
-  const logout = useAuthStore.getState().logout
+  const logoutStore = useAuthStore.getState().logout
+  const navigate = useNavigate()
 
   return useMutation({
     mutationFn: authService.logout,
-    onSuccess: () => {
-      logout()
+
+    onSuccess() {
+      logoutStore()
       queryClient.clear()
-      goTo("/login")
-      console.log(
-        "Đăng xuất thành công. Bạn cần đăng nhập lại để thao tác tiếp",
-      )
+      navigate("/login")
+      console.log("Logout successfull")
     },
-    onError: () => {
-      logout()
+
+    onError(error: any) {
+      logoutStore()
       queryClient.clear()
-      goTo("/login")
-      console.error(
-        "Đăng xuất thất bại rồi bạn cần xem lại mạng và chờ server phản hồi sau",
-      )
+      navigate("/")
+      console.log("Something go wrong for Logout " + error.message)
     },
   })
 }

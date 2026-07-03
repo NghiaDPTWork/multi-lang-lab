@@ -1,9 +1,4 @@
-import { useEffect, useState } from "react";
-import {
-  EmptyState,
-  ErrorState,
-  LoadingState,
-} from "@/components/ui/StatusStates";
+import { ErrorState, LoadingState } from "@/components/ui/StatusStates";
 import {
   Card,
   CardContent,

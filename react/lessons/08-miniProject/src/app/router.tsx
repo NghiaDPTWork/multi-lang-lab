@@ -5,7 +5,17 @@ import HomePage from "@/features/landing/pages/HomePage";
 import AdminLayout from "@/shared/layouts/AdminLayout";
 import UserLayout from "@/shared/layouts/UserLayout";
 import { createBrowserRouter } from "react-router-dom";
-import { ProtectedRoute, GuestRouter } from "@/shared/components/common";
+import GuestRouter from "@/shared/components/guards/GuestRouter";
+import ProtectedRoute from "@/shared/components/guards/ProtectedRoute";
+import RitualCategoryPage from "@/features/rituals/pages/RitualCategoryPage";
+import RitualDetailPage from "@/features/rituals/pages/RitualDetailPage";
+import UnAuthorizedPage from "@/shared/pages/UnAuthorizedPage";
+import NotFoundPage from "@/shared/pages/NotFoundPage";
+import AdminDashboard from "@/features/rituals/pages/AdminDashboard";
+import ManageRitualsListPage from "@/features/rituals/pages/ManageRitualsListPage";
+import ManageRitualCreatePage from "@/features/rituals/pages/ManageRitualCreatePage";
+import ManageRitualEditPage from "@/features/rituals/pages/ManageRitualEditPage";
+import ManageUserListPage from "@/features/rituals/pages/ManageUserListPage";
 
 export const router = createBrowserRouter([
   {
@@ -17,41 +27,76 @@ export const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        element: <GuestRouter />,
-        children: [
-          {
-            path: "login",
-            element: <LoginPage />,
-          },
-          {
-            path: "register",
-            element: <RegisterPage />,
-          },
-        ],
+        path: "rituals",
+        element: <RitualCategoryPage />,
       },
       {
-        element: <ProtectedRoute />,
-        children: [
-          {
-            path: "profile",
-            element: <ProfilePage />,
-          },
-        ],
+        path: "rituals:id",
+        element: <RitualDetailPage />,
       },
+      {
+        path: "login",
+        element: (
+          <GuestRouter>
+            <LoginPage />
+          </GuestRouter>
+        ),
+      },
+      {
+        path: "register",
+        element: (
+          <GuestRouter>
+            <RegisterPage />
+          </GuestRouter>
+        ),
+      },
+
+      // Process Wrong Role for User
+      {
+        path: "unauthorized",
+        element: <UnAuthorizedPage />,
+      },
+      {
+        path: "profile",
+        element: (
+          <ProtectedRoute allowedRoles={["user"]}>
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
+      },
+
+      // Handle 404 Error
+      { path: "*", element: <NotFoundPage /> },
     ],
   },
+  // Admin
   {
     path: "/admin",
-    element: <ProtectedRoute allowedRoles={["admin"]} />,
+    element: (
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
-        element: <AdminLayout />,
-        children: [
-          {
-            index: true,
-            element: <HomePage />,
-          },
-        ],
+        index: true,
+        element: <AdminDashboard />,
+      },
+      {
+        path: "rituals",
+        element: <ManageRitualsListPage />,
+      },
+      {
+        path: "rituals/create",
+        element: <ManageRitualCreatePage />,
+      },
+      {
+        path: "rituals/:id/edit",
+        element: <ManageRitualEditPage />,
+      },
+      {
+        path: "users",
+        element: <ManageUserListPage />,
       },
     ],
   },

@@ -1,10 +1,11 @@
 import { api } from "@/lib/axios"
-import { IAuthResponse } from "../types"
-import { LoginFormInputs } from "../schemas/auth-schema"
+import { LoginFormField } from "../schemas/auth-schema"
+import { AuthResponse } from "../types"
 
 export const authService = {
-  login: async (userCredentials: LoginFormInputs): Promise<IAuthResponse> => {
-    return api.post("/auth/login", userCredentials)
+  login: async (cerdentials: LoginFormField): Promise<AuthResponse> => {
+    const response = await api.post<AuthResponse>("/auth/login", cerdentials)
+    return response.data
   },
 
   logout: async () => {

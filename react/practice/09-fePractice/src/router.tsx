@@ -1,13 +1,12 @@
 import { createBrowserRouter } from "react-router-dom"
-
-import HomePage from "@/pages/home-page"
 import { GuestRoute, ProtectedRoute } from "./components/auth-guard"
-import { LoginPage } from "./features/auth/login-page"
-import { MainLayout } from "./components/common/main-layout"
-import { EmployeeListPage } from "./features/employees/employee-list-page"
-import { EmployeeCreatePage } from "./features/employees/employee-create-page"
-import { EmployeeDetailPage } from "./features/employees/employee-detail-page"
-import { AttendancePage } from "./features/attendance/attendance-page"
+import LoginPage from "./features/auth/login-page"
+import MainLayout from "./components/common/main-layout"
+import EmployeeListPage from "./features/employees/employee-list-page"
+import EmployeeDetailPage from "./features/employees/employee-detail-page"
+import EmployeeCreatePage from "./features/employees/employee-create-page"
+import EmployeeAttendancePage from "./features/attendance/employee-attedance-page"
+import HomePage from "./pages/home-page"
 
 export const router = createBrowserRouter([
   {
@@ -19,7 +18,6 @@ export const router = createBrowserRouter([
       },
     ],
   },
-
   {
     element: <MainLayout />,
     children: [
@@ -35,12 +33,12 @@ export const router = createBrowserRouter([
             element: <EmployeeListPage />,
           },
           {
-            path: "/admin/employees/create",
-            element: <EmployeeCreatePage />,
+            path: "/employee/:id",
+            element: <EmployeeDetailPage />,
           },
           {
-            path: "/admin/employees/:id",
-            element: <EmployeeDetailPage />,
+            path: "/employees/create",
+            element: <EmployeeCreatePage />,
           },
         ],
       },
@@ -49,7 +47,7 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "/attendance",
-            element: <AttendancePage />,
+            element: <EmployeeAttendancePage />,
           },
         ],
       },

@@ -29,11 +29,11 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    const failedReq = error.config
-    const isLoginUrl = failedReq.url?.includes("/auth/login")
-    const isUnauthorized = error.response?.status === 401
+    const failedRequest = error.config
+    const isLoginRequest = failedRequest.url?.includes("login")
+    const is401Error = failedRequest.message?.status === 401
 
-    if (isUnauthorized && !isLoginUrl) {
+    if (is401Error && !isLoginRequest) {
       useAuthStore.getState().logout()
       window.location.href = "/login"
     }

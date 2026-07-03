@@ -1,11 +1,11 @@
-export interface IUser {
-  id: string
+export interface User {
+  _id: string
   email: string
-  name: string
+  password: string
   role: "admin" | "employee"
 }
 
-export interface IAuthResponse {
-  token: string
-  user: IUser
+export interface AuthResponse {
+  accessToken: string
+  user: User
 }
