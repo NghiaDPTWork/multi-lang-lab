@@ -5,51 +5,34 @@ export default function UserLayout() {
   const { accessToken, role } = useAuthStore();
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
-      <aside className="w-64 bg-white border-r p-6 flex flex-col gap-6">
-        <h2 className="text-xl font-bold text-blue-600">Menu</h2>
-        <nav className="flex flex-col gap-4">
-          <Link
-            to="/"
-            className="text-gray-600 hover:text-blue-600 font-medium"
-          >
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <header className="border-b px-6 py-4 bg-white shadow-sm flex justify-between items-center">
+        <h1 className="text-xl font-bold text-blue-600">
+          {role === "admin" ? "Admin Layout" : "User Layout"}
+        </h1>
+
+        <nav className="flex gap-6 font-medium text-gray-600">
+          <Link to="/" className="hover:text-blue-600">
             Trang chủ
           </Link>
-          <Link
-            to="/rituals"
-            className="text-gray-600 hover:text-blue-600 font-medium"
-          >
+          <Link to="/rituals" className="hover:text-blue-600">
             Nghi lễ
           </Link>
           {accessToken ? (
-            <Link
-              to="/profile"
-              className="text-gray-600 hover:text-blue-600 font-medium"
-            >
+            <Link to="/profile" className="hover:text-blue-600">
               Hồ sơ
             </Link>
           ) : (
-            <Link
-              to="/login"
-              className="text-gray-600 hover:text-blue-600 font-medium"
-            >
+            <Link to="/login" className="hover:text-blue-600">
               Đăng nhập
             </Link>
           )}
         </nav>
-      </aside>
+      </header>
 
-      <div className="flex-1 flex flex-col">
-        <header className="border-b px-6 py-4 bg-white shadow-sm">
-          <h1 className="text-xl font-bold text-blue-600">
-            {role === "admin" ? "Admin Layout" : "User Layout"}
-          </h1>
-        </header>
-
-        <main className="flex-1 p-6">
-          <Outlet />
-        </main>
-      </div>
+      <main className="flex-1 p-6">
+        <Outlet />
+      </main>
     </div>
   );
 }
