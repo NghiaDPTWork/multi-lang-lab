@@ -21,7 +21,10 @@ try {
     });
   }
 } catch (e) {
-  console.error("Failed to read features directory for ESLint configuration:", e);
+  console.error(
+    "Failed to read features directory for ESLint configuration:",
+    e,
+  );
 }
 
 export default defineConfig([
@@ -54,7 +57,7 @@ export default defineConfig([
     },
 
     rules: {
-      "no-unused-vars": "warn",
+      "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": "warn",
 
       "react-hooks/rules-of-hooks": "error",
@@ -70,7 +73,6 @@ export default defineConfig([
       ],
       "import-x/no-self-import": "error",
       "import-x/no-unresolved": "error",
-
     },
   },
   // Rule: Shared layer must never import from features layer
@@ -83,7 +85,8 @@ export default defineConfig([
           patterns: [
             {
               group: ["@/features/**", "**/features/**", "*../features/**"],
-              message: "Files inside 'shared' layer must not import from 'features' layer to prevent coupling and circular dependencies.",
+              message:
+                "Files inside 'shared' layer must not import from 'features' layer to prevent coupling and circular dependencies.",
             },
           ],
         },
@@ -103,10 +106,10 @@ export default defineConfig([
               .flatMap((otherFeature) => [
                 {
                   group: [
-                    `@/features/${otherFeature}/**`, 
+                    `@/features/${otherFeature}/**`,
                     `**/features/${otherFeature}/**`,
                     `**/../${otherFeature}`,
-                    `**/../${otherFeature}/**`
+                    `**/../${otherFeature}/**`,
                   ],
                   message: `Imports from feature '${otherFeature}' must use the public API ('@/features/${otherFeature}') and cannot import deep internals or use relative paths.`,
                 },
@@ -127,10 +130,10 @@ export default defineConfig([
           patterns: features.flatMap((featureName) => [
             {
               group: [
-                `@/features/${featureName}/**`, 
+                `@/features/${featureName}/**`,
                 `**/features/${featureName}/**`,
                 `**/../${featureName}`,
-                `**/../${featureName}/**`
+                `**/../${featureName}/**`,
               ],
               message: `Imports from feature '${featureName}' must use the public API ('@/features/${featureName}') and cannot import deep internals or use relative paths.`,
             },
@@ -139,7 +142,4 @@ export default defineConfig([
       ],
     },
   },
-
 ]);
-
-
