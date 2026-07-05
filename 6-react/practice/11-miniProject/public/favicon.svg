@@ -6,10 +6,8 @@
       <stop offset="100%" stop-color="#ffd700" />
     </linearGradient>
   </defs>
-  <!-- Rounded card background -->
-  <rect width="100" height="100" rx="24" fill="#09090b" />
-  <!-- Main Sparkling Star -->
-  <path d="M 50 20 Q 50 50 20 50 Q 50 50 50 80 Q 50 50 80 50 Q 50 50 50 20 Z" fill="url(#star-grad)" />
-  <!-- Small Companion Star -->
-  <path d="M 72 18 Q 72 28 62 28 Q 72 28 72 38 Q 72 28 82 28 Q 72 28 72 18 Z" fill="url(#star-grad)" opacity="0.9" />
+  <!-- Enlarge Main Star (stretching from 5 to 95 to maximize size) -->
+  <path d="M 50 5 Q 50 50 5 50 Q 50 50 50 95 Q 50 50 95 50 Q 50 50 50 5 Z" fill="url(#star-grad)" />
+  <!-- Small Star placed closely and scaled up slightly -->
+  <path d="M 80 15 Q 80 25 70 25 Q 80 25 80 35 Q 80 25 90 25 Q 80 25 80 15 Z" fill="url(#star-grad)" opacity="0.9" />
 </svg>
