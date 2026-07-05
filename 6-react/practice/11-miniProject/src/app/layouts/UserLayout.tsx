@@ -1,5 +1,12 @@
 import { useAuthStore } from "@/features/auth";
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
+
+const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+  `hover:text-blue-600 transition-colors ${
+    isActive
+      ? "text-blue-600 underline decoration-2 underline-offset-4"
+      : "text-gray-600"
+  }`;
 
 export default function UserLayout() {
   const { accessToken, role } = useAuthStore();
@@ -11,21 +18,21 @@ export default function UserLayout() {
           {role === "admin" ? "Admin Layout" : "User Layout"}
         </h1>
 
-        <nav className="flex gap-6 font-medium text-gray-600">
-          <Link to="/" className="hover:text-blue-600">
+        <nav className="flex gap-6 font-medium">
+          <NavLink to="/" end className={navLinkClass}>
             Trang chủ
-          </Link>
-          <Link to="/rituals" className="hover:text-blue-600">
+          </NavLink>
+          <NavLink to="/rituals" className={navLinkClass}>
             Nghi lễ
-          </Link>
+          </NavLink>
           {accessToken ? (
-            <Link to="/profile" className="hover:text-blue-600">
+            <NavLink to="/profile" className={navLinkClass}>
               Hồ sơ
-            </Link>
+            </NavLink>
           ) : (
-            <Link to="/login" className="hover:text-blue-600">
+            <NavLink to="/login" className={navLinkClass}>
               Đăng nhập
-            </Link>
+            </NavLink>
           )}
         </nav>
       </header>

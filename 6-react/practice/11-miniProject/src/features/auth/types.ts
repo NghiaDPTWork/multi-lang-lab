@@ -54,3 +54,7 @@ export interface JwtPayload {
   email: string;
   role: UserRole;
 }
+
+export interface ApiErrorResponse {
+  message: string;
+}
