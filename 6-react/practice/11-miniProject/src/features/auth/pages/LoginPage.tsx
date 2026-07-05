@@ -1,3 +1,4 @@
+import { useLogin } from "../hooks/useLogin";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -11,7 +12,6 @@ import { Label } from "@/shared/components/ui/label";
 import { Input } from "@/shared/components/ui/input";
 import { Button } from "@/shared/components/ui/button";
 import { AuthSchema, type LoginFormFields } from "../schema";
-import { useLogin } from "../hooks/useLogin";
 import type { LoginRequest } from "../types";
 
 export default function LoginPage() {
@@ -47,7 +47,10 @@ export default function LoginPage() {
           <form onSubmit={handleLogin(onLogin)} className="space-y-4">
             {/* Trường Email */}
             <div className="space-y-2">
-              <Label htmlFor="email" className={errors.email ? "text-red-500" : ""}>
+              <Label
+                htmlFor="email"
+                className={errors.email ? "text-red-500" : ""}
+              >
                 Email
               </Label>
               <Input
@@ -55,16 +58,25 @@ export default function LoginPage() {
                 type="email"
                 placeholder="name@example.com"
                 {...register("email")}
-                className={errors.email ? "border-red-500 focus-visible:ring-red-500" : ""}
+                className={
+                  errors.email
+                    ? "border-red-500 focus-visible:ring-red-500"
+                    : ""
+                }
               />
               {errors.email && (
-                <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
             {/* Trường Mật khẩu */}
             <div className="space-y-2">
-              <Label htmlFor="password" className={errors.password ? "text-red-500" : ""}>
+              <Label
+                htmlFor="password"
+                className={errors.password ? "text-red-500" : ""}
+              >
                 Mật khẩu
               </Label>
               <Input
@@ -72,15 +84,25 @@ export default function LoginPage() {
                 type="password"
                 placeholder="••••••••"
                 {...register("password")}
-                className={errors.password ? "border-red-500 focus-visible:ring-red-500" : ""}
+                className={
+                  errors.password
+                    ? "border-red-500 focus-visible:ring-red-500"
+                    : ""
+                }
               />
               {errors.password && (
-                <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
             {/* Nút Đăng nhập */}
-            <Button type="submit" disabled={isPending} className="w-full cursor-pointer">
+            <Button
+              type="submit"
+              disabled={isPending}
+              className="w-full cursor-pointer"
+            >
               {isPending ? "Đang đăng nhập..." : "Đăng nhập"}
             </Button>
           </form>
