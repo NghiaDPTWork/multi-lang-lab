@@ -1,8 +1,16 @@
+import apiClient from "@/lib/axios";
 import type { AuthResponse, User, userLogin, userRegister } from "./types";
 
 export const UserService = {
-  async login(_credentials: userLogin): Promise<AuthResponse> {
-    // TODO: Implement login API call
-    throw new Error("Not implemented");
+  async login(credentials: userLogin): Promise<AuthResponse> {
+    return apiClient.post<AuthResponse>("/auth/login", credentials);
+  },
+
+  async register(credentials: userRegister): Promise<AuthResponse> {
+    return apiClient.post<AuthResponse>("/auth/resgister", credentials);
+  },
+
+  async getMe(): Promise<User> {
+    return apiClient.get<User>("auth/me");
   },
 };
