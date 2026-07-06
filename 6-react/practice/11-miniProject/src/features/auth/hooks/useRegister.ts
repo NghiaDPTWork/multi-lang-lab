@@ -2,8 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../service";
 import { toast } from "sonner";
-import type { ApiErrorResponse, AuthResponse } from "../types";
-import type { RegisterFormFields } from "../schema";
+import type { ApiErrorResponse, AuthResponse, RegisterRequest } from "../types";
 import type { AxiosError } from "axios";
 
 export function useRegister() {
@@ -12,10 +11,9 @@ export function useRegister() {
   return useMutation<
     AuthResponse,
     AxiosError<ApiErrorResponse>,
-    RegisterFormFields
+    RegisterRequest
   >({
-    mutationFn: ({ confirmPassword, ...registerData }) =>
-      authService.register(registerData),
+    mutationFn: (registerData) => authService.register(registerData),
 
     onSuccess: () => {
       toast.success("Register successfully !!!", {
