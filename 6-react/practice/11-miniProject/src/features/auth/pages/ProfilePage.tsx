@@ -27,7 +27,9 @@ export default function ProfilePage() {
       <div className="space-y-4">
         <div className="border-b pb-2">
           <span className="text-xs text-gray-400 block">Họ và tên</span>
-          <span className="text-gray-800 font-medium">{user.fullname}</span>
+          <span className="text-gray-800 font-medium">
+            {user.fullname || "Dương P. Trọng Nghĩa"}
+          </span>
         </div>
 
         <div className="border-b pb-2">
