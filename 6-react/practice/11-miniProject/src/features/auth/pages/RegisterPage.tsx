@@ -16,7 +16,7 @@ import { useRegister } from "../hooks/useRegister";
 
 export default function RegisterPage() {
   const {
-    register: registerField,
+    register,
     handleSubmit: handleRegister,
     formState: { errors },
   } = useForm<RegisterFormFields>({
@@ -56,7 +56,7 @@ export default function RegisterPage() {
               <Input
                 id="fullname"
                 placeholder="Nguyễn Văn A"
-                {...registerField("fullname")}
+                {...register("fullname")}
                 className={
                   errors.fullname
                     ? "border-red-500 focus-visible:ring-red-500"
@@ -81,9 +81,11 @@ export default function RegisterPage() {
                 id="email"
                 type="email"
                 placeholder="name@example.com"
-                {...registerField("email")}
+                {...register("email")}
                 className={
-                  errors.email ? "border-red-500 focus-visible:ring-red-500" : ""
+                  errors.email
+                    ? "border-red-500 focus-visible:ring-red-500"
+                    : ""
                 }
               />
               {errors.email && (
@@ -104,7 +106,7 @@ export default function RegisterPage() {
                 id="password"
                 type="password"
                 placeholder="••••••••"
-                {...registerField("password")}
+                {...register("password")}
                 className={
                   errors.password
                     ? "border-red-500 focus-visible:ring-red-500"
@@ -129,7 +131,7 @@ export default function RegisterPage() {
                 id="confirmPassword"
                 type="password"
                 placeholder="••••••••"
-                {...registerField("confirmPassword")}
+                {...register("confirmPassword")}
                 className={
                   errors.confirmPassword
                     ? "border-red-500 focus-visible:ring-red-500"
