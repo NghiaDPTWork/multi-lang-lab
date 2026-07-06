@@ -1,5 +1,6 @@
 import { useAuthStore } from "@/shared/stores/authStore";
 import { NavLink, Outlet } from "react-router-dom";
+import { Button } from "@/shared/components/ui/button";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   `hover:text-blue-600 transition-colors ${
@@ -9,7 +10,7 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   }`;
 
 export default function UserLayout() {
-  const { accessToken, role } = useAuthStore();
+  const { accessToken, role, clearAuth } = useAuthStore();
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -18,7 +19,7 @@ export default function UserLayout() {
           {role === "admin" ? "Admin Layout" : "User Layout"}
         </h1>
 
-        <nav className="flex gap-6 font-medium">
+        <nav className="flex gap-6 font-medium items-center">
           <NavLink to="/" end className={navLinkClass}>
             Trang chủ
           </NavLink>
@@ -26,9 +27,18 @@ export default function UserLayout() {
             Nghi lễ
           </NavLink>
           {accessToken ? (
-            <NavLink to="/profile" className={navLinkClass}>
-              Hồ sơ
-            </NavLink>
+            <>
+              <NavLink to="/profile" className={navLinkClass}>
+                Hồ sơ
+              </NavLink>
+              <Button
+                onClick={clearAuth}
+                variant="ghost"
+                className="hover:text-blue-600 text-gray-600 font-medium cursor-pointer h-auto p-0 hover:bg-transparent"
+              >
+                Đăng xuất
+              </Button>
+            </>
           ) : (
             <NavLink to="/login" className={navLinkClass}>
               Đăng nhập
