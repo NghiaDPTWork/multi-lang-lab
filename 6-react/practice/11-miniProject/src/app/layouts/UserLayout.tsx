@@ -1,6 +1,7 @@
 import { useAuthStore } from "@/shared/stores/authStore";
 import { NavLink, Outlet } from "react-router-dom";
 import { Button } from "@/shared/components/ui/button";
+import { useLogout } from "@/features/auth";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   `hover:text-blue-600 transition-colors ${
@@ -10,7 +11,8 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   }`;
 
 export default function UserLayout() {
-  const { accessToken, role, clearAuth } = useAuthStore();
+  const { accessToken, role } = useAuthStore();
+  const { mutate: logoutMutation } = useLogout();
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -33,7 +35,7 @@ export default function UserLayout() {
                 Hồ sơ
               </NavLink>
               <Button
-                onClick={clearAuth}
+                onClick={logoutMutation}
                 variant="ghost"
                 className="hover:text-blue-600 text-gray-600 font-medium cursor-pointer h-auto p-0 hover:bg-transparent"
               >
