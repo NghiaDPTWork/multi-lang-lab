@@ -6,8 +6,7 @@ import axios, {
 } from "axios";
 import { env } from "./env";
 import { toast } from "sonner";
-// eslint-disable-next-line no-restricted-imports
-import { useAuthStore } from "@/features/auth/store";
+import { useAuthStore } from "@/shared/stores/authStore";
 
 // =========== INTERFACE DEF ===========
 interface RetryConfig extends InternalAxiosRequestConfig {

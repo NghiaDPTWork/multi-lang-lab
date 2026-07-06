@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuthStore } from "../store";
+import { useAuthStore } from "@/shared/stores/authStore";
 import { authService } from "../service";
 import type {
   ApiErrorResponse,

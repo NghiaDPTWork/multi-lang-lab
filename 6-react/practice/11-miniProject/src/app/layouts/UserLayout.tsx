@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/features/auth";
+import { useAuthStore } from "@/shared/stores/authStore";
 import { NavLink, Outlet } from "react-router-dom";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>

@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuthStore } from "../../store";
+import { useAuthStore } from "@/shared/stores/authStore";
 
 export default function GuestRouter() {
   const { accessToken, role } = useAuthStore();
