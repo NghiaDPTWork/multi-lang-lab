@@ -1,6 +1,5 @@
 import { useAuthStore } from "@/shared/stores/authStore";
 import { NavLink, Outlet } from "react-router-dom";
-import { Button } from "@/shared/components/ui/button";
 import { useLogout } from "@/features/auth";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -34,13 +33,12 @@ export default function UserLayout() {
               <NavLink to="/profile" className={navLinkClass}>
                 Hồ sơ
               </NavLink>
-              <Button
+              <button
                 onClick={() => logoutMutation()}
-                variant="ghost"
                 className="hover:text-blue-600 text-gray-600 font-medium cursor-pointer h-auto p-0 hover:bg-transparent"
               >
                 Đăng xuất
-              </Button>
+              </button>
             </>
           ) : (
             <NavLink to="/login" className={navLinkClass}>
