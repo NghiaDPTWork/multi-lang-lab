@@ -15,7 +15,6 @@ import { RegisterSchema, type RegisterFormFields } from "../schema";
 import { useRegister } from "../hooks/useRegister";
 
 export default function RegisterPage() {
-  // 1. Khai báo form với kiểu RegisterFormFields (4 trường) và validate bằng RegisterSchema
   const {
     register: registerField,
     handleSubmit: handleRegister,
@@ -31,13 +30,11 @@ export default function RegisterPage() {
     },
   });
 
-  // 2. Gọi hook useRegister (chỉ nhận dữ liệu API 3 trường RegisterRequest)
   const { mutate: registerMutate, isPending } = useRegister();
 
-  // 3. Hàm submit: bóc tách confirmPassword ra trước khi gửi lên API (Hướng 1)
   const onSubmit = (formData: RegisterFormFields) => {
     const { confirmPassword, ...apiData } = formData;
-    registerMutate(apiData); // Gửi đi 3 trường (fullname, email, password)
+    registerMutate(apiData);
   };
 
   return (
@@ -49,7 +46,6 @@ export default function RegisterPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleRegister(onSubmit)} className="space-y-4">
-            {/* Họ và tên */}
             <div className="space-y-2">
               <Label
                 htmlFor="fullname"
@@ -74,7 +70,6 @@ export default function RegisterPage() {
               )}
             </div>
 
-            {/* Email */}
             <div className="space-y-2">
               <Label
                 htmlFor="email"
@@ -98,7 +93,6 @@ export default function RegisterPage() {
               )}
             </div>
 
-            {/* Mật khẩu */}
             <div className="space-y-2">
               <Label
                 htmlFor="password"
@@ -124,7 +118,6 @@ export default function RegisterPage() {
               )}
             </div>
 
-            {/* Xác nhận mật khẩu */}
             <div className="space-y-2">
               <Label
                 htmlFor="confirmPassword"
@@ -150,7 +143,6 @@ export default function RegisterPage() {
               )}
             </div>
 
-            {/* Nút Đăng ký */}
             <Button
               type="submit"
               disabled={isPending}
@@ -160,7 +152,6 @@ export default function RegisterPage() {
             </Button>
           </form>
 
-          {/* Link chuyển hướng về đăng nhập */}
           <div className="text-center mt-4 text-xs text-muted-foreground">
             Đã có tài khoản?{" "}
             <Link
