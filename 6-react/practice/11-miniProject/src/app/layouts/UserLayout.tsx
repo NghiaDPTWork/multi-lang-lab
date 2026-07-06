@@ -35,7 +35,7 @@ export default function UserLayout() {
                 Hồ sơ
               </NavLink>
               <Button
-                onClick={logoutMutation}
+                onClick={() => logoutMutation()}
                 variant="ghost"
                 className="hover:text-blue-600 text-gray-600 font-medium cursor-pointer h-auto p-0 hover:bg-transparent"
               >

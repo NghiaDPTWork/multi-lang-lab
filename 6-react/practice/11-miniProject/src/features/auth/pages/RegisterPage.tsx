@@ -33,9 +33,8 @@ export default function RegisterPage() {
   const { mutate: registerMutate, isPending } = useRegister();
 
   const onSubmit = (formData: RegisterFormFields) => {
-    const apiData = { ...formData } as Partial<RegisterFormFields>;
-    delete apiData.confirmPassword;
-    registerMutate(apiData as RegisterRequest);
+    const { confirmPassword, ...apiData } = formData;
+    registerMutate(apiData);
   };
 
   return (
