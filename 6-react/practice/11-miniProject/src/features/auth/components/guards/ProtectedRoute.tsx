@@ -1,13 +1,12 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useAuthStore } from "@/shared/stores/authStore";
+import { useAuth } from "../../hooks/useAuth";
 
 interface ProtectedRouteProps {
   allowedRoles?: string[];
 }
 
 export default function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
-  const { accessToken, role } = useAuthStore();
-  const isAuthenticated = accessToken && role;
+  const { isAuthenticated, role } = useAuth();
   const location = useLocation();
 
   if (!isAuthenticated) {

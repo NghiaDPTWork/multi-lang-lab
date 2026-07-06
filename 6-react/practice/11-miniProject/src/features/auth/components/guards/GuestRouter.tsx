@@ -1,9 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuthStore } from "@/shared/stores/authStore";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function GuestRouter() {
-  const { accessToken, role } = useAuthStore();
-  const isAuthenticated = accessToken && role;
+  const { isAuthenticated, role } = useAuth();
 
   if (isAuthenticated) {
     const authPath = role === "admin" ? "/admin" : "/";

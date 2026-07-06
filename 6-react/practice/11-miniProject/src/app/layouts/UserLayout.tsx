@@ -27,6 +27,7 @@ export default function UserLayout() {
             Nghi lễ
           </NavLink>
           {accessToken ? (
+            // Muốn render được nhiêu thì phải có Fragment tag bọc lại
             <>
               <NavLink to="/profile" className={navLinkClass}>
                 Hồ sơ

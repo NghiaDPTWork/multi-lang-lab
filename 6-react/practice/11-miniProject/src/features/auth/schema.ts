@@ -1,6 +1,7 @@
 import * as z from "zod";
 
 // Schema đăng nhập (AuthSchema)
+// Lấy Login làm chuẩn cho 2 field email - passwords
 export const AuthSchema = z.object({
   email: z
     .string()

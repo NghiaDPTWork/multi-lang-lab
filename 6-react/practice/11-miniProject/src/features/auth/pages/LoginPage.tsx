@@ -1,7 +1,3 @@
-import { useLogin } from "../hooks/useLogin";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -12,29 +8,9 @@ import {
 import { Label } from "@/shared/components/ui/label";
 import { Input } from "@/shared/components/ui/input";
 import { Button } from "@/shared/components/ui/button";
-import { AuthSchema, type LoginFormFields } from "../schema";
-import type { LoginRequest } from "../types";
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
-  const {
-    register,
-    handleSubmit: handleLogin,
-    formState: { errors },
-  } = useForm<LoginFormFields>({
-    mode: "onTouched",
-    resolver: zodResolver(AuthSchema),
-    defaultValues: {
-      email: "t.nghia2112278@gmail.com",
-      password: "12345678",
-    },
-  });
-
-  const { mutate: loginMutation, isPending } = useLogin();
-
-  const onLogin = (data: LoginRequest) => {
-    loginMutation(data);
-  };
-
   return (
     <div className="flex items-center justify-center min-h-[80vh] p-4">
       <Card className="w-full max-w-md shadow-md">
@@ -45,66 +21,32 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin(onLogin)} className="space-y-4">
+          <form className="space-y-4">
             {/* Trường Email */}
             <div className="space-y-2">
-              <Label
-                htmlFor="email"
-                className={errors.email ? "text-red-500" : ""}
-              >
-                Email
-              </Label>
+              <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="name@example.com"
-                {...register("email")}
-                className={
-                  errors.email
-                    ? "border-red-500 focus-visible:ring-red-500"
-                    : ""
-                }
+                required
               />
-              {errors.email && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.email.message}
-                </p>
-              )}
             </div>
 
             {/* Trường Mật khẩu */}
             <div className="space-y-2">
-              <Label
-                htmlFor="password"
-                className={errors.password ? "text-red-500" : ""}
-              >
-                Mật khẩu
-              </Label>
+              <Label htmlFor="password">Mật khẩu</Label>
               <Input
                 id="password"
                 type="password"
                 placeholder="••••••••"
-                {...register("password")}
-                className={
-                  errors.password
-                    ? "border-red-500 focus-visible:ring-red-500"
-                    : ""
-                }
+                required
               />
-              {errors.password && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.password.message}
-                </p>
-              )}
             </div>
 
             {/* Nút Đăng nhập */}
-            <Button
-              type="submit"
-              disabled={isPending}
-              className="w-full cursor-pointer"
-            >
-              {isPending ? "Đang đăng nhập..." : "Đăng nhập"}
+            <Button type="submit" className="w-full cursor-pointer">
+              Đăng nhập
             </Button>
           </form>
           <div className="text-center mt-4 text-xs text-muted-foreground">
