@@ -1,6 +1,7 @@
 import { useLogin } from "../hooks/useLogin";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -106,6 +107,15 @@ export default function LoginPage() {
               {isPending ? "Đang đăng nhập..." : "Đăng nhập"}
             </Button>
           </form>
+          <div className="text-center mt-4 text-xs text-muted-foreground">
+            Chưa có tài khoản?{" "}
+            <Link
+              to="/register"
+              className="text-primary underline font-medium hover:text-primary/80"
+            >
+              Đăng ký ngay
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>
