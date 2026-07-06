@@ -1,17 +1,16 @@
 import * as z from "zod";
 
-// Schema đăng nhập (AuthSchema) - Chỉ cần cấu trúc email/password cơ bản, không cần ràng buộc password phức tạp
+// Schema đăng nhập (AuthSchema)
 export const AuthSchema = z.object({
   email: z
     .string()
     .min(1, { message: "Email không được để trống" })
     .email({ message: "Email không đúng định dạng" }),
-  password: z
-    .string()
-    .min(1, { message: "Mật khẩu không được để trống" }), // Đăng nhập chỉ cần điền mật khẩu
+  password: z.string().min(1, { message: "Mật khẩu không được để trống" }),
 });
 
-// Schema đăng ký (RegisterSchema) - Kế thừa từ AuthSchema nhưng định nghĩa lại (override) password với các ràng buộc phức tạp
+// Schema đăng ký (RegisterSchema)
+// Kế thừa từ AuthSchema nhưng định nghĩa lại (override) password với các ràng buộc phức tạp
 export const RegisterSchema = AuthSchema.extend({
   password: z
     .string()
