@@ -35,21 +35,21 @@ export const useLogin = () => {
         navigate(from, { replace: true });
       }
 
-      toast.success("Login successfully!!!", {
-        description: "Now you can view your persional information",
+      toast.success("Đăng nhập thành công!!!", {
+        description: "Bây giờ bạn có thể xem thông tin cá nhân của mình",
       });
     },
 
     onError: (error) => {
-      toast.error("Login error!!!", {
+      toast.error("Đăng nhập thất bại!!!", {
         description:
           error.response?.data?.message ||
-          "Somthing go wrong please wait in few minutes to try again",
+          "Đã có lỗi xảy ra, vui lòng thử lại sau vài phút",
       });
     },
 
     onSettled: () => {
-      console.log("Hook useLogin run now");
+      console.log("Hook useLogin đang chạy");
     },
   });
 };

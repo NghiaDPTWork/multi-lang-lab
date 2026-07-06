@@ -21,8 +21,8 @@ export const useRegister = () => {
       authService.register(registerData),
 
     onSuccess: () => {
-      toast.success("Register successfully", {
-        description: "Please login before continue.",
+      toast.success("Đăng ký thành công", {
+        description: "Vui lòng đăng nhập để tiếp tục.",
       });
 
       navigate("/login");
@@ -31,12 +31,12 @@ export const useRegister = () => {
     onError: (error) => {
       toast.error(
         error.response?.data?.message ||
-          "Register error, please try again in few minutes",
+          "Đăng ký thất bại, vui lòng thử lại sau vài phút",
       );
     },
 
     onSettled: () => {
-      console.log("Run useRegister hook now.");
+      console.log("Hook useRegister đang chạy.");
     },
   });
 };
