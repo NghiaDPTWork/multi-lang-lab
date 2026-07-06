@@ -11,29 +11,20 @@ export function useLogout() {
   const queryClient = useQueryClient();
   const clearAuth = useAuthStore.getState().clearAuth;
 
-  return useMutation<AxiosError<ApiErrorResponse>>({
+  return useMutation<void, AxiosError<ApiErrorResponse>>({
     mutationFn: authService.logout,
 
-    onSuccess: () => {
-      clearAuth();
-      queryClient.clear();
-      navigate("/login");
-      toast.success("Đăng xuất thành công!", {
-        description: "Vui lòng đăng nhập lại để tiếp tục sử dụng.",
-      });
-    },
-
     onError: (error) => {
-      clearAuth();
-      queryClient.clear();
-      navigate("/login");
-      toast.success("Đăng xuất thành công!", {
-        description: "Vui lòng đăng nhập lại để tiếp tục sử dụng.",
-      });
       console.log("Đã xảy ra lỗi khi đăng xuất: " + error.message);
     },
 
     onSettled: () => {
+      clearAuth();
+      queryClient.clear();
+      navigate("/login");
+      toast.success("Đăng xuất thành công!", {
+        description: "Vui lòng đăng nhập lại để tiếp tục sử dụng.",
+      });
       console.log("Đã chạy tới phần Đăng xuất");
     },
   });
