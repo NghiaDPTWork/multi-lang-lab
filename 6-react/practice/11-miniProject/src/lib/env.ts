@@ -1,3 +1,5 @@
 export const env = {
-  API_URL: import.meta.env.VITE_API_URL || "http://localhost:4000/api/v1/",
+  API_URL:
+    import.meta.env.VITE_API_URL ||
+    "https://thich-cung-kieng-server-rusq.onrender.com/api/v1/",
 };
