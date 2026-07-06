@@ -16,8 +16,8 @@ import { useLogin } from "../hooks/useLogin";
 
 export default function LoginPage() {
   const {
-    register,
-    handleSubmit,
+    register: login,
+    handleSubmit: handleLogin,
     formState: { errors },
   } = useForm<LoginFormFields>({
     mode: "onTouched",
@@ -28,10 +28,10 @@ export default function LoginPage() {
     },
   });
 
-  const { mutate: login, isPending } = useLogin();
+  const { mutate: loginMutation, isPending } = useLogin();
 
   const onSubmit = (data: LoginFormFields) => {
-    login(data);
+    loginMutation(data);
   };
 
   return (
@@ -44,7 +44,7 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={handleLogin(onSubmit)} className="space-y-4">
             {/* Trường Email */}
             <div className="space-y-2">
               <Label htmlFor="email" className={errors.email ? "text-red-500" : ""}>
@@ -54,7 +54,7 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 placeholder="name@example.com"
-                {...register("email")}
+                {...login("email")}
                 className={errors.email ? "border-red-500 focus-visible:ring-red-500" : ""}
               />
               {errors.email && (
@@ -71,7 +71,7 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 placeholder="••••••••"
-                {...register("password")}
+                {...login("password")}
                 className={errors.password ? "border-red-500 focus-visible:ring-red-500" : ""}
               />
               {errors.password && (
