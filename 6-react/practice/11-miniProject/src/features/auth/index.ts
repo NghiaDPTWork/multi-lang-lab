@@ -4,4 +4,5 @@ export { default as ProtectedRoute } from "./components/guards/ProtectedRoute";
 export { useLogin } from "./hooks/useLogin";
 export { useLogout } from "./hooks/useLogout";
 export { useGetMe } from "./hooks/useGetMe";
+export type { ApiErrorResponse } from "./types";
 

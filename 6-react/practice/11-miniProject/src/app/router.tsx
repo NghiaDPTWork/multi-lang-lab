@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
         element: <RitualCategoryPage />,
       },
       {
-        path: "/rituals:id",
+        path: "/rituals/:id",
         element: <RitualDetailPage />,
       },
       // For authorized proccessing
