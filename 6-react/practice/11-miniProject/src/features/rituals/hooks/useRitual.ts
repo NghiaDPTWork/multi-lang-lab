@@ -11,10 +11,11 @@ export const useRituals = () => {
   });
 };
 
-export const useRitualDetails = (id: string) => {
+export const useRitualDetail = (id: string | undefined) => {
   return useQuery<Ritual, AxiosError<ApiErrorResponse>>({
+    // ! phía sau là Khẳng định ko có giá trị null
     queryKey: ["ritual", id],
-    queryFn: () => ritualService.getById(id),
+    queryFn: () => ritualService.getById(id!),
     enabled: !!id,
   });
 };

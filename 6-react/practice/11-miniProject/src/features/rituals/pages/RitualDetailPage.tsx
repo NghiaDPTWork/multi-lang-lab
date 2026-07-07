@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useRitualDetails } from "../hooks/useRitual";
+import { useRitualDetail } from "../hooks/useRitual";
 import { LoadingState, ErrorState } from "@/shared/components";
 
 export default function RitualDetailPage() {
@@ -9,7 +9,7 @@ export default function RitualDetailPage() {
     isLoading: isLoadingRitual,
     isError: isErrorRitual,
     error: ritualError,
-  } = useRitualDetails(id || "");
+  } = useRitualDetail(id);
 
   if (isLoadingRitual) return <LoadingState message="Đang tải chi tiết nghi lễ..." />;
   if (isErrorRitual || !ritual)
