@@ -1,8 +1,8 @@
-import { useGetMe } from "../hooks/useGetMe";
 import { LoadingState, ErrorState } from "@/shared/components";
+import { useUser } from "../hooks/useUser";
 
 export default function ProfilePage() {
-  const { data: user, isPending, isError, error } = useGetMe();
+  const { data: user, isPending, isError, error } = useUser();
 
   if (isPending) {
     return <LoadingState message="Đang tải thông tin cá nhân..." />;
