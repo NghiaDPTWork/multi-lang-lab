@@ -1,19 +1,18 @@
-// Tạo một cái form mẫu cho CRUD trong service
-// Dễ maintain và dễ scale
-
 import type { AxiosInstance } from "axios";
 import type { PaginationResponse, SelectOption } from "../types";
 import apiClient from "@/lib/axios";
 
-// Input
+// Input Definition
 export interface BaseServiceConfig<
-  TEntity, // Type cura entity chính
-  TCreateDto, // Type của data khi CREATE
-  TUpdateDto, // Type của data khi UPDATE
-  TFliterParams, // Type của param khi FLITER/SEARCH
+  TEntity,
+  TCreateDto,
+  TUpdateDto,
+  TFliterParams,
 > {
-  endpoint: string;
+  // Require
+  endppoint: string;
   axios?: AxiosInstance;
+
   getAll?: (param?: TFliterParams) => Promise<PaginationResponse<TEntity>>;
   getById?: (id: string | number) => Promise<TEntity>;
   create?: (data: TCreateDto) => Promise<TEntity>;
@@ -22,7 +21,7 @@ export interface BaseServiceConfig<
   getSelectOptions?: () => Promise<SelectOption[]>;
 }
 
-// Output
+// Output Definition
 export interface BaseService<TEntity, TCreateDto, TUpdateDto, TFliterParams> {
   getAll: (param?: TFliterParams) => Promise<PaginationResponse<TEntity>>;
   getById: (id: string | number) => Promise<TEntity>;
@@ -32,19 +31,20 @@ export interface BaseService<TEntity, TCreateDto, TUpdateDto, TFliterParams> {
   getSelectOptions: () => Promise<SelectOption[]>;
 }
 
-// Function
-// Tại sao cần dung Partial? - Record là gì? (Lưu dưới dạng key-value)
+// Function Definition
 export function createBaseService<
   TEntity,
-  TCreateDto = Partial<TEntity>,
-  TUpdateDto = Partial<TEntity>,
-  TFliterParams = Record<string, unknown>,
+  TCreateDto,
+  TUpdateDto,
+  TFliterParams,
 >(
   config: BaseServiceConfig<TEntity, TCreateDto, TUpdateDto, TFliterParams>,
 ): BaseService<TEntity, TCreateDto, TUpdateDto, TFliterParams> {
+  // Definition require endpoint
   const axios = config.axios ?? apiClient;
-  const endpoint = config.endpoint;
+  const endpoint = config.endppoint;
 
+  // Return Statement
   return {
     getAll:
       config.getAll ??

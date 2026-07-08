@@ -19,3 +19,12 @@ export interface PaginationResponse<T> {
   data: T[];
   meta: PaginationMeta;
 }
+
+// Base filter params
+export interface BaseFliterParams {
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: "ASC" | "DESC";
+  search?: string;
+}

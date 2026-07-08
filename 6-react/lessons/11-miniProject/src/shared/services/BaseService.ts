@@ -74,9 +74,10 @@ export function createBaseService<
     update:
       config.update ??
       (async (id: string | number, data: TUpdateDto) => {
-        return axios.put<TEntity>(`${endpoint}/${id}`, {
+        return axios.put<TEntity>(
+          `${endpoint}/${id}`,
           data,
-        }) as unknown as Promise<TEntity>;
+        ) as unknown as Promise<TEntity>;
       }),
 
     remove:
