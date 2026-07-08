@@ -1,9 +1,20 @@
 import apiClient from "@/lib/axios";
-import type { Ritual } from "./types";
+import type {
+  createRitualDto,
+  Ritual,
+  RitualFliterParams,
+  UpdateRitualDto,
+} from "./types";
+import { createBaseService } from "@/shared/services/BaseService";
 
-export const ritualService = {
-  async getAll(): Promise<Ritual[]> {
-    const response = await apiClient.get("/ritual") as any;
-    return response.data as unknown as Ritual[];
+export const ritualService = createBaseService<
+  Ritual,
+  createRitualDto,
+  UpdateRitualDto,
+  RitualFliterParams
+>({
+  endpoint: "ritual",
+  remove: async (id: string | number) => {
+    await apiClient.patch(`ritual/${id}/soft-remove`);
   },
-};
+});
