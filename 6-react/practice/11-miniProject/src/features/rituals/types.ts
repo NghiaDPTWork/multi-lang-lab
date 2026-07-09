@@ -1,3 +1,9 @@
+import type {
+  BaseFliterParams,
+  PaginationResponse,
+  SelectOption,
+} from "@/shared/types";
+
 export interface Ritual {
   id: string;
   createdAt: string;
@@ -18,3 +24,31 @@ export interface Ritual {
   ritualMedias?: [];
   ritualTags?: [];
 }
+
+export interface createRitualDto {
+  name: string;
+  dateLunar: string;
+  dateSolar?: string;
+  timeOfExecution?: string;
+  difficultyLevel: "dễ" | "khó" | "trung bình" | "rất khó";
+  description?: string;
+  content?: string;
+  reference?: string;
+  isHot?: boolean;
+  ritualCategoryId?: string;
+}
+
+export type UpdateRitualDto = Partial<createRitualDto>;
+
+// Select option for Dropdown
+export type RitualSelectOption = SelectOption;
+
+// Fliter
+export interface RitualFliterParams extends BaseFliterParams {
+  difficultLevel?: string;
+  isHot?: boolean;
+  ritualCategoryId?: string;
+}
+
+export type RitualListResponse = PaginationResponse<Ritual>;
+
