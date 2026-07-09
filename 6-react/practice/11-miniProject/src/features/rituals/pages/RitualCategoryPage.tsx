@@ -1,6 +1,8 @@
 import { useRituals } from "../hooks/useRitual";
 import { Link } from "react-router-dom";
 import { LoadingState, ErrorState, EmptyState } from "@/shared/components";
+import type { Ritual } from "../types";
+
 
 export default function RitualCategoryPage() {
   const {
@@ -47,7 +49,7 @@ export default function RitualCategoryPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {rituals.map((ritual) => (
+        {rituals.map((ritual: Ritual) => (
           <div
             key={ritual.id}
             className="bg-white border rounded-xl p-5 shadow-sm hover:shadow-md hover:border-blue-300 transition-all flex flex-col justify-between"
