@@ -13,7 +13,7 @@ export const ritualService = createBaseService<
   UpdateRitualDto,
   RitualFliterParams
 >({
-  endppoint: "ritual",
+  endpoint: "ritual",
   remove: async (id: string | number) => {
     await apiClient.patch(`ritual/${id}/soft-remove`);
   },
