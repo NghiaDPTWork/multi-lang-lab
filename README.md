@@ -41,7 +41,7 @@ Nếu bạn muốn tham khảo hoặc chạy thử các mã nguồn có sẵn tr
 1. **Clone repository này về máy cá nhân:**
 
    ```bash
-   git clone https://github.com/your-username/multi-lang-lab.git
+   git clone https://github.com/NghiaDPTWork/multi-lang-lab.git
    cd multi-lang-lab
    ```
 
