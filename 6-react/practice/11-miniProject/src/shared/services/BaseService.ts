@@ -2,18 +2,16 @@ import type { AxiosInstance } from "axios";
 import type { PaginationResponse, SelectOption } from "../types";
 import apiClient from "@/lib/axios";
 
-// Input Definition
+// Input
 export interface BaseServiceConfig<
   TEntity,
   TCreateDto,
   TUpdateDto,
   TFliterParams,
 > {
-  // Require
-  endppoint: string;
+  endpoint: string;
   axios?: AxiosInstance;
-
-  getAll?: (param?: TFliterParams) => Promise<PaginationResponse<TEntity>>;
+  getAll?: (params?: TFliterParams) => Promise<PaginationResponse<TEntity>>;
   getById?: (id: string | number) => Promise<TEntity>;
   create?: (data: TCreateDto) => Promise<TEntity>;
   update?: (id: string | number, data: TUpdateDto) => Promise<TEntity>;
@@ -21,7 +19,7 @@ export interface BaseServiceConfig<
   getSelectOptions?: () => Promise<SelectOption[]>;
 }
 
-// Output Definition
+// Output
 export interface BaseService<TEntity, TCreateDto, TUpdateDto, TFliterParams> {
   getAll: (param?: TFliterParams) => Promise<PaginationResponse<TEntity>>;
   getById: (id: string | number) => Promise<TEntity>;
@@ -31,20 +29,16 @@ export interface BaseService<TEntity, TCreateDto, TUpdateDto, TFliterParams> {
   getSelectOptions: () => Promise<SelectOption[]>;
 }
 
-// Function Definition
+// Function
 export function createBaseService<
   TEntity,
-  TCreateDto,
-  TUpdateDto,
-  TFliterParams,
->(
-  config: BaseServiceConfig<TEntity, TCreateDto, TUpdateDto, TFliterParams>,
-): BaseService<TEntity, TCreateDto, TUpdateDto, TFliterParams> {
-  // Definition require endpoint
+  TCreateDto = Partial<TEntity>,
+  TUpdateDto = Partial<TEntity>,
+  TFliterParams = Record<string, unknown>,
+>(config: BaseServiceConfig<TEntity, TCreateDto, TUpdateDto, TFliterParams>) {
   const axios = config.axios ?? apiClient;
-  const endpoint = config.endppoint;
+  const endpoint = config.endpoint;
 
-  // Return Statement
   return {
     getAll:
       config.getAll ??
@@ -74,9 +68,10 @@ export function createBaseService<
     update:
       config.update ??
       (async (id: string | number, data: TUpdateDto) => {
-        return axios.put<TEntity>(`${endpoint}/${id}`, {
+        return axios.put<TEntity>(
+          `${endpoint}/${id}`,
           data,
-        }) as unknown as Promise<TEntity>;
+        ) as unknown as Promise<TEntity>;
       }),
 
     remove:
