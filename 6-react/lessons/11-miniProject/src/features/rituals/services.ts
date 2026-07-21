@@ -1,6 +1,6 @@
 import apiClient from "@/lib/axios";
 import type {
-  createRitualDto,
+  CreateRitualDto,
   Ritual,
   RitualFliterParams,
   UpdateRitualDto,
@@ -9,7 +9,7 @@ import { createBaseService } from "@/shared/services/BaseService";
 
 export const ritualService = createBaseService<
   Ritual,
-  createRitualDto,
+  CreateRitualDto,
   UpdateRitualDto,
   RitualFliterParams
 >({

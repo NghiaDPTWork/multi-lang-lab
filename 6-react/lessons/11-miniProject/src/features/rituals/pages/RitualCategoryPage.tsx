@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useRituals } from "../hooks/useRitual";
-import { LoadingState, ErrorState, EmptyState } from "@/shared/components/common";
+import {
+  LoadingState,
+  ErrorState,
+  EmptyState,
+} from "@/shared/components/common";
 import { RitualCard, RitualFilters } from "../components";
 
 export default function RitualCategoryPage() {
@@ -20,9 +24,12 @@ export default function RitualCategoryPage() {
   const filteredRituals = rituals.filter((ritual) => {
     const matchesSearch =
       ritual.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (ritual.description || "").toLowerCase().includes(searchTerm.toLowerCase());
+      (ritual.description || "")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
     const matchesDifficulty =
-      selectedDifficulty === "all" || ritual.difficultyLevel === selectedDifficulty;
+      selectedDifficulty === "all" ||
+      ritual.difficultyLevel === selectedDifficulty;
     return matchesSearch && matchesDifficulty;
   });
 

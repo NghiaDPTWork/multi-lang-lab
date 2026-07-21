@@ -21,11 +21,19 @@ export interface Ritual {
   reference: string;
   isHot: boolean;
   ritualCategoryId: string;
-  ritualMedias?: [];
+  ritualMedias?: RitualMedia[];
   ritualTags?: [];
 }
 
-export interface createRitualDto {
+export interface RitualMedia {
+  alt?: string;
+  id: string;
+  ritualId: string;
+  type?: string;
+  url?: string;
+}
+
+export interface CreateRitualDto {
   name: string;
   dateLunar: string;
   dateSolar?: string;
@@ -38,7 +46,7 @@ export interface createRitualDto {
   ritualCategoryId?: string;
 }
 
-export type UpdateRitualDto = Partial<createRitualDto>;
+export type UpdateRitualDto = Partial<CreateRitualDto>;
 
 // Select option for Dropdown
 export type RitualSelectOption = SelectOption;

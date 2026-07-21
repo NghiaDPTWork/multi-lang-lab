@@ -10,6 +10,7 @@ import { Badge } from "@/shared/components/ui/badge";
 import { Button } from "@/shared/components/ui/button";
 import { Flame, Calendar, Award } from "lucide-react";
 import type { Ritual } from "../types";
+import defaultImage from "../image/image.png";
 
 export interface RitualCardProps {
   ritual: Ritual;
@@ -36,6 +37,13 @@ export function RitualCard({ ritual }: RitualCardProps) {
       <CardHeader className="pb-3">
         <div className="flex justify-between items-start gap-2">
           <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <img
+                className="w-full h-full object-cover rounded-md"
+                src={ritual.ritualMedias?.[4]?.url || defaultImage}
+                alt="Ritual Picture Description"
+              />
+            </div>
             <div className="flex items-center gap-2">
               <CardTitle className="text-lg font-bold group-hover:text-primary transition-colors">
                 <Link to={`/rituals/${ritual.id}`}>{ritual.name}</Link>
