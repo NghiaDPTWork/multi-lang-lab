@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRituals } from "../hooks/useRitual";
 import {
   LoadingState,
@@ -8,38 +8,74 @@ import {
 } from "@/shared/components/common";
 import { RitualCard, RitualFilters } from "../components";
 import { useDebounce } from "@/shared/hooks/useDebounce";
+import { useSearchParams } from "react-router-dom";
 
 export default function RitualCategoryPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const selectedDifficulty = searchParams.get("difficultLevel") || "all";
+  const isHotParam = searchParams.get("isHot");
+  const isHot =
+    isHotParam === "true" ? true : isHotParam === "false" ? false : undefined;
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [isHot, setIsHot] = useState<boolean | undefined>(undefined);
-  const debounedSearch = useDebounce(searchTerm, 500);
+  const [searchInput, setSearchInput] = useState<string>(
+    searchParams.get("search") || "",
+  );
+  const debounedSearch = useDebounce(searchInput, 500);
 
   const { rituals, pagination, isLoading, isError, error, refetch } =
     useRituals({
-      page: currentPage,
-      limit: 6,
-      search: debounedSearch || undefined,
+      page: Number(searchParams.get("page")) || 1,
+      limit: Number(searchParams.get("limit")) || 6,
+
+      // undefined để loại bỏ giá trị rỗng khi không lọc
+      search: searchParams.get("search") || undefined,
+      difficultLevel: searchParams.get("difficultLevel") || undefined,
+
+      // Boolean hoặc undefined
       isHot: isHot,
     });
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+    const params = new URLSearchParams(searchParams);
+    params.set("page", String(page));
+    setSearchParams(params);
   };
 
   const handleSearchChange = (value: string) => {
-    setSearchTerm(value);
-    setCurrentPage(1);
+    setSearchInput(value);
   };
 
-  // const handleDifficultyChange = (difficulty: string) => {
-  //   setSelectedDifficulty(difficulty);
-  //   setCurrentPage(1);
-  // };
+  useEffect(() => {
+    if (debounedSearch !== (searchParams.get("search") || "")) {
+      handleFliterChange("search", debounedSearch || undefined);
+    }
+  }, [debounedSearch]);
 
   const handleIsHotChange = (value: boolean | undefined) => {
-    setIsHot(value);
-    setCurrentPage(1);
+    handleFliterChange(
+      "isHot",
+      value === undefined ? undefined : String(value),
+    );
+  };
+
+  const handleDifficultyChange = (difficulty: string) => {
+    handleFliterChange(
+      "difficultLevel",
+      difficulty === "all" ? undefined : difficulty,
+    );
+  };
+
+  const handleFliterChange = (key: string, value: string | undefined) => {
+    const params = new URLSearchParams(searchParams);
+    if (value) {
+      params.set(key, value);
+    } else {
+      params.delete(key);
+    }
+    // Fliter xong rồi mới phân trang
+    params.set("page", "1");
+    setSearchParams(params);
   };
 
   if (isLoading) return <LoadingState />;
@@ -66,8 +102,10 @@ export default function RitualCategoryPage() {
 
       {/* Filters & Search */}
       <RitualFilters
-        searchTerm={searchTerm}
+        searchTerm={searchInput}
         onSearchChange={handleSearchChange}
+        selectedDifficulty={selectedDifficulty}
+        onDifficultyChange={handleDifficultyChange}
         isHot={isHot}
         onIsHotChange={handleIsHotChange}
       />
