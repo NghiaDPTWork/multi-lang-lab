@@ -4,13 +4,43 @@ import {
   LoadingState,
   ErrorState,
   EmptyState,
+  Pagination,
 } from "@/shared/components/common";
 import { RitualCard, RitualFilters } from "../components";
+import { useDebounce } from "@/shared/hooks/useDebounce";
 
 export default function RitualCategoryPage() {
-  const { rituals, isLoading, isError, error, refetch } = useRituals();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string>("all");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [isHot, setIsHot] = useState<boolean | undefined>(undefined);
+  const debounedSearch = useDebounce(searchTerm, 500);
+
+  const { rituals, pagination, isLoading, isError, error, refetch } =
+    useRituals({
+      page: currentPage,
+      limit: 6,
+      search: debounedSearch || undefined,
+      isHot: isHot,
+    });
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
+    setCurrentPage(1);
+  };
+
+  // const handleDifficultyChange = (difficulty: string) => {
+  //   setSelectedDifficulty(difficulty);
+  //   setCurrentPage(1);
+  // };
+
+  const handleIsHotChange = (value: boolean | undefined) => {
+    setIsHot(value);
+    setCurrentPage(1);
+  };
 
   if (isLoading) return <LoadingState />;
   if (isError)
@@ -20,18 +50,6 @@ export default function RitualCategoryPage() {
         onRetry={() => refetch()}
       />
     );
-
-  const filteredRituals = rituals.filter((ritual) => {
-    const matchesSearch =
-      ritual.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (ritual.description || "")
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-    const matchesDifficulty =
-      selectedDifficulty === "all" ||
-      ritual.difficultyLevel === selectedDifficulty;
-    return matchesSearch && matchesDifficulty;
-  });
 
   return (
     <div className="space-y-6">
@@ -49,20 +67,25 @@ export default function RitualCategoryPage() {
       {/* Filters & Search */}
       <RitualFilters
         searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        selectedDifficulty={selectedDifficulty}
-        onDifficultyChange={setSelectedDifficulty}
+        onSearchChange={handleSearchChange}
+        isHot={isHot}
+        onIsHotChange={handleIsHotChange}
       />
 
       {/* Grid List */}
-      {filteredRituals.length === 0 ? (
+      {rituals.length === 0 ? (
         <EmptyState message="Không tìm thấy nghi lễ nào phù hợp với bộ lọc." />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredRituals.map((ritual) => (
+          {rituals.map((ritual) => (
             <RitualCard key={ritual.id} ritual={ritual} />
           ))}
         </div>
+      )}
+
+      {/* Pagination */}
+      {pagination && (
+        <Pagination meta={pagination} onPageChange={handlePageChange} />
       )}
     </div>
   );

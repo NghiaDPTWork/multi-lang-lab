@@ -1,21 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { ritualService } from "../services";
-import { useParams } from "react-router-dom";
+import type { RitualFliterParams } from "../types";
 
-export const useRituals = () => {
-  const filters = useParams();
+export const useRituals = (params?: RitualFliterParams) => {
   const query = useQuery({
-    queryKey: ["rituals"],
-    queryFn: () => ritualService.getAll(filters),
-    placeholderData: (prev) => prev,
+    queryKey: ["rituals", params],
+    queryFn: () => ritualService.getAll(params),
+    placeholderData: keepPreviousData,
   });
 
   return {
     rituals: query.data?.data ?? [],
     pagination: query.data?.meta,
     isLoading: query.isLoading,
+    isFetching: query.isFetching,
     error: query.error,
     isError: query.isError,
     refetch: query.refetch,
   };
 };
+
