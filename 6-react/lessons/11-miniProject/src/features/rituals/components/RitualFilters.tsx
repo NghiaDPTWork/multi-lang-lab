@@ -1,4 +1,4 @@
-import { Search, Flame, ChevronDown, Check } from "lucide-react";
+import { Search, Flame, Check } from "lucide-react";
 import { Input } from "@/shared/components/ui/input";
 import { Button } from "@/shared/components/ui/button";
 import {

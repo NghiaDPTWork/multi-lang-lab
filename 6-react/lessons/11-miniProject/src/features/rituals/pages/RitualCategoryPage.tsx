@@ -17,7 +17,6 @@ export default function RitualCategoryPage() {
   const isHotParam = searchParams.get("isHot");
   const isHot =
     isHotParam === "true" ? true : isHotParam === "false" ? false : undefined;
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchInput, setSearchInput] = useState<string>(
     searchParams.get("search") || "",
   );
