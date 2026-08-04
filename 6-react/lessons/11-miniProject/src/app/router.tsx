@@ -2,7 +2,6 @@ import LoginPage from "@/features/auth/pages/LoginPage";
 import RegisterPage from "@/features/auth/pages/RegisterPage";
 import ProfilePage from "@/features/auth/pages/ProfilePage";
 import HomePage from "@/features/landing/pages/HomePage";
-import AdminLayout from "@/shared/layouts/AdminLayout";
 import UserLayout from "@/shared/layouts/UserLayout";
 import { createBrowserRouter } from "react-router-dom";
 import GuestRouter from "@/shared/components/guards/GuestRouter";
@@ -11,11 +10,32 @@ import RitualCategoryPage from "@/features/rituals/pages/RitualCategoryPage";
 import RitualDetailPage from "@/features/rituals/pages/RitualDetailPage";
 import UnAuthorizedPage from "@/shared/pages/UnAuthorizedPage";
 import NotFoundPage from "@/shared/pages/NotFoundPage";
-import AdminDashboard from "@/features/rituals/pages/AdminDashboard";
-import ManageRitualsListPage from "@/features/rituals/pages/ManageRitualsListPage";
-import ManageRitualCreatePage from "@/features/rituals/pages/ManageRitualCreatePage";
-import ManageRitualEditPage from "@/features/rituals/pages/ManageRitualEditPage";
-import ManageUserListPage from "@/features/rituals/pages/ManageUserListPage";
+import { lazy, Suspense, type ReactNode } from "react";
+import { LoadingState } from "@/shared/components/common/LoadingState";
+
+// Admin pages loaded lazily
+const AdminLayout = lazy(() => import("@/shared/layouts/AdminLayout"));
+const AdminDashboard = lazy(
+  () => import("@/features/rituals/pages/AdminDashboard"),
+);
+const ManageRitualsListPage = lazy(
+  () => import("@/features/rituals/pages/ManageRitualsListPage"),
+);
+const ManageRitualCreatePage = lazy(
+  () => import("@/features/rituals/pages/ManageRitualCreatePage"),
+);
+const ManageRitualEditPage = lazy(
+  () => import("@/features/rituals/pages/ManageRitualEditPage"),
+);
+const ManageUserListPage = lazy(
+  () => import("@/features/rituals/pages/ManageUserListPage"),
+);
+
+const withSuspense = (children: ReactNode) => (
+  <Suspense fallback={<LoadingState className="py-20" size="lg" />}>
+    {children}
+  </Suspense>
+);
 
 export const router = createBrowserRouter([
   {
@@ -31,7 +51,7 @@ export const router = createBrowserRouter([
         element: <RitualCategoryPage />,
       },
       {
-        path: "rituals:id",
+        path: "rituals/:id",
         element: <RitualDetailPage />,
       },
       {
@@ -74,29 +94,29 @@ export const router = createBrowserRouter([
     path: "/admin",
     element: (
       <ProtectedRoute allowedRoles={["admin"]}>
-        <AdminLayout />
+        {withSuspense(<AdminLayout />)}
       </ProtectedRoute>
     ),
     children: [
       {
         index: true,
-        element: <AdminDashboard />,
+        element: withSuspense(<AdminDashboard />),
       },
       {
         path: "rituals",
-        element: <ManageRitualsListPage />,
+        element: withSuspense(<ManageRitualsListPage />),
       },
       {
         path: "rituals/create",
-        element: <ManageRitualCreatePage />,
+        element: withSuspense(<ManageRitualCreatePage />),
       },
       {
         path: "rituals/:id/edit",
-        element: <ManageRitualEditPage />,
+        element: withSuspense(<ManageRitualEditPage />),
       },
       {
         path: "users",
-        element: <ManageUserListPage />,
+        element: withSuspense(<ManageUserListPage />),
       },
     ],
   },
